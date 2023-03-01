@@ -1,0 +1,399 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "ChatsHistory";
+    Layout = "~/Views/Shared/_Layout6.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-3">
+
+                <p>All Chats</p>
+                <div id="AllUsersChats" class="p-4"></div>
+            </div>
+            <div class="col-9">
+                   <div class="bg-white rounded-3">
+                <div id="MyChatsPage" style="height:600px; overflow: auto;  overflow-x: hidden"></div>
+                    <div class="row" style="position-fixed">
+                        <div class="col-9 float-start">
+                            <input type="text" class="form-control ms-5" PlaceHolder="Reply Text" id="ResText" />
+                            </div>
+                            <div class="col-3 float-end">
+                            <button class="btn btn-secondary justsend float-end mr-5" onclick="SaveReplys();"> Send </button>
+                        <button class="btn btn-secondary updatemsg float-end mr-5" id="nupdatemsg" onclick="updatereply();"> Send </button>
+                        </div>
+                    </div>
+                </div>
+@*                <div id="MyChatsPage" class="bg-white p-4"></div>
+*@            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div id="DeleteModal" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label for="exampleInputEmail1">Delete This Message?</label>
+                        <button type="button" id="DeleteModalCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This Action Can be Undone.</p>
+                        <input type="text" hidden="hidden" id="msgid"/>
+                    </div>
+                     <div class="modal-header">
+                        <button type="button" id="DeleteMsg" class="btn btn-danger float-end" data-dismiss="modal">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background-color: yellow;
+            padding: 50px;
+            font-size: 20px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('.Trash').hide();
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            if (id == null) {
+                ChatCurrentUser();
+            }
+            else {
+                GetChatsbyId();
+            }
+
+            GetAllChatsCurrentUser();
+        });
+
+        function GetChatsbyId() {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetChatbyUserIdandStoreId?id=' + id,
+                type: 'POST',
+                success: function (response) {
+                    console.log('resfir', response);
+                    var id = 0;
+                    var uncheckst = "";
+                    $.each(response, function (key, item) {
+
+                        if (item.sender.userId != item.id) {
+
+                            uncheckst += '<div class="d-flex float-end mt-3">';
+                            uncheckst += ((item.sender.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>' : '<img class=" icon-sm rounded-circle " src="' + item.sender.userImage + '"/>');
+                            uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p align="right" onclick="DeleteClick(' + item.messgeId + ')" id="DeleteHover" class="m-5"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center">' + item.chatOn + '</p>';
+
+                        }
+                        else {
+                            uncheckst += '<form >';
+                            uncheckst += '<div class="d-flex mt-3">';
+                            uncheckst += ((item.sender.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>' : '<img class="icon-sm rounded-circle" src="' + item.sender.userImage + '"/>');
+                            uncheckst += '<p class="badge-pill b btn-gray align-right">' + item.sender.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row" >';
+                            uncheckst += '<p class="ps-5" onclick="DeleteClick(' + item.messgeId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '<div class="Trash" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o float-end m-lg-n5" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center">' + item.chatOn + '</p>';
+                            uncheckst += '</form>';
+                        }
+                        id = item.id;
+                    })
+
+                    uncheckst += '<div class="row mb-4">';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    //uncheckst += '<input type="text" class="form-control" PlaceHolder = "Reply Text" id = "ResText" />';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    //uncheckst += '<button class="btn btn-secondary justsend" onclick="SaveReplys(' + id + ');"> Send </button>';
+                    uncheckst += '<input type="text" id="nroomid" value="'+ id +'" hidden="hidden"/>';
+
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                    $('#MyChatsPage').append(uncheckst);
+                    ChangeStatus(id);
+                }
+            })
+        }
+
+        function ChangeStatus(id) {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/ChangeMessageStatusandSave',
+                data: { id },
+                success: function (response) {
+                    console.log('ponse', response)
+                }
+            })
+        }
+
+        function GetAllChatsCurrentUser() {
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetAllChatsbyCurrentUser',
+                success: function (response) {
+                    var html12 = "";
+                    console.log(response);
+                    $.each(response, function (key, item) {
+                        html12 += '<div class="d-flex mb-4" onclick="GetChatsbyUserId(' + item.userId + ')">';
+                        html12 += ((item.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>' : '<img class="icon-sm rounded-circle" src="' + item.userImage + '"/>');
+                        html12 += '<p>' + item.userName + '</p>';
+                        html12 += '</div>';
+                    })
+                    $('#AllUsersChats').append(html12);
+                }
+            })
+        }
+
+        function GetChatsbyUserId(id) {
+            $('#MyChatsPage').empty();
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetChatbyUserIdandStoreId?id=' + id,
+                type: 'POST',
+                success: function (response) {
+                    var id = 0;
+                    var uncheckst = "";
+                    console.log('ressec', response);
+                    $.each(response, function (key, item) {
+                        if (item.sender.userId != item.id) {
+
+                            uncheckst += '<div class="d-flex float-end">';
+                            uncheckst += ((item.sender.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>' :'<img class=" icon-sm rounded-circle " src="' + item.sender.userImage + '"/>');
+                            uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p align="right" id="DeleteHover" onclick="DeleteClick(' + item.messgeId + ')" class="m-5"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o float-end" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '<div class="updatemsg pt-4" id="updmsg' + item.messgeId + '"><i class="fas fa-edit float-end m-lg-n5" style="font-size:24px" onclick="EditMessage(' + item.messgeId + ',\'' + item.messageText + '\');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center">' + item.chatOn + '</p>';
+
+                        }
+                        else {
+                            uncheckst += '<form >';
+                            uncheckst += '<div class="d-flex">';
+                            uncheckst += ((item.sender.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>' : '<img class="icon-sm rounded-circle" src="' + item.sender.userImage + '"/>');
+                            uncheckst += '<p class="badge-pill b btn-gray align-right">' + item.sender.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p class="ps-5" onclick="DeleteClick(' + item.messgeId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center">' + item.chatOn + '</p>';
+                            uncheckst += '</form>';
+                            id = item.id;
+                        }
+
+                    })
+                    console.log('id', id);
+                    uncheckst += '<div class="row mb-4">';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    //uncheckst += '<input type="text" class="form-control" PlaceHolder="Reply Text" id = "ResText" />';
+                    uncheckst += '<input hidden="hidden" type="text" id="msgid"/>';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    //uncheckst += '<button class="btn btn-secondary justsend" onclick="SaveReplys(' + id + ');"> Send </button>';
+                    uncheckst += '<input type="text" id="nroomid" value="'+ id +'" hidden="hidden"/>';
+                    //uncheckst += '<input type="text" id="nchatid" value="'+ chatid +'" hidden="hidden"/>';
+                    //uncheckst += '<button class="btn btn-secondary updatemsg" id="nupdatemsg" onclick="updatereply(' + id + ');"> Send </button>';
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+                    $('#MyChatsPage').append(uncheckst);
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                    ChangeStatus(id);
+                }
+            })
+        }
+
+
+        function SaveReplys() {
+            debugger
+            var token = sessionStorage.getItem('token');
+            var Message = $('#ResText').val();
+            var receiverid = $('#nroomid').val();
+            debugger
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/SaveReplyChat',
+                data: { receiverid, Message },
+                success: function (response) {
+                    debugger
+                    GetChatsbyUserId(response);
+                }
+            })
+        }
+
+
+        function ChatCurrentUser() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetChatbytoken',
+                success: function (response) {
+                    var id = 0;
+                    var uncheckst = "";
+                    console.log('resthird', response);
+                    $.each(response, function (key, item) {
+                        if (item.sender.userId != item.id) {
+
+                            uncheckst += '<div class="d-flex float-end">';
+                            uncheckst += ((item.sender.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>':'<img class=" icon-sm rounded-circle" src="' + item.sender.userImage + '"/>');
+                            uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p align="right" id="DeleteHover" onclick="DeleteClick(' + item.messgeId + ')" class="m-5"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o float-end" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '<div class="updatemsg pt-4" id="updmsg' + item.messgeId + '"><i class="fas fa-edit float-end m-lg-n5" style="font-size:24px" onclick="EditMessage(' + item.messgeId + ',\'' + item.messageText + '\');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center">' + item.chatOn + '</p>';
+
+                        }
+                        else {
+                            uncheckst += '<form >';
+                            uncheckst += '<div class="d-flex">';
+                            uncheckst += ((item.sender.userImage == null) ? '<p class="bg-danger rounded badge">Guest</p>':'<img class="icon-sm rounded-circle" src="' + item.sender.userImage + '"/>');
+                            uncheckst += '<p class="badge-pill b btn-gray align-right">' + item.sender.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p class="ps-5" onclick="DeleteClick(' + item.messgeId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash" id="Tash' + item.messgeId + '"><i class="fa fa-trash-o" style="font-size:24px" onclick="DeleteMessage(' + item.messgeId + ');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center">' + item.chatOn + '</p>';
+                            uncheckst += '</form>';
+                            id = item.id;
+
+                        }
+                    })
+                    console.log('id', id);
+                    uncheckst += '<div class="row mb-4">';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    //uncheckst += '<input type="text" class="form-control" PlaceHolder="Reply Text" id = "ResText" />';
+                    uncheckst += '<input hidden="hidden" type="text" id="msgid"/>';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    //uncheckst += '<button class="btn btn-secondary justsend" onclick="SaveReplys(' + id + ');"> Send </button>';
+                    uncheckst += '<input type="text" id="nroomid" value="' + id + '" hidden="hidden"/>';
+                    //uncheckst += '<input type="text" id="nchatid" value="' + chatid + '" hidden="hidden"/>';
+                    //uncheckst += '<button class="btn btn-secondary updatemsg" id="nupdatemsg" onclick="updatereply(' + id + ');"> Send </button>';
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+
+                    $('#MyChatsPage').append(uncheckst);
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                    ChangeStatus(id);
+                }
+            })
+        }
+
+        function DeleteClick(id) {
+            debugger
+            $('.updatemsg').hide();
+            $('.Trash').hide();
+            $('#Tash' + id).show();
+            $('#updmsg'+id).show();
+        }
+
+        function DeleteMessage(id) {
+            $('#msgid').val(id);
+            $('#DeleteModal').modal('show'); 
+        }
+
+        $('#DeleteMsg').click(function(){
+            debugger
+            var id = $('#msgid').val();
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                url: '/Home/DeleteChatbyId?id=' + id,
+                type: 'Delete',
+                success: function (response) {
+                    location.reload();
+                }
+            })
+        })
+
+        $('#DeleteModalCancel').click(function(){
+            $('.Trash').hide();
+            $('#DeleteModal').modal('hide');
+        })
+
+         function EditMessage(id, Message){
+        
+            $('#ResText').val(Message);
+            $('.justsend').hide();
+            $('#updmsg' + id).show();
+            $('#nupdatemsg').show();
+            $('#msgid').val(id);
+            }
+
+            function updatereply(){
+                var Text = $('#ResText').val();
+                var msgid = $('#msgid').val();
+                $.ajax({
+                    url: '/Home/UpdateMsgbyId',
+                    data: {Text,msgid},
+                    success: function (response) {
+                        location.reload();
+                    }
+                })
+            }
+    </script>
+    <style>
+          .spantext_backgrou {
+                background-color: #6DAAD7;
+            }
+    </style>

@@ -1,0 +1,417 @@
+﻿@using DarazApp.Services
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "AddCategory";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <section class="padding-y">
+        <div class="container">
+@*            <button id="AddCategory" class="btn btn-primary">Add Category</button>*@
+            <div class="mb-4"><a href="#" id="AddCategory" class="border float-end box m-lg-n5"><i class='fas fa-plus' style='font-size:36px'></i></a></div>
+            <section class="padding-top" id="mainview">
+                <nav class="row gy-5 row-cols-xl-8 row-cols-sm-5 row-cols-3" id="Categor">
+                </nav>
+            </section>
+
+            	<h3 class="section-title">New products</h3>
+		
+			<div class="row" id="Produc"></div>
+
+            <div id="CatCard">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h4 class="text-center ">Add Category</h4>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Category Name :</label>
+                            <input type="text" class="form-control" id="CategoryName" placeholder="Category Name" />
+                            <input type="file" class="form-control" id="CategoryIcon" />
+
+                        </div>
+                        <div class="form-group">                         
+                        </div>
+                        <p>
+                        <a href="#" id="SaveCategory" class="btn btn-danger">Send</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+            <div id="PerCard">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h1 class="text-center">Add PerCategory </h1>
+                        <div class="form-group">
+                             <button id="AddFields" class="add_field_button btn btn-success">Add SubCategory</button>
+                        </div>
+                        <div class="form-group">
+                            <input hidden="hidden" type="text" id="CategoryId" />
+                            <div class="input_fields_wrap"></div>   
+                        </div>
+                        <a href="#" id="savepercategory" class="btn btn-success">Save</a>
+                </form>
+                </div>
+            </div>
+        </div>
+
+
+          <div id="KidCard">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                         <h4 class="text-center ">Add Kid Category</h4>
+                        <div class="form-group">
+                            <select id="PerCategoreisese"></select>
+                        </div>
+                        <div class="form-group">
+                            <input hidden="hidden" type="text" id="PerCategoryId" />
+                                                        
+                            <div id="kidcategiddd">
+                                <a id="btncatid" class="btn-btnfiels btn btn-danger">Add Fields</a>
+                                <div class="kidcategori"></div>
+                        </div>
+                        </div>
+                            <a href="#" id="savekidcategory" class="btn btn-success">Save</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+    </section>
+           
+@*
+    <div class="container" id="CatCard">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h4 class="text-center ">Add Category</h4>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Category Name :</label>
+                            <input type="text" class="form-control" id="CategoryName" placeholder="Category Name" />
+                            <input type="file" class="form-control" id="CategoryIcon" />
+
+                        </div>
+                        <div class="form-group">                         
+                        </div>
+                        <p>
+                        <a href="#" id="SaveCategory" class="btn btn-danger">Send</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="PerCard">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h1 class="text-center">Add PerCategory </h1>
+                        <div class="form-group">
+                             <button id="AddFields" class="add_field_button btn btn-success">Add SubCategory</button>
+                        </div>
+                        <div class="form-group">
+                            <input hidden="hidden" type="text" id="CategoryId" />
+                            <div class="input_fields_wrap"></div>   
+                        </div>
+                        <a href="#" id="savepercategory" class="btn btn-success">Save</a>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="KidCard">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                         <h4 class="text-center ">Add Kid Category</h4>
+                        <div class="form-group">
+                            <select id="PerCategoreisese"></select>
+                        </div>
+                        <div class="form-group">
+                            <input hidden="hidden" type="text" id="PerCategoryId" />
+                                                        
+                            <div id="kidcategiddd">
+                                <a id="btncatid" class="btn-btnfiels btn btn-danger">Add Fields</a>
+                                <div class="kidcategori"></div>
+                        </div>
+                        </div>
+                            <a href="#" id="savekidcategory" class="btn btn-success">Save</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+    <div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Saved</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>KidCategor Added Successfully</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            GetCatDatas();
+            GetProductDates();  
+            $('#myModal').modal('hide');
+            $('#PerCard').hide();
+            $('#KidCard').hide();
+            $('#CatCard').hide();
+            $('#btncatid').hide();
+            var max_fields = 10;
+            var wrapper = $(".input_fields_wrap");
+            var add_button = $(".add_field_button");
+            var x = 1;
+
+            $(add_button).click(function (e) {
+                e.preventDefault();
+                if (x < max_fields) {
+                    $(wrapper).append('<div class="row"><input type="text" class="inputpercategorycat"/> <input type="file" class="inputfilepercat form-control"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+                    x++;
+                }
+            });
+
+            $(wrapper).on("click", ".remove_field", function (e) {
+                debugger
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
+            })
+        })
+
+        $('#AddCategory').click(function () {
+            $('#mainview').hide();
+            $('#Produc').hide();
+            $('#CatCard').show();
+        })
+
+        function GetCatDatas() {
+            var date = new Date();
+
+            $.ajax({
+                url: '/Home/GetOnlyCategories',
+
+                success: function (response) {
+                    debugger
+                    var cated = "";
+                    console.log('Test', response);
+                    $.each(response, function (key, item) {
+                        console.log('item', item);
+                        var dat = item.uploadDate;
+
+                        cated += '<div class="col">';
+                        cated += '<a href="/Home/GetCategoiesbyIDAdminView?id=' + item.categoryId + '" class="item-link text-center">';
+                        cated += '<i class="' + item.categoryIcon + '" style="font-size:24px"></i>';
+                        cated += '<span class="text"> ' + item.categoryName + '</span>';
+                        cated += '</a>';
+                        cated += '</div>';
+                    })
+                    $('#Categor').append(cated);
+
+                }
+            })
+        }
+
+        function GetProductDates() {
+
+            $.ajax({
+                url: '/Home/GetOnlyProducts',
+                success: function (response) {
+                    var html = "";
+                    let diff = 6.048e+8;
+                    $.each(response, function (key, item) {
+                        var dat = item.uploadDate;
+                        var date = new Date();
+                        var pricesvalue = [];
+                        html += '<div class="col-lg-3 col-md-6 col-sm-6">';
+                        html += '<figure class="card-product-grid" >';
+                        html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyIdAdmin?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyIdAdmin?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+                        html += '<figcaption class="pt-2" >';
+                        //html += '<a href="/Home/GetProductbyId?Id='+ item.productId +'" class="float-end btn btn-light btn-icon"></a>';
+                        html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart"></i></a>';
+                        $.each(item.productViewModels?.productVariations, function (key, itemss) {
+                            $.each(itemss.productBatches, function (key, obj) {
+                                pricesvalue = obj.price;
+                            })
+                        })
+                        var first = $(pricesvalue).get(0);
+                        html += '<strong class="text-muted12d"> RS :' + first + '</strong>';
+                        html += '<a href="/Home/GetProductbyIdAdmin?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';
+                        html += '<small class="text-muted"></small>';
+                        html += '</figcaption>';
+                        html += '</figure>';
+                        html += '</div>';
+                        html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>'
+                    })
+                    $('#Produc').append(html);
+                }
+            })
+        }
+
+
+        $('#SaveCategory').click(function () {
+            debugger
+            var CategoryName = $('#CategoryName').val();
+            var form = new FormData();
+            form.append('file', $('#CategoryIcon')[0].files[0]);
+            form.append('CategoryName', $('#CategoryName').val());
+
+            form.append('CategoryComission', $('#CategoryComission').val());
+            console.log('form',form);
+            $.ajax({
+                url: '/Table/AddNewCategory',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    debugger
+         
+                    $('#CategoryId').append(response);
+                    $('#CategoryId').val(response);
+                    $('#PerCard').show();
+                    $('#mainview').hide();
+                    $('#CatCard').hide();
+                },
+                error: function(data){
+                    alert('Error');
+                }
+            })
+        })
+
+        $('#savepercategory').click(function () {
+            var form1= new FormData();
+            var spetext = $('.inputfilepercat');
+            for (i = 0; i < spetext.length; i++) {
+                form1.append('formFiles', $('.inputfilepercat')[i].files[0]);
+            }
+
+            var quatti = $('.inputpercategorycat');
+            console.log(quatti);
+            for (var i = 0; i < quatti.length; i++) {
+                form1.append('SubCategoryName', $(quatti[i]).val());
+            }
+
+            form1.append('CategoryId', $('#CategoryId').val());
+            var consoleform1 = $(form1).serialize();
+            console.log(form1);
+            debugger
+            $.ajax({
+                url: '/Table/AddNewSubCategory',
+                type: 'Post',
+                data: form1,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log('response',response);
+                    debugger
+                    $.each(response, function(key,item){
+                        $('#PerCategoreisese').append('<option class="vari form-select" value="' + item.perCategoryId + '">' + item.perCategoryName + '</option>');
+                        $('#PerCard').hide();
+                        //$('#PerCard').show();
+                        $('#mainview').hide();
+                        $('#CatCard').hide();
+                        $('#KidCard').show();
+                    })
+                }
+            })
+
+        })
+
+        $('#PerCategoreisese').change(function () {
+            $('.kidcategori').empty();
+           var id= $('#PerCategoreisese').val();
+           $('#PerCategoryId').val(id);
+            $('#btncatid').show();
+        })
+       
+
+        $('#btncatid').click(function() {
+                    var max_fields = 10;
+                    var Quant = $(".kidcategori");
+                    var add_quan = $(".quents");
+                    $(Quant).append('<div class="inputquen"><input type="text" Placeholder="Kid-Category Name" class="inputkidcategoryname form-control" maxlength="4" name="myQuant[]"/><input type="text" class="KidCategoryComission form-control" placeholder="Commision" /><input type="file" class="inputkidfilename form-control" maxlength="4" placeholder="Price" name="myQuantity[]"/><a href="#" class="remove_inputfields">Remove</a></div>');
+        });
+
+        $(wrapper).on("click", ".remove_inputfields", function (e) {
+            debugger
+            e.preventDefault();
+            $(this).parent('div').remove();
+            x--;
+        })
+
+        $('#savekidcategory').click(function(){
+            debugger
+            var form = new FormData();
+            var quati = $('.inputkidcategoryname');
+            console.log(quati);
+            for (var i = 0; i < quati.length; i++) {
+                form.append('KidCategoryName', $(quati[i]).val());
+            }
+
+            var commision = $('.KidCategoryComission');
+            console.log(commision);
+            for (var i = 0; i < commision.length; i++) {
+                form.append('KidCategoryComission', $(commision[i]).val());
+            }
+
+            var spetext = $('.inputkidfilename');
+            //console.log(spetext);
+            for (i = 0; i < spetext.length; i++) {
+                form.append('formkidFiles', $('.inputkidfilename')[0].files[0]);
+            }
+            var id = $('#PerCategoryId').val();
+            form.append('PerCategoryId', id);
+
+            $.ajax({
+                url: '/Table/AddNewKidCategory',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log('response', response);
+                    debugger
+                    $('#myModal').modal('show');
+                }
+            })
+
+        })
+
+        $('#modelcancel').click(function(){
+            $('#myModal').modal('hide');
+        })
+
+        $('#modelclose').click(function(){
+            $('#myModal').modal('hide');
+        })
+
+    </script>

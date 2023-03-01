@@ -1,0 +1,781 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "GetProductbyIdAdmin";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+       <section class="padding-y" id="ProductInfo1">
+        <div class="container">
+            <input type="text" hidden="hidden" id="ProdIdsss" />
+            <div class="row">
+                <aside class="col-lg-6">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap img-thumbnail">
+                            <a data-fslightbox="mygalley" data-type="image" href="images/items/detail1/big.webp">
+                                <div class="img-big-wrap img-thumbnail" id="image"></div>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="d-flex" id="savedimages"></div>
+                            </div>
+                        </div>
+                    </article>
+                </aside>
+
+                <main class="col-lg-6">
+                    <article class="ps-lg-3">
+                        <div class="row">
+                            <div class="col-9">
+                                <h4 id="ProdName"></h4>
+                                <h4 id="ProdPrice"></h4>
+                                <input hidden="hidden" id="VariId"/>
+                                <input hidden="hidden" id="batchId">
+    
+                            </div>
+                            <div class="col-3">
+                                <a class="btn btn-light float-end">
+                                    <div id="SellerImage"></div>
+                                    <p id="SellerName"></p>
+                                    <input hidden="hidden" id="SellerId"/>
+                                </a>
+                            </div>
+                        </div>
+
+                        <p class="title text-dark" id="ProdDes"></p>
+                        <div id="Ratings"></div>
+                        <div class="rating-wrap my-3">
+                            <ul class="rating-stars">
+                                <li style="width:80%" class="stars-active"> <img src="images/misc/stars-active.svg" alt=""> </li>
+                                <li>
+                                    <img src="images/misc/starts-disable.svg" alt="">
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <dl class="row">
+
+                            <dt class="col-3">Material</dt>
+                            <dd class="col-9" id="ProdMaterial"></dd>
+                            <dt class="col-3">Brand</dt>
+                            <dd class="col-9" id="ProdBrand" value="ProdBrand"></dd>
+                            <dt class="col-3" id="QuantTag">Available </dt>
+                            <dd class="col-9" id="ProdQuantity" value="ProdQuantity"></dd>
+                        </dl>
+                        <hr>
+
+                        <div class="row mb-4">
+                            <div class="col-md-8 col-12 mb-4">
+                           @*     <label class="form-label">Size</label>
+                                <div id="ProdSize"></div>
+                                
+                            </div>
+                            <div class="col-md-4 col-6 mb-2">*@
+                                <label class="form-label">Variations</label>
+                                <div id="ProdColour"></div>
+
+                            </div>
+                            <div class="col-md-4 col-6 mb-2">
+                                <label class="form-label">Quantity</label>
+                                <input class="form-control" type="number" id="ProdQuantity" name="quantity" min="0" max="100" step="1" >
+                            </div>
+                        </div>
+                        <a href="#" class="btn  btn-warning" id="Continue"> Buy now </a>
+                        <a href="#" class="btn  btn-primary" id="AddtoCart"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+    <section class="padding-y bg-light border-top" id="ProductInfo2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+
+                    <div class="card">
+                        <header class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_specs" data-bs-toggle="tab" class="nav-link active">Specification</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_warranty" data-bs-toggle="tab" class="nav-link">Warranty info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_shipping" data-bs-toggle="tab" class="nav-link">Shipping info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_seller" data-bs-toggle="tab" class="nav-link" id="Reviewsbyproductid">Review</a>
+                                </li>
+                            </ul>
+                        </header>
+                        <div class="tab-content">
+                            <article id="tab_specs" class="tab-pane show active card-body">
+                                <p id="ProdSpecificationText"></p>
+
+                                <table class="table border table-hover" id="Specifications">
+                                    <tr>
+                                        <th>  Display: </th>
+                                        <td id="ProdDisplay"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Processor capacity: </th>
+                                        <td id="ProdCapacity"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Camera quality: </th>
+                                        <td id="ProdCameraQuality"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Memory </th>
+                                        <td id="ProdMemory"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Graphics </th>
+                                        <td id="ProdGraphics"></td>
+                                    </tr>
+                                </table>
+                            </article>
+                            <article id="tab_warranty" class="tab-pane card-body">
+                                <p id="ProdWarrantyInfo"></p>
+                            </article>
+                            <article id="tab_shipping" class="tab-pane card-body">
+                                <p id="ProdShippingInfo"></p>
+                            </article>
+
+                            <article id="tab_seller" class="tab-pane card-body">
+                               <div id="reviewsdata"></div>
+                           </article>
+                            <input id="productId" hidden="hidden" />
+                        </div>
+                    </div>
+
+                </div>
+
+               
+               @* <aside class="col-lg-4">
+
+                    <div class="card" id="similaritems">
+                        <div class="card-body">
+                            <h5 class="card-title">Similar items</h5>
+
+                            <article class="itemside mb-3">
+                                <div class="info" id="similaritemdetails">
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                </aside>*@
+            </div>
+
+            <br><br>
+
+        </div>
+    </section>
+
+    <section class="padding-y bg-light" id="ShippingInfo">
+        <div class="container">
+            <div class="row">
+                <main class="col-xl-8 col-lg-8">
+
+                       <article class="card">
+                <div class="content-body">
+                <h5 class="card-title"> Guest checkout </h5>
+                <div class="row">
+                <div class="col-6 mb-3">
+                <label class="form-label">First name</label>
+                <input type="text" class="form-control" Placeholder="User Name" id="UserName">
+                </div> <!-- col end.// -->
+
+                <div class="col-6">
+                <label class="form-label">Last name</label>
+                <input type="text" class="form-control" placeholder="FatherName" id="FatherName">
+                </div> <!-- col end.// -->
+
+                <div class="col-6 mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" value="+998" class="form-control" placeholder="Phone No" id="PhoneNo">
+                </div> <!-- col end.// -->
+
+                <div class="col-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" placeholder="Email" id="Email">
+                </div> <!-- col end.// -->
+                </div> <!-- row.// -->
+                <hr class="my-4">
+                <h5 class="card-title"> Shipping info </h5>
+                <div class="row">
+                <div class="col-sm-8 mb-3">
+                <label for="" class="form-label">Address</label>
+                <input type="text" class="form-control" placeholder="Address" id="Address">
+                </div> <!-- col end.// -->
+
+                <div class="col-sm-4 mb-3">
+                <label for="" class="form-label">City</label>
+                <input type="text" class="form-control" placeholder="City" id="City">
+                </div> <!-- col end.// -->
+
+                <div class="col-sm-4 col-6 mb-3">
+                <label for="" class="form-label">Postal code</label>
+                <input type="text" class="form-control" placeholder="PostalCode" id="PostalCode">
+                </div> <!-- col end.// -->
+                </div> <!-- row.// -->
+
+                <div class="mb-4">
+                <label for="" class="form-label">Message to seller</label>
+                <textarea class="form-control" id="Message"></textarea>
+                </div> <!-- col end.// -->
+
+                <div class="float-end">
+                <button class="btn btn-light">Cancel</button>
+                <button class="btn btn-success" id="AddtoOrder">Continue</button>
+                </div>
+
+                </div> <!-- card-body end.// -->
+                </article> <!-- card end.// -->
+
+
+                </main> <!-- col.// -->
+                <aside class="col-xl-4 col-lg-4">
+                    <article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+                        <h6 class="card-title">Summary</h6>
+
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-end"> $195.90</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Discount:</dt>
+                            <dd class="text-end text-danger"> - $60.00 </dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Shipping cost:</dt>
+                            <dd class="text-end"> + $14.00 </dd>
+                        </dl>
+                        <hr>
+                        <dl class="dlist-align">
+                            <dt> Total: </dt>
+                            <dd class="text-end"> <strong class="text-dark">$252.90</strong> </dd>
+                        </dl>
+
+                        <div class="input-group my-4">
+                            <input type="text" class="form-control" name="" placeholder="Promo code">
+                            <button class="btn btn-light text-primary">Apply</button>
+                        </div>
+
+                        <hr>
+                        <h6 class="mb-4">Items in cart</h6>
+                    </article>
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+            
+            <br><br>
+
+        </div> <!-- container .//  -->
+
+    </section>
+
+
+    <div>
+        <div id="myQuantityModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Error</h4>
+                        <button type="button" id="model1cancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Purchased Quantity Should be Less then Available Quantity.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="model1close" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login Error</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please Login First</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    <div>
+        <div id="SuccessModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Success</h4>
+                        <button type="button" id="SuccessModalcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Product Added To Cart Successfully.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="SuccessModalclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+    <script>
+        function GetAll() {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+
+            var html = "";
+            let diff = 6.048e+8;
+            debugger
+            $.ajax({
+                url: '/Table/ProductDetailsbyId?id=' + id,
+                type: 'Get',
+                success: function (response) {
+                    var priceses = [];
+                    var quan = [];
+                    var html = "";
+                    var date = new Date();
+                    console.log('response', response);
+                    $('#ProdIdsss').val(response.productId);
+                    $("#ProdId").append(response.productId);
+                    $("#ProdName").append(response.productName);
+                    $("#image").append(((date - (new Date(response.uploadDate))) <= diff) ? '<a href="/Home/GetProductbyId?id=' + response.productId + '" class=""><div class="d-flex justify-content-end"><span class="badge bg-danger">New</span></div><img style="height: 575px ; width : 620px" src = "' + response.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + response.productId + '" class="img-wrap rounded bg-gray-light"><img style="height: 575px ; width : 620px" src = "' + response.productImage + '" ></a>');
+
+                    $("#SellerName").append(response.sellerName);
+                    $('#SellerId').val(response.sellerId);
+                    $("#SellerImage").append('<a href="/Item/GetProductsbyUserId?id=' + response.sellerId + '"><img class="icon-md rounded-circle" src = "' + response.sellerImage + '" ></a>');
+                    let prodlength =0;
+                    prodlength = + (response.productComments.length);
+                    console.log('prodlength', prodlength);
+                    let endrat = 0;
+                    let lowpric = 0;
+                    $.each(response.productComments, function (key, item) {
+                        let productrate = (item.rating);
+                        let newrating = (productrate / prodlength);
+                        endrat += newrating;              
+                     
+                    })
+                    html += (((0 == endrat)) ? '<div class="d-flex"><span class="fa fa-star " style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (No Rating)<p style="color:green">' + prodlength + 'Orders</p></div>' : '');
+                    html += (((1 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star " style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((2 < endrat.toFixed() > 1)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((2 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((3 < endrat.toFixed() > 2)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((3 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((4 < endrat.toFixed() > 3)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + endrat.toFixed(1) + ')<p style="color:green">' + prodlength + 'Orders</p></div>' : '');
+                    html += (((4 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + endrat.toFixed(1) + ')<p style="color:green">'+ prodlength +'Orders</p></div>' : '');
+                    html += (((5 < endrat.toFixed() > 4)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">'+ prodlength +'Orders</p></div>' : '');
+                    html += (((5 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">' + prodlength + 'Orders</p></div>' : '');
+
+                    $('#Ratings').append(html);
+
+                    $.each(response.productViewModels.productVariations, function (key, item) {
+                        $("#ProdColour").append('<input type="radio" id="contactChoice1" name ="contact" class="prodcolor" onchange="GetSizes(' + item.p_VariationsID + ');" value="' + item.p_VariationsID + '"/><label>' + item.p_VariationsName + '</label>');
+                        $.each(item.productBatches, function(key, prices){
+                               priceses = prices.price;
+                               quan = prices.quantity
+                        });    
+                    })
+                       var first = $(priceses).get(0);
+                        var firstquan = $(quan).get(0);
+                       $('#ProdPrice').append(first);
+                        if(firstquan > 20)
+                       {
+                          $('#QuantTag').hide();
+                          $('#ProdQuantity').hide();
+                       }
+                       else
+                       {
+                          $('#QuantTag').show();
+                          $('#ProdQuantity').append(firstquan);
+                       }
+                              
+                    $.each(response.productViewModels.productDescriptions, function (key, item) {
+                        $("#ProdDesId").append('<option>' + item.pdescriptionId + '</option>');
+                        $("#ProdBrand").append(item.productBrand);
+                        $("#ProdDes").append(item.productDes);
+                        $("#ProdMaterial").append(item.productMaterial);
+                        $("#ProdQuality").append(item.productQuality);
+                        $("#ProdQuantity").append(item.productQuantity);
+                        $("#ProdType").append(item.productType);
+
+                    })
+
+                    $.each(response.productViewModels.productDescriptionimages, function (key, item) {
+                        $("#savedimages").append('<a href="/Home/GetImageDesbyImagesId?Id=' + item.productdesImage1 + '"><img style="height: 70px ; width : 90px" src = "' + item.productdesImage1 + '"></a>');
+                    })
+
+                    $.each(response.productViewModels.productSpecifications, function (key, item) {
+                        $("#ProdCameraQuality").append(item.cameraQuality);
+                        $("#ProdGraphics").append(item.graphics);
+                        $("#ProdMemory").append(item.memory);
+                        $("#ProdCapacity").append(item.processorCapacity);
+                        $("#ProdDisplay").append(item.productDisplay);
+                        $("#ProdShippingInfo").append(item.productShippingInfo);
+                        $("#ProdSpecificationText").append(item.productSpecificationsText);
+                        $("#ProdWarrantyInfo").append(item.productWarrantyInfo);
+                    })
+
+                    $.each(response.productViewModels.productSize, function (key, item) {
+                        $("#ProdSizeId").val(item.productSizeId);
+                    })
+
+                    $.each(response.productViewModels.productColours, function (key, item) {
+                        $("#ProdColourId").val(item.productColourId);
+                    })
+
+                },
+                error: function (err) {
+                }
+            })
+        };
+
+        debugger
+
+        $(document).ready(function () {
+            $('#QuantTag').hide();
+            $('#myModal').modal('hide');
+            $('#myQuantityModal').modal('hide');
+            $('#SuccessModal').modal('hide');
+            GetAll();
+            Simmilar();
+            $('#ShippingInfo').hide();
+            //GetUserInfo();
+            debugger
+
+        });
+
+        function GetSizes(VariationId) {
+            debugger
+           $('#QuantTag').hide();
+            $('#ProdQuantity').empty();
+            $('#ProdPrice').empty();
+            $('#VariId').val(VariationId);
+            debugger
+            $.ajax({
+                url: '/Table/GetAllColorsandSizes',
+                type: 'POST',
+                data: { VariationId },
+                success: function (response) {
+                    debugger
+                    $('#ProdSize').empty();
+                    $.each(response, function (key, item) {
+                        debugger
+                        console.log('it', item);
+                        $('#batchId').val(item.batchId);
+                        $('#ProdPrice').append(item.price);
+                        //$('#ProdQuantity').append(item.quantity);
+                         if(item.quantity > 20)
+                        {
+                            $('#QuantTag').hide();
+                            $('#ProdQuantity').hide();
+                        }
+                        else
+                        {
+                            $('#QuantTag').show();
+                            $('#ProdQuantity').append(item.quantity);
+                        }
+                        //$('#ProdSize').append('<input type="checkbox" class="prodsize" onchange="GetColourss();" value="' + item.sizeId + '">' + item.sizeName + '</><span class="label label-info">' + item.price + '</span>')
+                    })
+                }
+            })
+        }
+
+
+        function GetColourss(e) {
+            debugger
+            var ProductId = $('#ProdIdsss').val();
+            var SizeId = [];
+            var sizeId = $('.prodsize:checkbox');
+            $.each(sizeId, function (key, item) {
+                if (item.checked == true) {
+                    SizeId.push(item.value);
+                }
+            })
+            var ColourId = [];
+            var colourId = $('.prodcolor:checkbox');
+            $.each(colourId, function (key, item) {
+                if (item.checked == true) {
+                    ColourId.push(item.value);
+                }
+            })
+
+            $.ajax({
+                url: '/Table/GetAllColorsandSizes',
+                type: 'POST',
+                data: { ProductId, SizeId, ColourId },
+                success: function (response) {
+                    $('#ProdColour').empty();
+                    $.each(response, function (key, item) {
+
+                        $('#ProdColour').append('<input type="checkbox" class="prodcolor" onchange="GetSizes();" value="' + item.colourId + '">' + item.colourName + '<span class="label label-info">' + item.price + '</span></input>')
+                    })
+                }
+            })
+        }
+
+        $('#modelclose').click(function () {
+            $('#myModal').modal('hide');
+            window.location.replace('/Home/FirstPage');
+        })
+
+        $('#modelcancel').click(function () {
+            $('#myModal').modal('hide');
+
+        })
+
+
+        function Simmilar() {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            $.ajax({
+
+                url: '/Table/SimmilarItems?id=' + id,
+                type: 'Post',
+                data: { id },
+                success: function (response) {
+                    debugger
+                    $.each(response, function (key, item) {
+                        console.log('sim',item);
+                        let pric=[];
+                        let diff = 6.048e+8;
+                        var date = new Date();
+                        debugger
+                        $("#similaritems").append(((date - (new Date(item.uploadDate))) <= diff) ? '<a href="/Home/GetProductbyId?id=' + item.productId + '" class=""><div class="d-flex justify-content-start"><span class="badge bg-danger">New</span></div><img width=90px class="img-md img-thumbnail" height=90px src = "' + item.productImage + '" ></a> ' : '<a href="/Home/GetProductbyId?id=' + item.productId + '" class=""><div class="d-flex justify-content-start"><span class="badge bg-danger"></span></div><img width=90px class="img-md img-thumbnail" height=90px src = "' + item.productImage + '" ></a> ');
+                        $("#similaritems").append('<div><a class="title mb-1">' + item.productName + '</a></div>');
+                       
+                        $.each(item.productViewModels, function (key, itemss) {
+                            console.log('simiitemss',itemss);
+                            $.each(itemss, function (key, itemsss) {
+                                 console.log('ss',itemsss);
+                                 $.each(itemsss.productBatches,function(key,obj){
+                                     console.log('obj',obj);
+                                     pric=obj.price;
+                                 })
+                            })
+                        })
+                        var firpric = $(pric).get(0);
+                         $("#similaritems").append('<strong class="price">' + firpric + '</strong>');
+                        
+                    })
+
+                }
+            })
+        };
+
+        $('#AddtoCart').click(function () {
+            debugger
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let ProductId = search_params.get('id');
+            var token = sessionStorage.getItem('token');
+            var StoreId = $('#SellerId').val();
+            if (token == null) {
+                $('#myModal').modal('show');
+            }
+            else {
+                var Quantity = $('#ProdQuantity').val();
+                var ProductPrice = $('#ProdPrice').text();
+                var BatchId = $('#batchId').val();
+                var VariationId = $('#VariId').val();
+             
+                debugger
+                $.ajax({
+                    headers: {
+                        Authorization: `Bearer ` + token
+                    },
+                    url: '/Item/AddtoCart',
+                    data: {
+                        ProductId,
+                        Quantity,
+                        ProductPrice,
+                        VariationId,
+                        BatchId,
+                        StoreId,
+                    },
+                    type: 'Post',
+                    success: function (response) {
+                       $('#SuccessModal').modal('show');
+                    },
+                    Error: function (response) {
+                        alert("Error");
+                    }
+                })
+            }
+        });
+
+        $('#Continue').click(function () {
+            debugger
+            var token = sessionStorage.getItem('token');
+            if (token == null) {
+                $('#myModal').modal('show');
+                //window.location.replace('/Home/Index');
+            }
+            else {
+                $('#ProductInfo1').hide();
+                $('#ProductInfo2').hide();
+                $('#ShippingInfo').show();
+            }
+
+        })
+        $('#AddtoOrder').click(function () {
+            debugger
+            var token = sessionStorage.getItem('token');
+            if (token == null) {
+                $('#myModal').modal('show');
+                window.location.replace('/Home/Index');
+            }
+            else {
+
+                let url_str = window.location.href;
+                let url = new URL(url_str);
+                let search_params = url.searchParams;
+
+                let ProductId = search_params.get('id');
+                var VariationId = $('#VariId').val();
+                var BatchId =$('#batchId').val();
+                var Quantity = $('#ProdQuantity').val();
+                var ProductPrice = $('#ProdPrice').text();
+                var StoreId = $('#SellerId').val();
+                //var SizeId = $('#ProdSize').val();
+                //var ColourId = $('#ProdColour').val();
+                var TotalPrice = (Quantity * ProductPrice);
+                var UserName = $('#UserName').val();
+                var FatherName = $('#FatherName').val();
+                var Email = $('#Email').val();
+                var PhoneNo = $('#PhoneNo').val();
+                var Address = $('#Address').val();
+                var City = $('#City').val();
+                var PostalCode = $('#PostalCode').val();
+                var Message = $('#Message').val();
+                $.ajax({
+                    headers: {
+                        Authorization: `Bearer ` + token
+                    },
+                    url: '/Item/AddtoOrders',
+                    data: {
+                        ProductId, Quantity, ProductPrice,BatchId, VariationId, TotalPrice, UserName, FatherName, Email, PhoneNo, Address, City, PostalCode,StoreId, Message
+                    },
+                    type: 'Post',
+                    success: function (response) {
+                        //window.location.replace('/Item/QuantityError');
+                        alert('Added Successfully');
+                    },
+                    error: function (data) {
+                        $('#myQuantityModal').modal('show');
+
+                    }
+                })
+            }
+        })
+        $('#model1close').click(function () {
+            $('#myQuantityModal').modal('hide');
+            var id = $('#ProdIdsss').val();
+            window.location.replace('/Home/GetProductbyId?id=' + id);
+        })
+
+        $('#model1cancel').click(function () {
+            $('#myQuantityModal').modal('hide');
+            var id = $('#ProdIdsss').val();
+            window.location.replace('/Home/GetProductbyId?id=' + id);
+
+        })
+
+        $('#Reviewsbyproductid').click(function () {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let id = search_params.get('id');
+            $.ajax({
+                url: '/Item/GetReviewbyProductId?id=' + id,
+                //data: {ProductId},
+                success: function (response) {
+                    var reve = "";
+                    $.each(response, function(key,item){
+                    reve += '<div class="card">';
+                    reve +='<div class="row">';
+                    reve +='<div class="col-3">';
+                    reve +='<img width=70px class="img-md img-thumbnail" height=70px src="'+item.user.userImage+'"/>';
+                    reve += '</div>';
+                    reve += '<div class="col-9">';
+                    reve += '<h6>'+item.user.userName+'</h6>';
+                    reve +='<br/>';
+                    reve += '<div>';
+                    reve +='<p>'+item.commentedOn+'</p>';
+                    reve += '</div>';
+                     reve += '<div>';
+                    //reve += (((1 < item.rating> 0)) ? '<span class="fa fa-star " style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((1 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((2 < item.rating> 1)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + item.rating + ')' : '');
+                    reve += (((2 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + item.rating + ')' : '');
+                    reve += (((3 < item.rating> 2)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + item.rating + ')' : '');
+                    reve += (((3 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + item.rating + ')' : '');
+                    reve += (((4 < item.rating> 3)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((4 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((item.rating> 4)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + item.rating + ')' : '');
+                    //reve += (((5 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + item.rating + ')' : '');
+                    //reve += (((0 == response.productComments.length)) ? '<span class="fa fa-star" style = "font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></spa><span style="font-size:16px" class="fa fa-star"></span><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star"></span>                (No Rating)' : '');
+                    reve += '</div>';
+                    reve += '<div>';
+                    //reve += '<p id="revstarrating">' + item.rating + '</p >';
+                    reve +='</div>';
+
+                    reve +='</div>';
+                    reve +='</div>';
+                    reve +='<div>';
+                    reve += '<div id="revratingcomment">' + item.commentDescription + '</div>';
+                    reve +='</div>'; 
+                    reve +='</div>'; 
+                    })
+                    $('#reviewsdata').append(reve);
+                    
+                },
+                error: function (data) {
+                    debugger
+                    $('#myQuantityModal').modal('show');
+                }
+
+            })
+        })
+ 
+    </script>

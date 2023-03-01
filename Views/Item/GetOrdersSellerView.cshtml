@@ -1,0 +1,259 @@
+﻿@*@using DarazApp.Services;*@
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "GetOrdersSellerView";
+    Layout = "~/Views/Shared/_Layout6.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+<section class="padding-y bg-light">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-9  col-xl-9">
+                <article class="card">
+                    <div class="content-body">
+                        <div id="Orders1">
+                        </div>
+                    </div>
+                </article>
+            </div>
+                <aside class="col-xl-3 col-lg-3" id="SimilarItems">
+                    <article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+                        <h6 class="card-title">Summary</h6>
+
+                        <hr>
+                        <dl class="dlist-align">
+                            <dt> Total: </dt>
+                            <dd class="text-end" id="TotalValue"> <strong class="text-dark"></strong> </dd>
+                        </dl>
+
+                      </article>
+                </aside>
+               
+        </div>
+            
+    </div>
+</section>
+
+    <div>
+        <div id="SuccessModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Status Changed</h4>
+                        <button type="button" id="SuccessModalcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Status Changed Successfully.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="SuccessModalclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+
+<script>
+    $(document).ready(function () {
+        GetDatas();
+        GetTotalPrice();
+        $('#SuccessModal').modal('hide');
+    })
+        function GetTotalPrice() {
+            debugger
+            var token = sessionStorage.getItem('token');
+
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/GetOrderSellerbyLogIn',
+                type: 'Get',
+              
+                success: function (response) {
+                    debugger
+                    var total = 0;
+                    console.log('response', response);
+                    $.each(response, function (key, items) {
+                 
+                       $('#TotalValue').append(total);
+                    })
+                }
+            })
+        }
+
+        function GetDatas() {
+
+            debugger
+            GetAllStatus();
+            var token = sessionStorage.getItem('token');
+
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/GetOrderSellerbyLogIn',
+                type: 'Get',
+                success: function (response) {
+                    var total = 0;
+                      var TotalPric = 0;
+                    var html2 = "";
+                    
+                    $.each(response, function (key, items) {
+                        console.log('items', items);
+
+                        html2 += '<article class="card border-primary mb-4">';
+                        html2 += '<div class="card-body">';
+                        html2 += '<header class="d-lg-flex">';
+                        html2 += '<div class="flex-grow-1">';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDataMessage" value="' + items.message + '"/>';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDataUserId" value="' + items.userId + '"/>';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDataId" value="' + items.odOrderdetailId + '"/>';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDateId" value="' + items.uploadDate + '"/>';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDatafatherName" value="' + items.fatherName + '"/>';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDataPostalCode" value="' + items.postalCode + '"/>';
+                        html2 += '<input type="text" hidden="hidden" id="OrderDataCity" value="' + items.city + '"/>';
+                        html2 += '<button class="btn btn-success float-end" onclick="ChangeStatus('+items.odOrderdetailId + ');" name="UpdateStauts" id="UpdateStauts" >Update</button>';
+                        html2 += '<h6 class="mb-0" id="OrderId">' + 'Orderid' + ':' + items.odOrderdetailId + '</h6><h6>'+ items.statusName +'</h6>';
+                        html2 += '<div class="float-end"><select class="AllShippingStatus float-end form-select" id="statuses'+ items.odOrderdetailId +'" ></select></div>';
+                        html2 += '<h6 class="mb-0" id="OrderDate"></h6>';
+                        html2 += '<span class="text-muted" id="OrderDate">' + 'Date ' + ':' + items.uploadDate + '</span>';
+                        html2 += '</div>';
+                        html2 += '<div>';
+                        html2 += '</div>';
+                        html2 += '</header>';
+                        html2 += '<hr>';
+                        html2 += ' <div class="row">';
+                        html2 += ' <div class="col-lg-4">';
+                        html2 += '  <p class="mb-0 text-muted">Contact</p>';
+                        html2 += ' <p class="m-0" id="UserName">' + items.userName + '</p>';
+                        html2 += '<p class="mb-0" id="PhoneNo">' + items.odPhoneNo + '</p>';
+                        html2 += '<p class="mb-0" id="Email">' + items.odEmail + '</p>';
+                        html2 += ' </div>';
+                        html2 += ' <div class="col-lg-4 border-start">';
+                        html2 += ' <p class="mb-0 text-muted">Shipping address</p>';
+                        html2 += ' <p class="m-0" id="Nationality">' + items.odNationality + '</p>';
+                        html2 += '<p class="m-0" id="Address">' + items.shippingAddress + '</p>';
+                        html2 += ' </div>';
+                        html2 += '  </div>';
+                        html2 += '<hr>';
+                        html2 += '<ul class="row">';
+                       
+                        $.each(items.orderHistoryView, function (key, itemss) {
+                            console.log('itemss', itemss);
+                            debugger
+                            html2 += '<li class="col-xl-4  col-lg-6">';
+                            html2 += '<figure class="itemside mb-3 d-flex">';
+                            html2 += '<div class="d-flex">';
+                         
+                            html2 += '<img width="72" height="72" src="' + itemss.productImage + '" class="img-sm rounded border">';
+                            html2 += '<figcaption class="info">';
+                            
+                            $.each(itemss.productComments, function (key, itemsss) {
+                             
+                                console.log('itemsss', itemsss);
+                                html2 += ((1 == itemsss.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html2 += ((2 == itemsss.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html2 += ((3 == itemsss.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html2 += ((4 == itemsss.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html2 += ((5 == itemsss.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star checked" ></span>' : '';
+                            })
+                            html2 += '<p class="title" id="ProdDes">' + itemss.productName + '</p>';
+                            html2 += '<div class="d-flex">';
+                            html2 += '<p class="title" id="ProdDes">' + itemss.remainingQuantity + 'x'+'</p>';
+                            html2 += '<p id="ProdQuantityandPrize">'+'=' + itemss.totalPrice + '</p>'; 
+                            html2 += '</div>';  
+                            html2 += '<p id="ProdQuantityandPrize">' + itemss.netPrice + '</p>';
+                            TotalPric =+ (itemss.netPrice);
+                            html2 += '</figcaption>';
+                            html2 += '</div>';
+                            html2 += '</figure>';
+                            html2 += '</li>';
+                        })    
+                        total =+ TotalPric;
+ 
+                            html2 += '</ul>';
+                            html2 += '</div>';
+                            html2 += '</article>';
+                    })
+                    $('#TotalValue').append(total);
+                    $('#Orders1').append(html2);
+                    GetAllStatus();
+                }
+            })
+        }
+
+        function GetAllStatus(){
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                url: '/Item/GetStatuesInput',
+                success: function (response) {
+                    var OrderStatus = "";
+                    console.log('All Status', response);
+                    $.each(response, function(key,items){
+                        console.log('SHip',items);
+                        $('.AllShippingStatus').append('<option name="selectstatus" value="' + items.id + '">' + items.name + '</option>');
+                    })
+                }
+            })
+        }
+        function ChangeStatus(id){
+        
+            debugger
+            var OrderDetailsId = id;
+            //var StatusName = $('select.AllShippingStatus').find('option:selected').val();
+            //var StatusName = $('#AllShippingStatus').find('option:selected').val()
+            var StatusName = $('#statuses' + id).val();
+            var UserName = $('#UserName').text();
+            var PhoneNo = $('#PhoneNo').text();
+            var Email = $('#Email').text();
+            var Nationality = $('#Nationality').text();
+            var Address = $('#Address').text();
+            var UploadDate = $('#OrderDateId').val();
+            var UserId = $('#OrderDataUserId').val();
+            var FatherName = $('#OrderDatafatherName').val();
+            var Message = $('#OrderDataMessage').val();
+            var PostalCode = $('#OrderDataPostalCode').val();
+            var City = $('#OrderDataCity').val();
+            debugger
+            //var token =sessionStorage.getItem('token');
+            $.ajax({
+                url:'/Item/ChangeShippingStatus',
+                type: 'Post',
+                data: { OrderDetailsId, StatusName, UserName, PhoneNo, Email, Nationality, Address, UploadDate, UserId, FatherName, Message, PostalCode, City },
+                success: function (response) {
+                 $('#SuccessModal').modal('show');
+                }
+            })
+        }
+
+        $('#SuccessModalcancel').click(function(){
+            $('#SuccessModal').modal('hide');
+        })
+        $('#SuccessModalclose').click(function(){
+            $('#SuccessModal').modal('hide');
+        })
+         //var UserName = $('#UserName').val();
+            //var Contact = $('#Contact').val();
+            //var Nationality =$('#Nationality').val();
+            //var Address =$('#Address').val();
+            //var Email =$('#Emai').val();
+            //var Date = $('#OrderDate').val();
+</script>

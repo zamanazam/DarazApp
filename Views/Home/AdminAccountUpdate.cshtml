@@ -1,0 +1,236 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "AdminAccountUpdate";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <div class="container">
+        <div class="card-body bg-gray" id="newcard">
+            <card>
+                <div class="row mb-4">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                        <div class="aside">
+                            <span class="bg-gray icon-md rounded-circle">
+                                <div id="UserImage"></div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <input type="file" name="file" id="file" onchange="previewFile(this);" />
+                        <div class="aside">
+                            <span class="bg-gray icon-md rounded-circle">
+                                <img id="previewImg" src="previewImg" />
+
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <input type="text" id="UserName" class="form-control" placeholder="User Name">
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="FatherName" class="form-control" placeholder="Second Name">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <input type="text" id="Email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="CNIC" class="form-control" placeholder="CNIC">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <input type="text" id="Gender" class="form-control" placeholder="Gender">
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="PhoneNo" class="form-control" placeholder="Phone No">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <input type="text" id="Age" class="form-control" placeholder="Age">
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="Nationality" class="form-control" placeholder="Nationality">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+                        <input type="text" id="City" class="form-control" placeholder="City">
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="PostalCode" class="form-control" placeholder="Postal Code">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-3">
+
+                        <input type="password" id="Password" class="form-control" placeholder="Password">
+                        <label for="show-password" class="field__toggle">
+                            <input type="checkbox" id="Checkbox" class="field__toggle-input" onclick="ShowPassword();" />
+                            Show password
+                        </label>
+                    </div>
+                    <div class="col-3">
+                        <input type="text" id="Password1" class="form-control" placeholder="Confirm Password">
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <textarea class="form-control" id="Address" placeholder="Address"></textarea>
+                    </div>
+                    <div class="col-3"></div>
+                    @*  <div class="col-3"></div>*@
+                </div>
+
+                <div class="row mb-4">
+                    <div class="col-3"></div>
+                    <div class="col-9">
+                        <button class="btn btn-primary" id="Update">Update</button>
+                    </div>
+                </div>
+
+            </card>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            GetUserInfo();
+
+        })
+        function GetUserInfo() {
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                url: '/Home/GetUserData',
+                type: 'Get',
+                success: function (response) {
+                    debugger
+                    console.log(response);
+                    $('#UserName').val(response.userName);
+                    $('#FatherName').val(response.fatherName);
+                    $('#Email').val(response.email);
+                    $('#PhoneNo').val(response.phoneNo);
+                    $('#Address').val(response.address);
+                    $('#City').val(response.city);
+                    $('#PostalCode').val(response.postalCode);
+                    $('#Age').val(response.age);
+                    $('#UserImage').append('<img class="icon-md rounded-circle" src="' + response.userImage + '"/>');
+                    $('#Gender').val(response.gender);
+                    $('#CNIC').val(response.cnic);
+                    $('#Nationality').val(response.nationality);
+                    $('#Password').val(response.password);
+
+                }
+            })
+        }
+        function previewFile(input) {
+            var file = $("input[type=file]").get(0).files[0];
+            debugger
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        };
+        $('#Update').click(function () {
+            debugger
+            var pd = $('#Password').val();
+            var pd1 = $('#Password1').val();
+            if (pd == pd1) {
+                Continue();
+            }
+            else {
+                alert("Password and Confirm Password values Should be Same.");
+            }
+        })
+        function Continue() {
+
+            var token = sessionStorage.getItem('token');
+
+            var form = new FormData();
+
+            form.append('UserName', $('#UserName').val());
+            form.append('FatherName', $('#FatherName').val());
+            form.append('Age', $('#Age').val());
+            form.append('PhoneNo', $('#PhoneNo').val());
+            form.append('Email', $('#Email').val());
+            form.append('Cnic', $('#CNIC').val());
+            form.append('City', $('#City').val());
+            form.append('Nationality', $('#Nationality').val());
+            form.append('Password', $('#Password').val());
+            form.append('Address', $('#Address').val());
+            form.append('Gender', $('#Gender').val());
+            form.append('file', $('#file')[0].files[0]);
+            console.log(form);
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Home/UpdateUserData',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    debugger
+                    $('#newcard').show();
+                    alert: ("Product Saved.");
+                },
+                error: function (data) {
+                    alert: ("Saving Error");
+                }
+            })
+        }
+
+        function ShowPassword(event) {
+            var show = document.getElementById('Password');
+            debugger
+            if (show.type == 'password') {
+                show.type = 'text';
+            }
+            else {
+                if (show.type == 'text') {
+                    show.type = 'password';
+                }
+            }
+        }
+    </script>

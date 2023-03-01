@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link href=”//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css” rel=”stylesheet”>
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/ui.css" rel="stylesheet" />
+    <script src="multiselect/jquery.multiselect.js"></script>
+    <link rel="stylesheet" href="multiselect/jquery.multiselect.css">
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="~/js/javascript.js"></script>
+
+
+</head>
+<body>
+    <header class="section-header">
+        <section class="header-main">
+            <div class="container">
+                <div class="row gy-3 align-items-center">
+                    <div class="col-lg-2 col-sm-4 col-4">
+                        <a href="http://bootstrap-ecommerce.com/" class="navbar-brand">
+
+                            <img class="logo" height="40" src="~/images/capture.jpg">
+                            <!-- brand end.// -->
+                        </a> <!-- brand end.// -->
+                    </div>
+                    <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+
+                        <div class="float-end">
+
+                            <a href="/Home/FirstPage" class="btn btn-light">
+                                <i class='fas fa-user-alt'></i>  <span class="ms-1 d-none d-sm-inline-block">Sign in  </span>
+                            </a>
+                            <a href="/Home/FirstPage" id="SignOut" class="btn btn-light">
+                                <i class='fas fa-user-alt'></i>  <span class="ms-1 d-none d-sm-inline-block">Sign Out</span>
+                            </a>
+                            <a href="/Home/UpdatesellerAccount" class="btn btn-light">
+                                <div id="UserImage1"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-12 col-12">
+
+                    </div>
+                </div>
+                <div class="row gy-3 align-items-center">
+                    <div class="col-lg-2 col-sm-4 col-4"></div>
+                    <div class="col-lg-5 col-md-12 col-12">
+                        <div>
+                            <ul id="ProdValues">
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="navbar navbar-light bg-gray-light navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler border" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_main">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbar_main">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/LoggedinIndex">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link ps-0" href="/Table/AllUsersProducts"> Products </a>
+                        </li>
+              
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/AddProductsView">Add Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Item/GetOrdersSellerView">Orders</a>
+                        </li>
+                      
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/UpdatesellerAccount">My Account</a>
+                        </li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="section-footer bg-primary footer-dark">
+        <div class="container">
+            <section class="footer-main padding-y">
+                <div class="row">
+                    <aside class="col-12 col-sm-12 col-lg-4">
+                        <article class="me-lg-4">
+                            <a href="/Home/Index"><img class="logo" height="40" src="~/images/capture.jpg"></a>
+                            <p class="mt-3">
+                                © 2018- 2021 Templatemount. <br>
+                                All rights reserved.
+                            </p>
+                        </article>
+                    </aside>
+                    <aside class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="title">Store</h6>
+                        <ul class="list-menu mb-3">
+                            <a class="nav-link" href="/Home/Index">Home</a>
+
+                        </ul>
+                    </aside>
+                    <aside class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="title">Information</h6>
+                        <ul class="list-menu mb-3">
+                            <a class="nav-link" href="/Home/FirstPage">Sign Out</a>
+
+                        </ul>
+                    </aside>
+                    <aside class="col-6 col-sm-4  col-lg-2">
+                        <h6 class="title">Support</h6>
+                        <ul class="list-menu mb-3">
+                          
+                            <a class="nav-link" href="/Home/FirstPage">Sign in</a>
+                        </ul>
+
+                    </aside>
+                    <aside class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="title">Our apps</h6>
+
+
+                        <a href="/Home/Index" class="mb-2 d-inline-block"><img src="~/images/app-store-symbol.png" height="38" /> </a><br />
+                        <a href="/Home/Index" class="mb-2 d-inline-block"><img src="~/images/google play.jpg" height="38" /> </a>
+                    </aside>
+                </div> <!-- row.// -->
+            </section>  <!-- footer-top.// -->
+            <h2 id="Length"></h2>
+    </footer>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <!-- Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+    @RenderSection("Scripts", required: true)
+    <script>
+        $('#Search').click(function () {
+
+            var Id = $('select#Categories').find('option:selected').val();
+            window.location.replace("/Home/GetProductbyKidId?Id=" + Id)
+
+        })
+  
+
+        $('#SignOut').click(function () {
+            sessionStorage.clear('token');
+            window.location.replace("/Home/FirstPage");
+        })
+        $(document).ready(function () {
+            $('#searchTable').hide();
+            GetsCardData();
+            GetsUserData();
+            //GetAllCategories();
+            Searchprod();
+            //ChangeType();
+
+
+        })
+        function GetsCardData() {
+            var token = sessionStorage.getItem('token');
+            var html1 = "";
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Item/GetsCardData',
+                Type: 'Get',
+                success: function (response) {
+                    html1 = response.length
+                    $('#ShowItem1').append(html1);
+                },
+
+            })
+        }
+        function GetsUserData() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Home/GetUserData',
+                type: 'Get',
+                success: function (response) {
+                    console.log(response);
+                    $('#UserImage1').append('<img class="icon-md rounded-circle" src="' + response.userImage + '"/>');
+                },
+            })
+        }
+        $('#GetWishList').click(function () {
+            window.location.replace('/Item/GetWishListView');
+        })
+        function GetAllCategories() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Home/GetAllKidCategories',
+                type: 'Get',
+                success: function (response) {
+                    console.log(response);
+                    $.each(response, function (key, item) {
+                        console.log(item);
+                        $('#Categories').append('<option value="' + item.kidCategoryId + '">' + item.kidCategoryName + '</option>');
+                    })
+                },
+            })
+        }
+        function Searchprod() {
+            var ProductName = $('#SearchProduct').val();
+            $.ajax({
+                url: '/Home/TextBoxSearchProducts',
+                type: 'Get',
+                data: { ProductName },
+                success: function (response) {
+                    var html = "";
+                    console.log(response);
+
+                    $.each(response, function (key, item) {
+                        console.log('SearchProducts', item); /*kidCategoryName*/
+                        html += '<tr style="border: 1px solid black" class="border"><td class="border"><a href="/Home/GetProductbyId?id=' + item.productId + '">' + item.productName + '</a></td></tr>';
+                    })
+                    $("#searchTable").append(html);
+                }
+            })
+        }
+
+
+        function ChangeType() {
+            debugger
+            var ProductName = $('#searchInput').val();
+            $.ajax({
+                url: '/Home/TextBoxSearchProducts',
+                type: 'Get',
+                data: { ProductName },
+                success: function (response) {
+                    var html = "";
+                    console.log(response);
+                    $.each(response, function (key, item) {
+                        console.log('SearchProducts', item);
+
+                        $("#ProdValues").replaceWith('<p>' + item.productName + '</p>');
+                        console.log(item.productName);
+                    })
+                }
+            })
+        }
+        //$("#ProdValues").autocomplete({
+        //    source: function (request, response) {
+        //        $.ajax({
+        //            url: '@Url.Action("TextBoxSearchProducts","Home")',
+        //            dataType: "json",
+        //            data: { ProductName: $("#ProdValues").val() },
+        //            success: function (data) {
+        //                console.log('prodvalues', data);
+        //                response($.map(data, function (item) {
+        //                    return { label: item.productName, value: item.productName };
+        //                }));
+        //            },
+        //            error: function (xhr, status, error) {
+        //                alert("Error");
+        //            }
+        //        });
+        //    }
+        //});
+        $('#ProductSe').click(function () {
+            debugger
+            var id = $('#ProdValues').val();
+            window.location.replace('/Item/GetProductsbyProductName?id=' + id);
+
+        })
+    </script>
+</body>
+</html>

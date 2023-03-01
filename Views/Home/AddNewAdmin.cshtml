@@ -1,0 +1,420 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.SaveData;
+@{
+    ViewBag.Title = "AddNewAdmin";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+
+    <section class="padding-y bg-light" id="MainCard">
+        <div class="container">
+            <div>
+                <div class="mb-4 bg-grey">
+
+
+                    <div>
+                        <div class="row mb-3" id="radioDiv">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <main class="col-xl-12 col-lg-12">
+
+                    <article class="card">
+                        <div class="content-body">
+                            <h5 class="card-title text-center mb-4 b"> User Info </h5>
+
+                            <div class="row">
+                                <div class="col-6">
+
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" placeholder="UserName" id="UsersName" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control" placeholder="Password" id="Password" />
+                                        </div>
+                                    </div>   
+                                    
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <input class="form-control" placeholder="Email" type="text" id="Email" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="text" placeholder="Father Name" id="FatherName" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <input class="form-control" id="UserAge" placeholder="Your Age" type="text" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="text" placeholder="Phone No" id="PhoneNo" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <input class="form-control" placeholder="CNIC" type="text" id="CNIC" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="text" placeholder="Gender" id="Gender" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-4">
+                                            <div class="gallery-uploader-wrap" width="5" height="5">
+                                                <label class="uploader-img1 border rounded-lg p-3">
+                                                    <input type="file" name="file" id="file" onchange="previewFile(this);">
+                                                    <svg xmlns="" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                                        <circle cx="12" cy="12" r="3"></circle>
+                                                        <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                                    </svg>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div>
+                                            <input class="form-control" placeholder="Postal Code" multiple="multiple" type="text" id="PostalCode" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div>
+                                            <input class="form-control" placeholder="Per Address" multiple="multiple" type="text" id="Address" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <input class="form-control" placeholder="City" type="text" id="City" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="text" placeholder="Country" id="Country" />
+                                        </div>
+                                    </div>
+
+                                  
+                                </div>
+                                <div class="col-6 ">
+                                    <img id="previewImg" style="height: 575px ; width : 500px" src="previewImg" />
+                                </div>
+
+                                <div class="row mb-4" id="SellerCard">
+                                    <h4>Store info</h4>
+                                    <div class="row mb-4 bg-grey">
+                                        <div class="col-6">
+                                            <input class="form-control" placeholder="StoreName" type="text" id="StoreName" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="text" placeholder="Phone No" id="StorePhoneNo" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="col-6">
+                                            <input class="form-control" placeholder="Address" type="text" id="StoreAddress" />
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="text" placeholder="Email" id="StoreEmail" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-4">
+                                        <div class="">
+                                            <input class="form-control" placeholder="Shipping Info" type="text" id="ShippingInfo" />
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row p-5">
+                                    <div class="col-4"></div><div class="col-4"></div><div class="col-4">                            
+                                        <a class="btn btn-primary float-end" id="Save">Save</a>
+                                                @*<button type="button" class="btn btn-primary float-end" id="Next">Next</button>*@
+                                        </div>
+
+                                </div>
+                            </div>
+                        </div> <!-- card-body end.// -->
+                    </article> <!-- card end.// -->
+                </main> <!-- col.// -->
+                <!-- col.// -->
+            </div> <!-- row.// -->
+
+            <br><br>
+
+        </div> <!-- container .//  -->
+
+    </section>
+
+  @*  <article class="card-body" id="Security">
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-12 mt-5 d-flex justify-content-center">
+
+                        <form class="w-50 border p-5 bg-gray-light" style="margin:10%" id="Roles">
+                            <h5 class="m-5 text-center b">Add Security</h5>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">User Name</label>
+                                <input type="text" class="form-control mb-4" placeholder="UserName" id="UserName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="text" class="form-control mb-4" placeholder="Password" id="Password" />
+                            </div>
+                            <a class="btn btn-primary" id="Save">Save</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>*@
+
+    <div>
+        <div id="myModalns" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Success</h5>
+                        <button type="button" id="myModalnsclose" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Account Created Successfully.</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="myModalnscancel" class="btn btn-primary float-end">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="ErrorModel12" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Error</h5>
+                        <button type="button" id="ErrorModal12cancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Incomplete Information!</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="ErrorModal12close" class="btn btn-primary float-end">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#Security').hide();
+            $('#SellerCard').hide();
+            GetRoles();
+            GetView();
+        })
+        $('#Next').click(function () {
+            $('#Security').show();
+            $('#MainCard').hide();
+        })
+
+        $('#ErrorModal12cancel').click(function () {
+            $('#ErrorModel12').modal('hide');
+        })
+
+        $('#ErrorModal12close').click(function () {
+            $('#ErrorModel12').modal('hide');
+        })
+
+
+        function SellerShow() {
+            debugger
+            var radioid = $("#radioDiv input[type='radio']:checked").val();
+
+            console.log(radioid);
+                if (radioid == 2) {
+                    $('#SellerCard').show();
+                    $('#MainCard').show();
+                }
+                else {
+                    $('#MainCard').show();
+                    $('#SellerCard').hide();
+                }
+            
+        }
+
+        function GetView() {
+            debugger
+            var radioid = $(".radio123123").prop('checked', true);
+            var radios = $('.radio123123');
+            console.log('radio', radios);
+
+            console.log('id', radioid.length);
+            var x = 0;
+            if (radioid.length == 0 || radioid.length == null) {
+                $("#1").is(":checked")
+                $('#1').attr('checked', 'checked');
+                $('input[name=radiobutton][value=1]').prop('checked', 'checked');
+                $("input:radio[value='1']").prop('checked', true);
+                $('input[id=1][value=1]').prop("checked", true);
+            }
+        }
+
+        $('#Save').click(function () {
+         
+            let nulval = "";
+            var pas = $('#Password').val();
+            var usename = $('#UsersName').val();
+            var radioid = $("#radioDiv input[type='radio']:checked").val();
+            var em = $('#Email').val();
+            var fname = $('#FatherName').val();
+            var age = $('#UserAge').val();
+            var pcod = $('#PostalCode').val();
+            var gen = $('#Gender').val();
+            var add = $('#Address').val();
+            var cit = $('#City').val();
+            var cou = $('#Country').val();
+            var pho = $('#PhoneNo').val();
+            var cnic = $('#CNIC').val();
+            var shi = $('#ShippingInfo').val();
+            var sname = $('#StoreName').val();
+            var stadd = $('#StoreAddress').val();
+            var phon = $('#StorePhoneNo').val();
+            var stemai = $('#StoreEmail').val();
+            var nefile = $("#file")[0].files[0];
+
+            debugger
+            if (radioid == 1 || radioid == 3) {
+                if (usename == nulval || pas == nulval || em == nulval || fname == nulval || age == nulval || pcod == nulval ||
+                    gen == nulval || add == nulval || cit == nulval || cou == nulval || pho == nulval
+                    || cnic == nulval || nefile == undefined) {
+                    $('#ErrorModel12').modal('show');
+                }
+                else {
+                    saverecord();
+                }
+            }
+            else {
+                debugger
+                if (usename == nulval || pas == nulval || em == nulval || fname == nulval || age == nulval || age == nulval || pcod == nulval ||
+                    gen == nulval || add == nulval || cit == nulval || cou == nulval || pho == nulval
+                    || cnic == nulval || shi == nulval || sname == nulval || stadd == nulval || phon == nulval || stemai == nulval || nefile == undefined) {
+                    $('#ErrorModel12').modal('show');
+                }
+                else {
+                    saverecord();
+                }
+            }
+        })
+
+
+        function saverecord() {
+            var form = new FormData();
+            form.append('RoleId', $("#radioDiv input[type='radio']:checked").val());
+            form.append('UserName', $('#UsersName').val());
+            form.append('Password', $('#Password').val());
+            form.append('Email', $('#Email').val());
+            form.append('FatherName', $('#FatherName').val());
+            form.append('Age', $('#UserAge').val());
+            form.append('PostalCode', $('#PostalCode').val());
+            form.append('Gender', $('#Gender').val());
+            form.append('Address', $('#Address').val());
+            form.append('City', $('#City').val());
+            form.append('Nationality', $('#Country').val());
+            form.append('PhoneNo', $('#PhoneNo').val());
+            form.append('Cnic', $('#CNIC').val());
+            form.append('ShippingInfo', $('#ShippingInfo').val());
+            form.append('StoreName', $('#StoreName').val());
+            form.append('ShippingAddress', $('#StoreAddress').val());
+            form.append('Contact', $('#StorePhoneNo').val());
+            form.append('StoreEmail', $('#StoreEmail').val());
+            form.append('file', $('#file')[0].files[0]);
+
+            console.log(form);
+            debugger
+            $.ajax({
+                url: '/Home/Register',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    debugger
+                    alert('Account Created Successfully');
+                    $('#newcard').show();
+                    $('#myModalns').modal('show');
+                }
+            })
+        }
+
+        $('#myModalnsclose').click(function () {
+            $('#myModalns').modal('hide');
+        })
+
+        $('#myModalnscancel').click(function () {
+            $('#myModalns').modal('hide');
+        })
+
+        function previewFile(input) {
+            var file = $("input[type=file]").get(0).files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        }
+        function GetRoles() {
+            $.ajax({
+                url: '/Home/GetRoles',
+                type: 'Get',
+                success: function (response) {
+                    var html = "";
+                    console.log('roles', response);
+                    $.each(response, function (key, item) {
+                        console.log('item', item);
+                        //html += '<div class="row mb-3">';
+                        if (item.roleId == 4 ||item.roleId == 5) {
+
+                        }
+                        else {
+                            html += '<div class="col-lg-4 mb-3">';
+                            html += '<label class="form-check m-5 ps-5">';
+                            html += (((1 == item.roleId)) ? '<input class="form-check-input radio123123" type = "radio" id = "' + item.roleId + '" onclick = "SellerShow(' + item.roleId + ')" checked name ="radiobutton" value = "' + item.roleId + '" > ' : '<input class="form-check-input radio123123 " type="radio" id = "' + item.roleId + '" onclick = "SellerShow(' + item.roleId + ')" name = "radiobutton" value = "' + item.roleId + '">');
+                            html += '<b class="border-oncheck"></b>';
+                            html += '<span class="card form-check-label box bg-gray-light">' + item.roleName + '<br></span>';
+                            html += '</label>';
+                            html += '</div>';
+                        }
+                        //html += '</div>';
+                        //html += '<input type="radio" id="' + item.roleId + '" onclick="SellerShow(' + item.roleId + ')" name="radiobutton" value="' + item.roleId + '"><label for="' + item.roleName + '">' + item.roleName + '</label>';
+                    })
+
+                    $('#radioDiv').append(html);
+                }
+            })
+        }
+
+    </script>

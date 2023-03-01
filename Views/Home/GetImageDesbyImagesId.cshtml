@@ -1,0 +1,27 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+
+@{
+	ViewData["Title"] = "GetImageDesbyImagesId";
+	Layout = null;
+}
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+    }
+	<body>
+		
+		<div class="row">
+			<div class="img-big-wrap img-thumbnail">
+			@foreach (var item in Model.productDescriptionimages)
+			{
+				<a data-fslightbox="mygalley" data-type="image" href="">
+
+					<img height="100" width="100" src="@item.ProductdesImage1">
+				</a>
+			}
+			</div>
+		</div>
+	</body>

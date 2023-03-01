@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "QuantityError";
+    Layout = "~/Views/Shared/_Layout1.cshtml";;
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h1 class="text-center">Error</h1>
+                        <p> Selected Product Quantity Exceeds from Available Product Quantity.</p>
+                        <button type="button" id="back" class="btn btn-primary btn-lg btn-block" href="/Home/Index" style="margin:13px">Back</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

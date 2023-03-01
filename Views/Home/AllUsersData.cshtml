@@ -1,0 +1,237 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "AllUsersData";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <table class="table table-striped table-hover border" id="example" style="border: 1px solid black">
+        <thead style="color:black">
+            <tr>
+                <th scope="col">User Image</th>
+                <th scope="col">Name</th>
+                <th scope="col">Password</th>
+
+                <th scope="col">Age</th>
+                <th scope="col">Gender</th>
+                <th scope="col">CNIC</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Date</th>
+                <th scope="col">Postal</th>
+                <th scope="col">City</th>
+                <th scope="col">Nationality</th>
+                <th scope="col">Address</th>
+            </tr>
+        </thead>
+        <tbody id="tbody" class="border">
+        </tbody>
+    </table>
+
+     <section class="padding-y bg-light">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-9  col-xl-9">
+                <article class="card">
+                  <div id="SellersId"></div>
+                        <button id="Produc" class="btn btn-outline-danger">Seller Products</button>
+                    <div class="content-body" id="Orders1">
+                    </div>
+                </article>
+            </div>  
+        </div>
+            
+    </div>
+</section>
+    <script>
+           $(document).ready(function () {
+        GetDatas();
+        //GetTotalPrice();
+        GetUserData();
+    })
+
+        function GetDatas() {
+            debugger
+            var token = sessionStorage.getItem('token');
+             let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let Id = search_params.get('id');
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/GetOrdersSellerViews?Id='+Id,
+                type: 'Get',
+                //data: 'Json',
+                success: function (response) {
+
+                    var html = "";
+                    console.log('response', response);
+                    $.each(response, function (key, items) {
+                        console.log('items', items);
+
+                        html += '<article class="card border-primary mb-4">';
+                        html += '<div class="card-body">';
+                        html += '<header class="d-lg-flex">';
+                        html += '<div class="flex-grow-1">';
+                        html += '<input type="text" hidden="hidden" id="OrderDataMessage" value="' + items.message + '"/>';
+                        html += '<input type="text" hidden="hidden" id="OrderDataUserId" value="' + items.userId + '"/>';
+                        html += '<input type="text" hidden="hidden" id="OrderDataId" value="' + items.orderDetailsId +'"/>';
+                        html += '<input type="text" hidden="hidden" id="OrderDateId" value="' + items.uploadDate + '"/>';
+                        html += '<input type="text" hidden="hidden" id="OrderDatafatherName" value="' + items.fatherName + '"/>';
+                        html += '<input type="text" hidden="hidden" id="OrderDataPostalCode" value="' + items.postalCode + '"/>';
+                        html += '<input type="text" hidden="hidden" id="OrderDataCity" value="' + items.city + '"/>';
+                        html += '<button class="btn btn-success float-end" onclick="ChangeStatus();" name="UpdateStauts" id="UpdateStauts" >Update</button>';
+                        html += '<h6 class="mb-0" id="OrderId">' + 'Orderid' + ':' + items.orderDetailsId + '</h6><h6>'+ items.status +'</h6>';
+                        html += '<select class="float-end" id="AllShippingStatus" float></select>';
+                        html += '<h6 class="mb-0" id="OrderDate"></h6>';
+                        
+                        html += '<span class="text-muted" id="OrderDate">' + 'Date ' + ':' + items.uploadDate + '</span>';
+                        html += '</div>';
+                        html += '<div>';
+                        //html += '<a href="#" class="btn btn-sm btn-outline-danger" /*onclick="DeleteOrder()"*/ id="DeleteOrder" >Cancel order</a>';
+                        html += '</div>';
+                        html += '</header>';
+                        html += '<hr>';
+                        html += ' <div class="row">';
+                        html += ' <div class="col-lg-4">';
+                        html += '  <p class="mb-0 text-muted">Contact</p>';
+                        html += ' <p class="m-0" id="UserName">' + items.userName + '</p>';
+                        html += '<p class="mb-0" id="PhoneNo">'+ items.phoneNo +'</p>';
+                        html += '<p class="mb-0" id="Email">' + items.email + '</p>';
+                        html += ' </div>';
+                        html += ' <div class="col-lg-4 border-start">';
+                        html += ' <p class="mb-0 text-muted">Shipping address</p>';
+                        html += ' <p class="m-0" id="Nationality">' + items.nationality + '</p>';
+                        html += '<p class="m-0" id="Address">' + items.address + '</p>';
+                        html += ' </div>';
+                        html += '  </div>';
+                        html += '<hr>';
+                        html += '<ul class="row">';
+                        $.each(items.orders, function (key, itemss) {
+                            console.log('itemsss', itemss);
+                            debugger
+                            html += '<li class="col-xl-4  col-lg-6">';
+                            html += '<figure class="itemside mb-3 d-flex">';
+                            html += '<div class="d-flex">';
+                            html += '<img width="72" height="72" src="' + itemss.products?.productImage + '" class="img-sm rounded border">';
+                            html += '<figcaption class="info">';
+                            html += '<p class="title" id="ProdDes">' + itemss.products?.productName + '</p>';
+                            html += '<p class="title" id="ProdDes">' + itemss.productQuantity + '</p>';
+                            html += '<p id="ProdQuantityandPrize">' + itemss.totalPrice + '</p>';
+                            html += '</figcaption>';
+                            html += '</div>';
+                            html += '</figure>';
+                            html += '</li>';
+                        })
+                            html += '</ul>';
+                            html += '</div>';
+                            html += '</article>';
+                    })
+                    $('#Orders1').append(html);
+                    GetAllStatus();
+                }
+            })
+
+        }
+
+        function GetAllStatus(){
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                url: '/Item/GetStatuesInput',
+                success: function (response) {
+                    var OrderStatus = "";
+                    console.log('All Status', response);
+                    $.each(response, function(key,items){
+                        console.log('SHip',items);
+                        OrderStatus += '<option name="selectstatus" onclick="ChangeStatus();" value="' + items.name + '">' + items.name + '</option>';
+                    })
+                    $('#AllShippingStatus').append(OrderStatus);
+                }
+            })
+        }
+        function ChangeStatus(){
+        
+            debugger
+            var OrderDetailsId = $('#OrderDataId').val();
+            var StatusName = $('select#AllShippingStatus').find('option:selected').val();
+            var UserName = $('#UserName').text();
+            var PhoneNo = $('#PhoneNo').text();
+            var Email = $('#Email').text();
+            var Nationality = $('#Nationality').text();
+            var Address = $('#Address').text();
+            var UploadDate = $('#OrderDateId').val();
+            var UserId = $('#OrderDataUserId').val();
+            var FatherName = $('#OrderDatafatherName').val();
+            var Message = $('#OrderDataMessage').val();
+            var PostalCode = $('#OrderDataPostalCode').val();
+            var City = $('#OrderDataCity').val();
+            debugger
+            $.ajax({
+                url:'/Item/ChangeShippingStatus',
+                type: 'Post',
+                data: { OrderDetailsId, StatusName, UserName, PhoneNo, Email, Nationality, Address, UploadDate, UserId, FatherName, Message, PostalCode, City },
+                success: function (response) {
+                Console.log(response);
+                
+                }
+            })
+        }
+            function GetUserData(){ 
+                debugger
+            var token = sessionStorage.getItem('token');
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let Id = search_params.get('id');
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Home/GetUserDatabyId?Id='+Id,
+                type: 'Get',
+                success: function (response) {
+                    console.log('update',response);
+                    debugger
+                    var html = "";
+                    debugger
+                            html += '<tr><td style="border: 1px solid black" class="item"><img style="height: 70px ; width : 90px" src="' + response.userImage + '"></td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.userName + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.password + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.age + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.gender + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.cnic + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.email + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.phoneNo + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.date + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.postalCode + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.city + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.nationality + '</td>';
+                            html += '<td style="border: 1px solid black" class="border">' + response.address + '</td>';
+                    $('#SellersId').append('<input hidden="hidden" id="Sellerid" type="text" value="' + response.userId + '"/>');
+                    $("#tbody").append(html);
+                }
+                
+            })
+}
+
+        $('#Produc').click(function(){
+            debugger
+            var id = $('#Sellerid').val();
+            console.log(id);
+            window.location.replace('/Item/GetProductsbyUserId?id='+id);
+
+        })
+
+    </script>

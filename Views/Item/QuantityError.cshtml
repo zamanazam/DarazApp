@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "QuantityError";
+    Layout = "~/Views/Shared/_Layout2.cshtml"; ;
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+  
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    <div class="col-12 mt-5 d-flex justify-content-center">
+                        <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                            <h1 class="text-center">Quantity Error</h1>
+                            @* <div class="form-group">
+                        <label for="exampleInputEmail1">Email address</label>
+                        <input type="email" class="form-control" id="txtusername" aria-describedby="emailHelp" placeholder="Enter email">
+                        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                        </div>
+                        <div class="form-group">
+                        <label for="exampleInputPassword1">Password</label>
+                        <input type="password" class="form-control" id="txtpassword" placeholder="Password">
+                        </div>*@
+                            <button type="button" id="btnSignIn" class="btn btn-primary btn-lg btn-block" style="margin:13px">Back</button>
+                    @*        <button type="button" id="btnregister" class="btn btn-secondary btn-lg btn-block ">SignUp</button>*@
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+          $(btnSignIn).click(function(){
+            window.location.replace('/Home/Index');
+          })
+        </script>

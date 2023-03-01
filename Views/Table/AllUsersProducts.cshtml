@@ -1,0 +1,248 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "AllUsersProducts";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    } 
+<div class="container-fluid">
+           <table class="border table-striped table-hover border" id="example" >
+            <thead style="color:black">
+                    <tr style="border: 1px solid black">
+                 <th scope="col" style="border: 1px solid black">Product Name</th>
+                    <th scope="col">User Name</th>
+                    <th scope="col">Category Name</th>
+                    <th scope="col">Product Price</th>
+                    <th scope="col">Product Quantity</th>
+                    <th scope="col">Product Material</th>
+                    <th scope="col">Product Brand</th>
+                    <th scope="col">Upload Date</th>
+                    <th scope="col">Product Image</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Add Batch</th>
+                </tr>
+            </thead>
+            <tbody id="tbody" class="border">
+            </tbody>
+        </table>
+        </div>
+
+    <div>
+        <div id="AddNewModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+@*                        <input class="modal-title" style="border : none" id="AddTitle" />
+*@                        <label>Add Batch</label>
+                        <button type="button" id="AddNewcancel" onclick="HideModal();" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                           <div class="col-3 float-end">
+                               <div id="prodimage"></div>  
+                           </div>
+                            <div class="col-3 float-start">
+                                <input for="exampleInputEmail1" style="border : none" id="prodname" />
+                            </div>
+                            <div class="col-6"></div>
+                        </div>
+                       
+                        <input for="exampleInputEmail1" hidden="hidden" style="border : none" id="prodid" />
+                        
+                        
+                        <div class="row">
+                            <div class="col-3">
+                                <select onchange="AddQuantPrice();" id="prodcolour">
+                                    <option selected></option>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <select onchange="AddQuantPrice();" id="prodsize">
+                                    <option selected></option>
+                                </select>
+                            </div>
+                            <div class="col-6">
+                                <div class="pquantity"></div>
+                            </div>
+
+                        </div>
+                        
+@*                        <div class="pquantity"></div>
+*@                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="AddField" class="btn btn-danger" data-dismiss="modal">Save</button>
+                        <button type="button" id="AddSize" class="btn btn-danger" onclick="HideModal();" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+      
+        $(document).ready(function () {
+            GetAllUserProducts();
+            GetColours();
+            GetSizes();
+            $('#AddNewModal').modal('hide');
+            //$('#AddProductCard').hide();
+        })
+
+        function GetColours(){
+
+            $.ajax({
+                url: '/Home/GetAllColoures',
+                Type: 'Get',
+                success: function (response) {
+                    console.log('reee',response);
+                    $.each(response,function(key,item){
+                         console.log(item);
+
+                        $('#prodcolour').append('<option id"' + item.colourId + '">' + item.colourName + '</option>');
+                        //$('#prodsize').append('<option id"' + item.sizesvm.sizeid + '">' + item.sizesvm.sizeName + '</option>');
+
+                    })
+                }
+            })
+        }
+
+      function HideModal(){
+            $('#AddNewModal').modal('hide');
+        }
+
+
+        function GetSizes() {
+
+            $.ajax({
+                url: '/Home/GetAllSizes',
+                Type: 'Get',
+                success: function (response) {
+                    console.log('reee', response);
+                    $.each(response, function (key, item) {
+                        console.log(item);
+
+                        //$('#prodcolour').append('<option id"' + item.colourId + '">' + item.colourName + '</option>');
+                        $('#prodsize').append('<option id"' + item.sizeid + '">' + item.sizeName + '</option>');
+
+                    })
+                }
+            })
+        }
+
+        function GetAllUserProducts(){
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Table/AllProductsUSer',
+                type : 'Get',
+                data : 'JSON',
+                success: function (response) {
+                    console.log('res',response);
+                    debugger
+                    var html = "";
+                    debugger
+                   
+                    $.each(response, function (key, item) {
+                        console.log(item);
+                        debugger
+                        $.each(item.productDescriptions, function (key, items) {
+                        console.log(items);
+                        html += '<tr style="border: 1px solid black" id="Serialkey" class="border"><td class="border">' + item.productName + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + item.user.userName + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + item.kidCategory?.kidCategoryName + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + item.productPrice + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + items.productQuantity + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + items.productMaterial + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + items.productBrand + '</td>';
+                        html += '<td style="border: 1px solid black" class="border">' + item.uploadDate + '</td>';
+                        html += '<td style="border: 1px solid black" class="item"><img style="height: 70px ; width : 90px" src="' + item.productImage + '"></td>';
+                        html += '<td style="border: 1px solid black" class="border item"><a href="/Table/DeleteTableRow?id=' + item.productId + '"><i class="fas fa-trash-alt" style="font-size: 24px"></i></a></td>';
+                        html += '<td style="border: 1px solid black" class="border item"><a href="/Table/EditTable?id=' + item.productId + '"><i class="fas fa-edit" style="font-size: 24px"></i></a></td></tr>';
+                        html += '<td style="border: 1px solid black" class="border item"><a href="#"><i class="fas fa-edit" onclick="AddBatch(' + item.productId + ');" style="font-size: 24px"></i></a></td></tr>';
+
+                    })
+                    })
+            
+                    $("#tbody").append(html);
+                }
+            })
+            }
+
+        function AddQuantPrice(e) {
+            debugger
+            var data = new FormData();
+            var colourses = $('#prodcolour').val();
+            var sizeses = $('#prodsize').val();
+
+            if (colourses != "" && sizeses != "") {
+
+                var max_fields = 10;
+                var Quant = $(".pquantity");
+                var add_quan = $(".quents");
+                var x = 1;
+
+                if (x < max_fields) {
+                    $(Quant).append('<div class="inputquen"><input type="text" Placeholder="Quantity" class="inputquant" maxlength="4" name="myQuant[]"/><input type="text" class="inputprice" maxlength="4" placeholder="Price" name="myQuantity[]"/><a href="#" class="remove_quanprice">Remove</a></div>'); //add input box
+                    x++;
+                }
+            }
+        };
+        var Quant = $(".pquantity");
+        $(Quant).on("click", ".remove_quanprice", function (e) {
+            e.preventDefault();
+            $(this).parent('div').remove();
+            //x--;
+        })
+     
+            function AddBatch(id){
+            //$('#AddNewModal').modal('empty');
+            $("AddNewModal").remove();
+                debugger
+                $.ajax({
+                url: '/Home/GetProductbyIdForBatch?id=' + id,
+                type: 'Post',
+                success: function (response) {
+                console.log('newresponse',response);
+
+                    $('#prodimage').append('<img width="72" height="72" id="' + response.productId + '" src="' + response.productImage + '" class="img-sm rounded border">');
+                        $('#prodname').val(response.productName);
+                        $('#prodid').val(response.productId);
+                        $('#AddNewModal').modal('show');
+                }
+                })
+            }
+
+            $('#AddField').click(function(){
+            var ProductId = $('#prodid').val();
+            var ProductColour = $('#prodcolour').val();
+            var ProductSizes = $('#prodsize').val();
+            var ProductQuantity = $(".inputquant").val();
+            var ProductPrice = $('.inputprice').val();
+            $.ajax({
+                url : '/Home/AddBatch',
+                type : 'POST',
+                data : {ProductId, ProductColour, ProductSizes, ProductQuantity, ProductPrice},
+                success : function (response) {
+                console.log(response)
+                alert('Batch Added Successfully');
+                },
+                //error : function (data){
+                //    alert('Error');
+                //}
+            })
+
+           
+
+            })
+                </script>

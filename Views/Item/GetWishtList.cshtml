@@ -1,0 +1,70 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "AddtoWishList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <body>
+        <figure id="">
+
+        </figure>
+
+
+    </body>
+
+    <script>
+        $(document).ready(function(){
+            var token = sessionStorage.getItem('token');
+
+            $.ajax({
+
+                url: '/Item/GetWishtList',
+                type: 'Get',
+                success: function(response){
+                    console.log(response);
+
+                }
+            })
+        })
+        items += '<article class="row gy-3 mb-4"  >';
+                        items += '<div class="col-lg-5">';
+                        items += '<figure class="itemside me-lg-5">';
+                        items += "<div class='aside'><img height='100'  src =" + item.productImage + "> </img> </div>";
+                        items += '<figcaption class="info">';
+                        items += "<a  class='title' >" + item.productName + "</a>";
+                        items += "<a  class='title' >" + item.colourName + ',' + item.sizeName + "</a>";
+                        items += '</figcaption>';
+                        items += ' </figure>';
+                        items += '</div>';
+                        items += '<div class="col">';
+                        items += '<input type="number" id="ProdQuantity" value="' + item.productQuantity + '" name="quantity" min="0" max="100" step="10" value="30">';
+                        //items += "<input type='text' name='quantity' value=" + item.productQuantity + '" id="productQuantity" min="0" max="100" step="10" value="30" />"';
+                        items += '</div>';
+                        items += '<div class="col-lg-2 col-sm-4 col-6">';
+                        items += '<div class="price-wrap lh-sm">';
+                        items += "<var class='price h6'>" + item.totalPrice + "</var>";
+                        items += '<br>';
+                        items += "<small class='text-muted'>" + item.productPrice + "/Per item </small>";
+                        items += '</div>';
+                        items += '</div>';
+                        items += '</div>';
+                        items += '<div class="col-lg col-sm-4">';
+                        items += '<div class="float-lg-end">';
+                        items += '<a href="#" class="btn btn-light"> <i class="fa fa-heart"></i></a>';
+                        items += '<a href="#" class="btn btn-light text-danger"onclick="RemoveCard()"> Remove</a>';
+                        items += '<input type="hidden" id = "CardDataId" name = "quantity" value = "' + item.cardDataId + '" >';
+                        items += '<input type="hidden" id = "SizeId" name = "quantity" value = "' + item.sizeid + '" >';
+                        items += '<input type="hidden" id = "ColourId" name = "quantity" value = "' + item.colourId + '" >';
+                        items += '<input type="hidden" id = "ProductId" name = "quantity" value = "' + item.productId + '" >';
+                        items += '</div>';
+                        items += '</div>';
+                        items += ' </article>';
+    </script>

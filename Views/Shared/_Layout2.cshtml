@@ -1,0 +1,994 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <link href=”//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css” rel=”stylesheet”>
+    <link href="~/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/css/responsive.css" rel="stylesheet" />
+    <link href="~/css/ui.css" rel="stylesheet" />
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <script src="~/js/javascript.js"></script>
+    <link rel="stylesheet" href="css/bootstrap-multiselect.css" type="text/css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M2TXFLD"
+                height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header class="section-header">
+        <section class="header-main">
+            <div class="container">
+                <div class="row gy-3 align-items-center">
+                    <div class="col-lg-2 col-sm-4 col-4">
+                        <a href="http://bootstrap-ecommerce.com/" class="navbar-brand">
+
+                            <img class="logo" height="40" src="~/images/capture.jpg">
+                            <!-- brand end.// -->
+                        </a> <!-- brand end.// -->
+                    </div>
+                    <div class="order-lg-last col-lg-5 col-sm-8 col-8">
+
+                        <div class="float-end">
+
+                            <a href="/Home/FirstPage" id="SignIn" class="btn btn-light">
+                                <i class='fas fa-user-alt'></i>
+                                <span class="ms-1 d-none d-sm-inline-block">Sign in  </span>
+                            </a>
+
+                            <a id="Notifications" class="btn btn-light">
+                                <i class="fa fa-bell"></i>
+                                <span class="top-0 start-0 m-1 p-1 translate-middle badge bg-primary" id="NotificationLength"></span>
+
+                            </a>
+
+
+                            <a id="GetWishList" class="btn btn-light">
+                                <i class='fas fa-heart'></i>
+                                    <span class="top-0 start-0 m-1 p-1 translate-middle badge bg-primary" id="WishListLength"></span>    
+                                </a>
+
+                            <a id="GetProductsCart" class="btn btn-light">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span class="top-0 start-0 m-1 p-1 translate-middle badge bg-primary" id="ShowItem1"></span>
+                            </a>
+
+                            <a href="/Home/FirstPage" id="SignOut" class="btn btn-light" >
+                                <i class='fas fa-user-alt'></i>  <span class="ms-1 d-none d-sm-inline-block">Sign Out</span>
+                            </a>
+                            <a href="/Home/UpdateUserAccount" class="btn btn-light" id="anchoruserimage">
+                                <div id="UserImage1"></div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-5 col-md-12 col-12">
+
+                        <div class="input-group">
+                            <button class="btn btn-primary" id="ProductSe" onkeyup="ChangeType()"> <i class="fa fa-search"></i> </button>
+                            <input type="text" id="ProdValues" style="width:25%" class="form-control" placeholder="Search">
+
+                            <select class="form-select" id="Categories">
+                                <subselect id="PerCategories">
+                                </subselect>
+
+                            </select>
+                            <button class="btn btn-primary" id="Search"> <i class="fa fa-search"></i> </button>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row gy-3 align-items-center">
+                    <div class="col-lg-2 col-sm-4 col-4"></div>
+                    <div class="col-lg-5 col-md-12 col-12">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <nav class="navbar navbar-light bg-gray-light navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler border" type="button" data-bs-toggle="collapse" data-bs-target="#navbar_main">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbar_main">
+                    <ul class="navbar-nav">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Item/CheckInPageView">My Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Home/GetProductbyKidIdView">Search Product</a>
+                        </li>
+
+                        <li class="nav-item float-end">
+                        <a class="nav-link" href="#" id="HelpButton">Help</a>
+                        </li>
+                          <li class="nav-item float-end">
+                        <a class="nav-link" href="#" id="Chats">Chats</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div id="FilterItem">
+    <div class="row mb-4" id="FilterSearchBox"></div>
+    </div>
+
+    <div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login Error</h4>
+                        <button type="button" id="modelcancel31" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please Login First</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose31" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+       <div>
+        <div id="SuccessModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Success</h4>
+                        <button type="button" id="successmodelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Request Saved Successfully</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="successmodelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="AddNewModaln" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <input class="modal-title" style="border : none" id="AddTitle" />
+                        <button type="button" id="AddNewcanceln" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                         <label for="exampleInputEmail1">Select Help Type</label>
+                            <div class="form-group">
+                                <select class="form-select mb-4" id="radioDiv"></select>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="Your Role" id="Role" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="User Name" id="UserName" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="Email" id="Email" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="Phone No" id="PhoneNo" />
+                            </div>
+                               <div class="form-group">
+                                <textarea class="form-control mb-4" id="Addressg" placeholder="Address"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control mb-4" id="HelpText" placeholder="Request Description"></textarea>
+                            </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light float-end mb-4" id="Save">Send</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+                 <div>
+                    <div id="AddNewModalnotification" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <label for="exampleInputEmail1">Notifications</label>
+                                    <button type="button" id="AddNewModalnotificationcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <div id="UnCheckMessages"></div>
+                               
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                   <div>
+        <div id="ChatModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Chat</h4>
+                        <button type="button" id="ChatModalCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="ChatModalBody">
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="ChatModalClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+     <div>
+            <div id="DeleteModal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <label for="exampleInputEmail1">Delete This Message?</label>
+                            <button type="button" id="DeleteModalCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>This Action Can be Undone.</p>
+                            <input type="text" hidden="hidden" id="msgid"/>
+                        </div>
+                         <div class="modal-header">
+                            <button type="button" id="DeleteMsg" class="btn btn-danger float-end" data-dismiss="modal">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="section-footer bg-primary footer-dark">
+        <div class="container">
+            <section class="footer-main padding-y">
+                <div class="row">
+                    <aside class="col-12 col-sm-12 col-lg-4">
+                        <article class="me-lg-4">
+                            <a href="/Home/Index"><img class="logo" height="40" src="~/images/capture.jpg"></a>
+                            <p class="mt-3">
+                                © 2018- 2021 Templatemount. <br>
+                                All rights reserved.
+                            </p>
+                        </article>
+                    </aside>
+                    <aside class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="title">Store</h6>
+                        <ul class="list-menu mb-3">
+                            <a class="nav-link" href="/Home/Index">Home</a>
+
+                        </ul>
+                    </aside>
+                    <aside class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="title">Information</h6>
+                        <ul class="list-menu mb-3">
+                            <a class="nav-link" href="#" id="SignOut">Sign Out</a>
+
+                               <li> <a href="#" id="HelpButtond">Help Center</a></li>
+                            @* <li> <a href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#">Money refund</a></li>
+                            <li> <a href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#">Shipping info</a></li>
+                            <li> <a href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#">Refunds</a></li>*@
+                        </ul>
+                    </aside>
+                    <aside class="col-6 col-sm-4  col-lg-2">
+                        <h6 class="title">Support</h6>
+                        <ul class="list-menu mb-3">
+                            @* <li> <a href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#"> Help center </a></li>
+                            <li> <a href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#"> Documents </a></li>
+                            <li> <a href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#"> Account restore </a></li>*@
+                            <a class="nav-link" href="/Home/FirstPage">Sign in</a>
+                        </ul>
+
+                    </aside>
+                    <aside class="col-6 col-sm-4 col-lg-2">
+                        <h6 class="title">Our apps</h6>
+
+
+                        <a href="/Home/Index" class="mb-2 d-inline-block"><img src="~/images/app-store-symbol.png" height="38" /> </a><br />
+                        <a href="/Home/Index" class="mb-2 d-inline-block"><img src="~/images/google play.jpg" height="38" /> </a>
+                    </aside>
+                </div> <!-- row.// -->
+            </section>  <!-- footer-top.// -->
+            <h2 id="Length"></h2>
+    </footer>
+    <section class="footer-bottom d-flex justify-content-lg-between border-top">
+        <div>
+            <i class="fab fa-lg fa-cc-visa"></i>
+            <i class="fab fa-lg fa-cc-amex"></i>
+            <i class="fab fa-lg fa-cc-mastercard"></i>
+            <i class="fab fa-lg fa-cc-paypal"></i>
+        </div>
+
+        <nav class="dropup">
+
+            <button class="dropdown-toggle btn d-flex align-items-center py-0" type="button" data-bs-toggle="dropdown">
+                <img src="./Website layout sample_files/flag-usa.webp" class="me-2" height="20">
+                <span>English</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#">Russian</a></li>
+                <li><a class="dropdown-item" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#">Arabic</a></li>
+                <li><a class="dropdown-item" href="https://bootstrap-ecommerce.com/bootstrap5-ecommerce/page-index-2.html#">Spanish</a></li>
+            </ul>
+        </nav>
+    </section>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/script.js"></script>
+    <script src="multiselect.min.js"></script>
+     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>   
+    <script type="text/javascript" src="js/bootstrap-multiselect.js"></script>
+
+
+    @RenderSection("Scripts", required: true)
+    <script>
+        $(document).ready(function () {
+            $('#searchTable').hide();
+            $('#myModal').modal('hide');
+             $('#SuccessModal').modal('hide');
+            GetRoles();
+            GetAllCategories();
+            NotificationsLength();
+            WishListLength();
+            $('#AddNewModalnotification').modal('hide');
+           
+            var token = sessionStorage.getItem('token');
+            if(token == null)
+            {
+                $('#SignIn').show();
+                $('#SignOut').hide();
+                $('#anchoruserimage').hide();
+            }
+            else
+            {
+                $('#SignIn').hide();
+                $('#SignOut').show();
+                $('#anchoruserimage').show();
+                 GetsUserData();
+                 GetsCardData();
+            }
+        })
+
+        $("#ProdValues").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("TextBoxSearchProducts","Home")',
+                    dataType: "json",
+                    data: { ProductName: $("#ProdValues").val() },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.productName, value: item.productName };
+                        }));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error");
+                    }
+                });
+            }
+        });
+        $('#ProductSe').click(function () {
+            var id = $('#ProdValues').val();
+            window.location.replace('/Item/GetProductsbyProductName?id=' + id);
+
+        })
+
+        $('#Chats').click(function(){
+            var token = sessionStorage.getItem('token');
+            var secretkey = localStorage.getItem('secretkey');
+            if(token != null)
+            {
+                window.location.replace('/Home/ChatsHistoryBuyerView');
+            }
+            else{
+                window.location.replace('/Home/ChatsHistoryBuyerView?secretkey='+secretkey);
+            }
+        })
+        function WishListLength(){
+            var token = sessionStorage.getItem('token');
+            var html1 = "";
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Item/GetWishListLength',
+                Type: 'Get',
+                success: function (response) {
+                    html1 = response.length
+                    $('#WishListLength').append(html1);
+                },
+
+            })
+        }
+
+         function GetAllCategories() {
+            $.ajax({
+                url: '/Home/GetAllKidCategories',
+                type: 'Get',
+                success: function (response) {
+                    $.each(response, function (key, item) {
+                        $('#Categories').append('<option value="' + item.kidCategoryId + '">' + item.kidCategoryName + '</option>');
+                    })
+                },
+            })
+        }
+
+         $('#Search').click(function () {
+            var Id = $('select#Categories').find('option:selected').val();
+            window.location.replace("/Home/GetProductsView?Id=" + Id)
+
+        })
+            function GetsUserData() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Home/GetUserData',
+                type: 'Get',
+                success: function (response) {
+                    $('#UserImage1').append('<img class="icon-md rounded-circle" src="' + response.userImage + '"/>');
+                },
+            })
+        }
+
+        function GetsCardData() {
+            var token = sessionStorage.getItem('token');
+            var html1 = "";
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Item/GetsCardData',
+                Type: 'Get',
+                success: function (response) {
+                    html1 = response.length
+                    $('#ShowItem1').append(html1);
+                },
+            })
+        }
+
+        $('#modelclose31').click(function () {
+            $('#myModal').modal('hide');
+             window.location.replace('/Home/Index');
+        })
+
+        $('#modelclose31').click(function () {
+            $('#myModal').modal('hide');
+            window.location.replace('/Home/Index');
+
+        })
+
+        $('#successmodelclose').click(function () {
+            $('#SuccessModal').modal('hide');
+            $('#AddNewModaln').modal('hide');
+        })
+
+        $('#successmodelcancel').click(function () {
+            $('#SuccessModal').modal('hide'); 
+            $('#AddNewModaln').modal('hide');
+        })
+
+
+        $('#GetWishList').click(function () {
+            var token =sessionStorage.getItem('token');
+            if(token == null || token == 0)
+            {
+                   $('#myModal').modal('show');
+            }
+            else
+            {
+                window.location.replace('/Item/GetWishListView');
+            } 
+        })
+
+        $('#GetProductsCart').click(function(){
+            var token = sessionStorage.getItem('token');
+            if(token == null)
+            {
+                $('#myModal').modal('show'); 
+            }
+            else
+            {
+                window.location.replace('/Item/ProductsCard');
+            }
+        })
+
+        $('#SignOut').click(function(){
+            
+             var token =sessionStorage.getItem('token');
+             if(token == null){
+                 window.location.replace("/Home/FirstPage");
+             }
+             else
+             {
+                 sessionStorage.clear('token');
+                 window.location.replace("/Home/FirstPage");
+             }
+            
+        })
+        $('#HelpButton').click(function(){
+            debugger
+            var key = localStorage.getItem('secretkey');
+            var token = sessionStorage.getItem('token');
+          
+           if(token == null && key == null){
+               $('#AddNewModaln').modal('show');
+           }
+           else{
+
+               if(token != null)
+                {
+                   GetChatbyToken();
+                }
+                else
+                {
+                 if(key != null)
+                 {
+                    GetChatbySecretKey(); 
+                 }
+               }
+           }
+        })
+
+         $('#HelpButtond').click(function(){
+            debugger
+            var key = localStorage.getItem('secretkey');
+            var token = sessionStorage.getItem('token');
+          
+           if(token == null && key == null){
+               $('#AddNewModaln').modal('show');
+           }
+           else{
+
+               if(token != null)
+                {                      
+                   GetChatbyToken();
+                }
+                else
+                {
+                 if(key != null)
+                 {      
+                    GetChatbySecretKey(); 
+                 }
+               }
+           }
+        })
+
+        function GetChatbySecretKey(){
+            debugger
+             $('#ChatModalBody').empty();
+             var SecretKey = localStorage.getItem('secretkey');
+            $.ajax({
+            
+            url: '/Home/GetHelpChatbySecretKey',
+            type: 'Post',
+            data: {SecretKey},
+                success: function (response) {
+                  var id = 0;
+                    var uncheckst = "";
+                    $.each(response, function (key, item) {
+                        console.log('obj', item.adminChat);
+                        console.log('ite',item);
+                        $.each(item.adminChat, function (key, obj) {
+                      if (obj.messageBy != null)
+                      {
+                            uncheckst += '<div class="rounded-5 bg-info">';
+                            uncheckst += '<div>';
+                            uncheckst += '<p align="right" class="badge-pill b btn-info ml-auto m-xxl-3">Daraz App</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p align="right" class="pe-xl-5" onclick="DeleteClick(' + obj.a_ChatId + ')">' + obj.messageText + '</p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + obj.a_ChatId + '"><i class="fa fa-trash-o float-end" style="font-size:24px" onclick="DeleteMessage(' + obj.a_ChatId + ');"></i></div>';
+                            uncheckst += '</div>';
+                      }
+                      else
+                      {
+                            uncheckst += '<div class="rounded-5 bg-gray">';
+                            uncheckst += '<div>';
+                            uncheckst += '<p class="badge-pill b btn-info ml-auto ps-4">' + item.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="ps-5" onclick="DeleteClick(' + obj.a_ChatId + ')">' + obj.messageText + '</p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + obj.a_ChatId + '"><i class="fa fa-trash-o float-end m-2" style="font-size:24px" onclick="DeleteMessage(' + obj.a_ChatId + ');"></i></div>';
+                            uncheckst += '<div class="updatemsg pt-2" id="updmsg' + obj.a_ChatId + '"><i class="fas fa-edit float-end me-2" style="font-size:24px" onclick="EditMessage(' + obj.a_ChatId + ',\'' + obj.messageText + '\');"></i></div>';
+                            uncheckst += '</div>';
+                             id = item.roomId;
+                      }
+                        })
+                    })
+
+                    uncheckst += '<div class="row mb-4" >';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    uncheckst += '<input type="text" class="form-control mt-5" PlaceHolder = "Reply Text" id = "ResText" />';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    uncheckst += '<button class="btn btn-secondary float-end mt-5" id="sendmsg" onclick="SaveReply('+id+');"> Send </button>';
+                    uncheckst += '<button class="btn btn-primary float-end mt-5" id="updatemsg" onclick="updatereply();"> Send </button>';
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+
+                   
+                    $('#ChatModalBody').append(uncheckst);
+                    $('#ChatModal').modal('show');
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                    $('#updatemsg').hide();
+                }
+            })
+        }
+
+        $('#ChatModalCancel').click(function(){
+            $('#ChatModal').modal('hide');
+        })
+
+        $('#ChatModalClose').click(function(){
+            $('#ChatModal').modal('hide');
+        })
+
+        function GetChatbyToken(){
+               $('#ChatModalBody').empty();
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                 headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Home/GetHelpChatbyToken',
+                success: function (response) {
+                    var id = 0;
+                    var uncheckst = "";
+                    $.each(response, function (key, item) {
+                        console.log('obj', item.adminChat);
+                        console.log('ite', item);
+                        $.each(item.adminChat, function (key, obj) {
+                            if (obj.messageBy != null) {
+
+                                uncheckst += '<div class="rounded-5 bg-info">';
+                                uncheckst += '<div>';
+                                uncheckst += '<p align="right" class="badge-pill b btn-info ml-auto m-xxl-3">Daraz App</p>';
+                                uncheckst += '</div>';
+                                uncheckst += '<p align="right" class="pe-xl-5" onclick="DeleteClick(' + obj.a_ChatId + ')">' + obj.messageText + '</p>';
+                                uncheckst += '<div class="Trash pe-3" id="Tash' + obj.a_ChatId + '"><i class="fa fa-trash-o float-end" style="font-size:24px" onclick="DeleteMessage(' + obj.a_ChatId + ');"></i></div>';
+                                uncheckst += '</div>';
+
+                            }
+                            else {
+                                uncheckst += '<div class="rounded-5 bg-gray">';
+                                uncheckst += '<div>';
+                                uncheckst += '<p class="badge-pill b btn-info ml-auto ps-4">' + item.userName + '</p>';
+                                uncheckst += '</div>';
+                                uncheckst += '<p class="ps-5" onclick="DeleteClick(' + obj.a_ChatId + ')">' + obj.messageText  + '</p>';
+                                uncheckst += '</div>';
+                                uncheckst += '<div class="Trash pe-3" id="Tash' + obj.a_ChatId + '"><i class="fa fa-trash-o float-end m-2" style="font-size:24px" onclick="DeleteMessage(' + obj.a_ChatId + ');"></i></div>';
+                                uncheckst += '<div class="updatemsg pt-2" id="updmsg' + obj.a_ChatId + '"><i class="fas fa-edit float-end me-2" style="font-size:24px" onclick="EditMessage(' + obj.a_ChatId + ',\'' + obj.messageText + '\');"></i></div>';
+
+                                id = item.roomId;
+                            }
+                        })
+                    })
+
+                    uncheckst += '<div class="row mb-4" >';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    uncheckst += '<input type="text" class="form-control mt-5" PlaceHolder = "Reply Text" id = "ResText" />';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    uncheckst += '<button class="btn btn-secondary float-end mt-5" id="sendmsg" onclick="SaveReply('+id+');"> Send </button>';
+                    uncheckst += '<button class="btn btn-primary float-end mt-5" id="updatemsg" onclick="updatereply();"> Send </button>';
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+
+
+                    $('#ChatModalBody').append(uncheckst);
+                    $('#ChatModal').modal('show');
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                      $('#updatemsg').hide();
+                }
+            })
+        }
+        
+        
+        $('#AddNewcanceln').click(function(){
+             $('#AddNewModaln').modal('hide');
+        })
+
+
+        $('#Save').click(function(){
+            var token =sessionStorage.getItem('token');
+            var type =  $('#radioDiv').val();
+            var Email = $('#Email').val();
+            var UserName = $('#UserName').val();
+            var HelpText = $('#HelpText').val();
+            var RoleType = $('#Role').val();
+            var Address = $('#Addressg').val();
+            var PhoneNumber = $('#PhoneNo').val();
+           if(token != null)
+           {  
+              SavewithUserId();
+           }
+           else
+           {
+             SaveWithoutUserId();  
+           }
+        })
+
+
+        function SaveWithoutUserId()
+        {
+            var secretkey = localStorage.getItem('secretkey');
+            var type =  $('#radioDiv').val();
+            var Email = $('#Email').val();
+            var UserName = $('#UserName').val();
+            var HelpText = $('#HelpText').val();
+            var RoleType = $('#Role').val();
+            var Address = $('#Addressg').val();
+            var PhoneNumber = $('#PhoneNo').val();
+
+            $.ajax({
+                url: '/Home/AddHelpsNotLogedIn',
+                type: 'POST',
+                data: { type, Email, UserName, HelpText, RoleType, PhoneNumber,secretkey,Address},
+                success: function (secretkey) {
+                    debugger
+                    var secret=localStorage.getItem('secretkey');
+                    if(secret == null)
+                    {
+                        localStorage.setItem('secretkey', secretkey);
+                        $('#SuccessModal').modal('show');
+                    }
+                    else{
+                       $('#SuccessModal').modal('show');
+                    }
+                }
+            })
+        }
+
+        function SavewithUserId()
+        {
+            var token = sessionStorage.getItem('token');
+            var type =  $('#radioDiv').val();
+            var Email = $('#Email').val();
+            var UserName = $('#UserName').val();
+            var HelpText = $('#HelpText').val();
+            var RoleType = $('#Role').val();
+            var PhoneNumber = $('#PhoneNo').val();
+            $.ajax({
+                headers: {
+                    'Authorization': 'Berear ' + token
+                },
+                url: '/Home/AddHelp',
+                type: 'POST',
+                data: { type, Email, UserName, HelpText, RoleType, PhoneNumber },
+                success: function (response) {
+                    var html = "";
+                    $('#SuccessModal').modal('show');
+                }
+            })
+        }
+
+        function GetRoles() {
+            $.ajax({
+                url: '/Home/GetHelpType',
+                type: 'Get',
+                success: function (response) {
+                    var html = "";
+                    $.each(response, function (key, item) {
+                        $('#radioDiv').append('<option id="' + item.typeId + '" value="' + item.typeId + '">' + item.typeText + '</option>');
+                    })
+                  
+                }
+            })
+        }
+
+        function NotificationsLength(){
+            debugger
+            $('#NotificationLength').empty();
+                        var token = sessionStorage.getItem('token');
+                        $.ajax({
+                            headers:{
+                                authorization: 'Berear ' + token
+                            },
+                            url:'/Home/GetUnreadMessages',
+                            success: function (response) {
+                                console.log('leng',response.length);
+                                $('#NotificationLength').append(response.length);
+                            }
+                        })
+                    }
+
+        $('#Notifications').click(function () {
+            $('#UnCheckMessages').empty();
+            var token = sessionStorage.getItem('token');
+            if(token == null)
+            {
+                  $('#myModal').modal('show'); 
+            }
+            else
+            {
+
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetUnreadMessages',
+                success: function (response) {
+                    console.log('rs', response);
+                    var uncheckst = "";
+                    $.each(response, function (key, item) {
+
+                        console.log('it', item);
+                        uncheckst += '<a href="/Home/ChatsHistoyBuyerView?id=' + item.sender.userId + '">';
+                        uncheckst += '<div class="row mb-2">';
+                        uncheckst += '<div class="card bg-light" href="/Home/ChatsHistory?id=' + item.sender.userId + '">';
+                        uncheckst += '<formgroup class="lh-1" >';
+                        uncheckst += '<div class="row">';
+                        uncheckst += '<div class="col-3">';
+                        uncheckst += '<img class="icon-sm rounded-circle" src="' + item.sender.userImage + '"/>';
+                        uncheckst += '</div>';
+                        uncheckst += '<div class="col-9">';
+                        uncheckst += '<p href="#">' + item.sender.userName + '</p>';
+                        uncheckst += '</div>';
+                        uncheckst += '</div>';
+                        uncheckst += '<p href="#" >' + item.message + '</p>';
+                        uncheckst += '</formgroup>';
+                        uncheckst += '</div>';
+                        uncheckst += '</div>';
+                        uncheckst += '</a>';
+                    })
+                    $('#UnCheckMessages').append(uncheckst);
+                    $('#AddNewModalnotification').modal('show');
+               NotificationsLength();
+                },
+            })
+            }
+        })
+
+        $('#AddNewModalnotificationcancel').click(function () {
+            $('#AddNewModalnotification').modal('hide');
+        })
+
+    
+        function SaveReply() {
+            var secretkey = localStorage.getItem('secretkey');
+            var token = sessionStorage.getItem('token');
+            var HelpText = $('#ResText').val();
+            if(token != null){
+        
+            debugger
+            $.ajax({
+               headers: {
+                    authorization: 'Berear ' + token
+                },
+                    url: '/Home/AddHelp',
+                type: 'POST',
+                data: { secretkey, HelpText },
+                success: function (response) {
+                        GetChatbyToken();
+                }
+            })
+            }
+            else
+            {
+                 $.ajax({
+                          url: '/Home/AddHelpsNotLogedIn',
+                          type: 'POST',
+                          data: { secretkey, HelpText },
+                          success: function (response) {
+                         GetChatbySecretKey();
+                     }
+                 })
+            }
+        }
+
+        function DeleteClick(id) {
+            debugger
+            $('.updatemsg').hide();
+            $('.Trash').hide();
+            $('#Tash' + id).show();
+            $('#updmsg' + id).show();
+        }
+
+        function DeleteMessage(id) {
+            $('#msgid').val(id);
+            $('#DeleteModal').modal('show');
+        }
+
+        $('#DeleteMsg').click(function () {
+            debugger
+            var id = $('#msgid').val();
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                url: '/Home/DeleteAdminChatbyId?id=' + id,
+                type: 'Delete',
+                success: function (response) {
+                    $('#DeleteModal').modal('hide');
+                    var token =  sessionStorage.getItem('token');
+                    if(token != null)
+                    {
+                          GetChatbyToken();
+                    }
+                    else
+                    {
+                          GetChatbySecretKey();
+                    }
+                }
+            })
+        })
+
+        $('#DeleteModalCancel').click(function () {
+            $('.Trash').hide();
+            $('#DeleteModal').modal('hide');
+        })
+
+        function EditMessage(id, Message) {
+            debugger
+            $('#ResText').val(Message);
+            $('.justsend').hide();
+            $('#updmsg' + id).show();
+            $('#nupdatemsg').show();
+            $('#msgid').val(id);
+            $('#updatemsg').show();
+            $('#sendmsg').hide();
+        }
+
+        function updatereply() {
+            debugger
+            var Text = $('#ResText').val();
+            var msgid = $('#msgid').val();
+            $.ajax({
+                url: '/Home/UpdateMsgbyAdminChatId',
+                data: { Text, msgid },
+                success: function (response) {
+                   var token = sessionStorage.getItem('token');
+                    if (token != null) {
+                        GetChatbyToken();
+                    }
+                    else {
+                        GetChatbySecretKey();
+                    }
+                }
+            })
+        }
+        
+    </script>
+        <style>
+        .text-container {
+             max-width: 370px; 
+            }
+    </style>
+</body>
+</html>

@@ -1,0 +1,173 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "TestingView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+<body>
+      <div class="card mb-4" id="AddProductCard">
+            <article class="card-body">
+                <h4 class="mb-4">Submit product</h4>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Category</label>
+                    <div class="col-9">
+                        <select name="category" id="category">
+                            <option value="free"></option>
+                            <option value="bronze"></option>
+                            <option value="silver"></option>
+                            <option value="Gold"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Title</label>
+                    <div class="col-9">
+                        <input type="text" id="text" class="form-control" placeholder="Product Name here">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Price</label>
+                    <div class="col-9">
+                        <input type="text" id="ProductPrice" class="form-control" placeholder="$ 0.00">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">
+
+                        <small class="text-muted">(Max 10 mb)</small>
+                    </label> <div class="col-9">
+                        <div class="gallery-uploader-wrap">
+                            <label style="width: 80px; height: 80px" class="uploader-img">
+                                <img width="100" src="./Ecommerce templates for Figma and Sketch_files/1.webp">
+                            </label>
+                            <label style="width: 80px; height: 80px" class="uploader-img">
+                                <img width="100" src="./Ecommerce templates for Figma and Sketch_files/2.webp">
+                            </label> <label style="width: 80px; height: 80px" class="uploader-img">
+
+                                <input type="file" id="file" name="lorem">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="3">
+                                    </circle>
+                                    <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                </svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Description</label>
+                    <div class="col-9">
+                        <textarea class="form-control" id="ProductDes" placeholder="Type here"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Features</label>
+                    <div class="col-9">
+                        <ul class="row row-cols-xxl-3 row-cols-2">
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-label"> HD camera </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-label"> Voice control </span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Metallic </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> 5K Display </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> High speed </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Ultra wide </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label">
+                                        5K Display
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Blootooth 3.0 </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    <div class="col-9 offset-3">
+                        <button type="button" id="btnshow" class="btn btn-primary">Add product</button>
+
+                        <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                    </div>
+
+                </div>
+
+            </article>
+        </div>
+</body>
+
+<script>
+
+    $(document).ready(function(){
+        debugger
+        GetCategories();
+    })
+
+function GetCategories() {
+           $.ajax({
+            url: '/Table/ProductDetails',
+                type: 'Get',
+                data: 'Json',
+                success : function(response){
+                    debugger
+                        console.log(response);
+                        var Cate ="";
+                    $.each(response, function (key, item) {
+                        console.log(item);
+                        //Cate += '<option >' + tem.kidCategory?.kidCategoryName + '</option>';
+                        //Cate += '<td class="border">' + item.user.userName + '</td>';
+                        //Cate += '<td class="border">' + item.kidCategory?.kidCategoryName + '</td>';
+                        //Cate += '<td class="border">' + item.productPrice + '</td>';
+                        //Cate += '<td class="item"><img style="height: 70px ; width : 90px" src="' + item.productImage + '"></td>';
+                        //Cate += '<td class="border item">' + '<button type="button" id="item.user.userId" onclick="OnAddclick()" class="btn btn-secondary">Delete</button>' + '</td>';
+                        //Cate += '<td class="border">' + '<button type="button" id="item.user.userId" onclick="OnAddclick()" class="btn btn-primary">Add </button>' + '</td></tr>';
+                       
+                    })
+                    $("#category").append(Cate);
+                }
+           })
+        }
+</script>

@@ -1,0 +1,99 @@
+﻿@using DarazApp.Entities;
+@model DarazApp.Entities.ProductDescription
+
+@{
+	ViewData["Title"] = "GetAllProducts";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+    }
+	<section class="padding-y">
+		<div class="container">
+
+			<header class="section-heading">
+				<h3 class="section-title">Recommended</h3>
+			</header>
+
+			<div class="row">
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<figure class="card-product-grid">
+						<a href="/Home/GetProductbyId?Id=16" id="1" class="img-wrap rounded bg-gray-light">
+							<img height="250" class="mix-blend-multiply" src="./Website layout sample_files/9.webp">
+						</a>
+						<figcaption class="pt-2">
+							<a href="/Home/GetProductbyId?Id=7" class="float-end btn btn-light btn-icon"> <i class="fa fa-heart"></i> </a>
+							<strong class="price">$17.00</strong> <!-- price.// -->
+							<a href="/Home/GetProductbyId" class="title text-truncate">Blue jeans shorts for men</a>
+							<small class="text-muted">Sizes: S, M, XL</small>
+						</figcaption>
+					</figure>
+				</div> <!-- col end.// -->
+
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<figure class="card-product-grid">
+						<a href="/Home/GetProductbyId?Id=13" id="2" class="img-wrap rounded bg-gray-light">
+							<img height="250" class="mix-blend-multiply" src="./Website layout sample_files/10.webp">
+						</a>
+						<figcaption class="pt-2">
+							<a href="/Home/GetProductbyId?Id=8" class="float-end btn btn-light btn-icon"> <i class="fa fa-heart"></i> </a>
+							<strong class="price">$9.50</strong> <!-- price.// -->
+							<a href="/Home/GetProductbyId" class="title text-truncate">Slim fit T-shirt for men</a>
+							<small class="text-muted">Sizes: S, M, XL</small>
+						</figcaption>
+					</figure>
+				</div> <!-- col end.// -->
+
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<figure class="card-product-grid">
+						<a href="/Home/GetProductbyId?Id=9" class="img-wrap rounded bg-gray-light">
+							<img height="250" id="4" class="mix-blend-multiply" src="./Website layout sample_files/11.webp">
+						</a>
+						<figcaption class="pt-2">
+							<a href="/Home/GetProductbyId?9" class="float-end btn btn-light btn-icon"> <i class="fa fa-heart"></i> </a>
+							<strong class="price">$29.95</strong> <!-- price.// -->
+							<a href="/Home/GetProductbyId" class="title text-truncate">Modern product name here</a>
+							<small class="text-muted">Sizes: S, M, XL</small>
+						</figcaption>
+					</figure>
+				</div> <!-- col end.// -->
+
+				<div class="col-lg-3 col-md-6 col-sm-6">
+					<figure class="card-product-grid">
+						<a href="/Home/GetProductbyId?Id=15" class="img-wrap rounded bg-gray-light">
+							<img height="250" id="5" class="mix-blend-multiply" src="./Website layout sample_files/12.webp">
+						</a>
+						<figcaption class="pt-2">
+							<a href="/Home/GetProductbyId?Id=10" class="float-end btn btn-light btn-icon"> <i class="fa fa-heart"></i> </a>
+							<strong class="price">$29.95</strong> <!-- price.// -->
+							<a href="/Home/GetProductbyId" class="title text-truncate">Modern product name here</a>
+							<small class="text-muted">Sizes: S, M, XL</small>
+						</figcaption>
+					</figure>
+				</div> <!-- col end.// -->
+			</div> <!-- row end.// -->
+
+		</div> <!-- container end.// -->
+	</section>
+
+	@*@foreach (var item in Model)
+{
+	<div class="col-md-4">
+		<div class="card mb-4 shadow-sm">
+
+			<div class="card-body">
+				<h3 class="card-title">@item.Product</h3>
+				<p class="card-text">@item.Pdescription</p>
+				<p class="card-img-bottom">@item.ProductColor</p>
+				<p class="card-text"> @item.ProductPrice</p>
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="btn-group">
+						<a href="/Home/GetProductbyId" class="btn btn-sm btn-outline-danger">View Data </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+}*@

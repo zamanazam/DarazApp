@@ -1,0 +1,109 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "AddtoWishList";
+    Layout = "~/Views/Shared/_Layout1.cshtml";
+    
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+      <div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login Error</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please Login First</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="SuccessModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Success</h4>
+					<button type="button" id="smodelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>Product Added to WishList Successfully.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="smodelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+<script>
+	$(document).ready(function () {
+            
+            $('#SuccessModal').modal('hide');
+            $('#myModal').modal('hide');
+        var token =sessionStorage.getItem('token');
+        debugger
+        if(token == null)
+        {
+                $('#myModal').modal('show');
+           window.location.replace('/Home/Index');
+           //window.location.replace('Home/Index');
+        }
+        else
+        {
+                AddtoWishList();
+        }
+           
+	})
+
+        $('#smodelclose').click(function () {
+            $('#myModal').modal('hide');
+            window.location.replace("/Home/Index");
+        })
+
+        $('#smodelcancel').click(function () {
+            $('#myModal').modal('hide');
+            window.location.replace('/Home/Index');
+
+        })
+
+    function AddtoWishList(){
+        var token = sessionStorage.getItem('token');
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let id = search_params.get('id');
+            debugger
+            console.log(id);
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/AddtoWishtLists?id=' + id,
+                type: 'Post',
+                success : function(data){
+                    console.log(data);
+                    $('#SuccessModal').modal('show');
+                
+                },
+                error : function(data){
+                    window.location.replace("/Home/Index");
+                }
+            })
+    }
+</script>

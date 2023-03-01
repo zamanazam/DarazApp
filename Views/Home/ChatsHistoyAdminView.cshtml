@@ -1,0 +1,493 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "ChatsHistoyAdminView";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <div class="container">
+        <div class="row d-flex">
+            <div class="col-2">
+
+                <div class="card bg-white">
+                <p class="position-fixed mb-4">All Chats</p>
+                <div id="AllUsersChats" class="position-fixed mb-3 mt-5"></div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="bg-white rounded-3">
+                <div id="MyChatsPage" style="height:600px; overflow: auto;  overflow-x: hidden"></div>
+                    <div class="row" style="position-fixed">
+                        <div class="col-9 float-start">
+                            <input type="text" class="form-control ms-5" PlaceHolder="Reply Text" id="ResText" />
+                            </div>
+                            <div class="col-3 float-end">
+                            <button class="btn btn-secondary justsend float-end mr-5" onclick="SaveReplys();"> Send </button>
+                        <button class="btn btn-secondary updatemsg float-end mr-5" id="nupdatemsg" onclick="updatereply();"> Send </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2">
+
+                    <div class="card bg-gray position-fixed">
+                    <label class="">
+                       Assigned To
+                    </label>
+
+                    <select class="form-select mb-4" id="AssignTo"></select>
+                    <input type="text" class="mb-4" hidden="hidden" id="RoomId">
+                    <input type="text" id="AssignStatus" class="form-control mb-4" />
+                    <button id="SendStatus" class="btn btn-primary float-end mb-4">Send</button>
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="DeleteModal" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label for="exampleInputEmail1">Delete This Message?</label>
+                        <button type="button" id="DeleteModalCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>This Action Can be Undone.</p>
+                        <input type="text" hidden="hidden" id="msgid" />
+                    </div>
+                    <div class="modal-header">
+                        <button type="button" id="DeleteMsg" class="btn btn-danger float-end" data-dismiss="modal">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+    <div>
+        <div id="SuccessMod" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label for="exampleInputEmail1">Sucess</label>
+                        <button type="button" id="SuccessModCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Successfully Assigned!</p>
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="SuccessModClose" class="btn btn-danger float-end" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+              console.log('JustId',id);
+            if (id == null) {
+
+                 let url_str = window.location.href;
+                let url = new URL(url_str);
+                let search_params = url.searchParams;
+                let RoomId = search_params.get('RoomId');
+                console.log('RoomId',RoomId);
+                if(RoomId != null){
+                    GetChatsbyUserId(RoomId);
+                }
+                else{
+                GetAllChatsCurrentUser();
+                }
+            }
+            else {
+
+                GetChatsbyId();
+
+            }
+
+            GetAllChats();
+            GetAllAdmin();
+        });
+
+        function GetChatsbyId() {
+
+            $('#MyChatsPage').empty();
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            ChangeStatus(id);
+      
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetHelpDesbyId?id=' + id,
+                type: 'POST',
+                success: function (response) {
+                    var id = 0;
+                    var chatid = 0;
+                    var uncheckst = "";
+                    var AssinTo = [];
+                    $.each(response, function (key, item) {
+                        console.log('ite', item);
+                        if (item.messageBy != null) {
+                            uncheckst += '<div class="d-flex">';
+                            uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3 mt-3 mr-3">Daraz App</p>';
+                            uncheckst += '</div>';
+
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p align="right" class="mr-5 pr-5" onclick="DeleteClick(' + item.a_ChatId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.a_ChatId + '"><i class="fa fa-trash-o float-end pr-5" style="font-size:24px" onclick="DeleteMessage(' + item.a_ChatId + ');"></i></div>';
+                            uncheckst += '<div class="updatemsg pt-4" id="updmsg' + item.a_ChatId + '"><i class="fas fa-edit float-end m-lg-n5 pr-5" style="font-size:24px" onclick="EditMessage(' + item.a_ChatId + ',\'' + item.messageText + '\');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center text-muted">' + item.messageOn + '</p>';
+                        }
+                        else {
+                            uncheckst += '<form>';
+                            uncheckst += '<div class="d-flex">';
+                            uncheckst += '<p class="badge-pill b btn-gray align-right mt-3 ml-3">' + item.room?.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="pr-5 ml-5" onclick="DeleteClick(' + item.a_ChatId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.a_ChatId + '"><i class="fa fa-trash-o" style="font-size:24px" onclick="DeleteMessage(' + item.a_ChatId + ');"></i></div>';
+                            uncheckst += '<p class="text-center text-muted">' + item.messageOn + '</p>';
+
+                            uncheckst += '</form>';
+                            id = item.roomId;
+                            chatid = item.a_ChatId;
+                        }
+                         AssinTo.push(item.roomId);
+                    })
+
+                    uncheckst += '<div class="row mb-4" >';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    //uncheckst += '<input type="text" class="form-control" PlaceHolder = "Reply Text" id = "ResText" />';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    //uncheckst += '<button class="btn btn-secondary justsend" onclick="SaveReplys(' + id + ');"> Send </button>';
+                    uncheckst += '<input type="text" id="nroomid" value="'+ id +'" hidden="hidden"/>';
+                    uncheckst += '<input type="text" id="nchatid" value="'+ chatid +'" hidden="hidden"/>';
+                    //uncheckst += '<button class="btn btn-secondary updatemsg" id="nupdatemsg" onclick="updatereply(' + chatid + ');"> Send </button>';
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+                    
+                    var Assignedto = (AssinTo[0]);
+                    $('#RoomId').val(Assignedto);
+                    AssignedStatus(10);
+                    
+                    $('#MyChatsPage').append(uncheckst);
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                }
+            })
+        }
+
+       
+        function ChangeStatus(id) {
+     
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/ChangeMessageStatusandSave',
+                data: { id },
+                success: function (response) {
+                    console.log('ponse', response)
+                }
+
+            })
+        }
+
+        function GetAllChatsCurrentUser() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetAllChatsbyCurrentUser',
+                success: function (response) {
+                    var html12 = "";
+                    console.log(response);
+                    $.each(response, function (key, item) {
+                        html12 += '<div class="d-flex" onclick="GetChatsbyUserId(' + item.userId + ')">';
+                        html12 += '<img class="icon-sm rounded-circle" src="' + item.userImage + '"/>';
+                        html12 += '<p>' + item.userName + '</p>';
+                        html12 += '</div>';
+                    })
+                    $('#AllUsersChats').append(html12);
+                }
+            })
+        }
+
+
+        function GetChatsbyUserId(id) {
+            $('#MyChatsPage').empty();
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetHelpDesbyRoomId?id=' + id,
+                type: 'POST',
+                success: function (response) {
+                    var id = 0;
+                    var uncheckst = "";
+                    var chatid = 0;
+                    var AssinTo = [];
+                    $.each(response, function (key, item) {
+                        console.log('ite', item);
+                        if (item.messageBy != null) {
+                            uncheckst += '<div class="d-flex">';
+                            uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3 mt-3 mr-3">Daraz App</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<div class="row">';
+                            uncheckst += '<p align="right" class="mr-5 pr-5" onclick="DeleteClick(' + item.a_ChatId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.a_ChatId + '"><i class="fa fa-trash-o float-end pr-5" style="font-size:24px" onclick="DeleteMessage(' + item.a_ChatId + ');"></i></div>';
+                            uncheckst += '<div class="updatemsg pt-4" id="updmsg' + item.a_ChatId + '"><i class="fas fa-edit float-end m-lg-n5 pr-5" style="font-size:24px" onclick="EditMessage(' + item.a_ChatId + ',\'' + item.messageText + '\');"></i></div>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="text-center text-muted">' + item.messageOn + '</p>';
+                        }
+                        else {
+                            uncheckst += '<form>';
+                            uncheckst += '<div class="d-flex">';
+                            uncheckst += '<p class="badge-pill b btn-gray align-right mt-3 ml-3">' + item.room?.userName + '</p>';
+                            uncheckst += '</div>';
+                            uncheckst += '<p class="pr-5 ml-5" onclick="DeleteClick(' + item.a_ChatId + ')"><span class="bg-gradient-light m-3 p-1 rounded-3">' + item.messageText + '</span></p>';
+                            uncheckst += '<div class="Trash pe-3" id="Tash' + item.a_ChatId + '"><i class="fa fa-trash-o" style="font-size:24px" onclick="DeleteMessage(' + item.a_ChatId + ');"></i></div>';
+                            uncheckst += '<p class="text-center text-muted">' + item.messageOn + '</p>';
+                            uncheckst += '</form>';
+                            id = item.roomId;
+                            chatid = item.a_ChatId;
+                        }
+                          AssinTo.push(item.roomId);
+                    })
+
+                    uncheckst += '<div class="row mb-4" >';
+                    uncheckst += '<div class="col-9 float-end" >';
+                    //uncheckst += '<input type="text" class="form-control" PlaceHolder = "Reply Text" id = "ResText" />';
+                    uncheckst += '</div>';
+                    uncheckst += '<div class="col-3 float-start">';
+                    uncheckst += '<input type="text" id="nroomid" value="'+ id +'" hidden="hidden"/>';
+                    uncheckst += '<input type="text" id="nchatid" value="'+ chatid +'" hidden="hidden"/>';
+                    //uncheckst += '<button class="btn btn-secondary justsend" onclick="SaveReplys(' + id + ');"> Send </button>';
+                    //uncheckst += '<button class="btn btn-secondary updatemsg" id="nupdatemsg" onclick="updatereply(' + chatid + ');"> Send </button>';
+                    uncheckst += '</div>';
+                    uncheckst += '</div>';
+                    var Assignedto = (AssinTo[0]);
+                    $('#RoomId').val(Assignedto);
+                    AssignedStatus(Assignedto);
+                 
+                    $('#MyChatsPage').append(uncheckst);
+                    $('.Trash').hide();
+                    $('.updatemsg').hide();
+                }
+            })
+        }
+
+        function GetAllChatsCurrentUser() {
+
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetAllChatsbyCurrentUser',
+                success: function (response) {
+                    var html12 = "";
+       
+                    $.each(response, function (key, item) {
+                        html12 += '<div class="d-flex" onclick="GetChatsbyUserId(' + item.userId + ')">';
+                        html12 += '<img class="icon-sm rounded-circle" src="' + item.userImage + '"/>';
+                        html12 += '<p>' + item.userName + '</p>';
+                        html12 += '</div>';
+                    })
+                    $('#AllUsersChats').append(html12);
+                }
+            })
+        }
+
+        function SaveReplys() {
+            var token = sessionStorage.getItem('token');
+            var Message = $('#ResText').val();
+            var id = $('#nroomid').val();
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/SaveREplybyRoomId',
+                data: { id, Message },
+                success: function (response) {
+                    GetChatsbyUserId(response);
+                }
+            })
+        }
+
+        function GetAllChats() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetAllChatUsers',
+                success: function (response) {
+
+                    var uncheckst = "";
+                    $.each(response, function (key, item) {
+                        uncheckst += '<div class="row mb-4">';
+                        uncheckst += '<div class="d-flex" onclick="GetChatsbyUserId(' + item.r_Id + ')">';
+                        uncheckst += ((item.roleId == 5) ? '<span class="badge bg-danger float-end">Guest</span>' : '<img class=" icon-sm rounded-circle " src="' + item.userImage + '"/>');
+                        uncheckst += '<p>' + item.userName + '</p>';
+                        uncheckst += '</div>';
+                        uncheckst += '</div>';
+                    })
+                    $('#AllUsersChats').append(uncheckst);
+                }
+            })
+        }
+
+         function AssignedStatus(id){
+               $('#AssignStatus').empty();
+                var UnAssigne = "Un-Assigned";
+            $.ajax({
+                url: '/Home/GetRoomAssignStatus?id='+id,
+                 success: function (response) {
+                     debugger
+                    console.log('ponse', response)
+                    if(response == null){
+                         $('#AssignStatus').append(UnAssigne);
+                         $('#AssignStatus').val(UnAssigne);
+                    }
+                    else
+                    {
+                        //$('#AssignStatus').append( response.userName);
+                        $('#AssignStatus').val( response.userName );
+                    }
+                }
+            })
+        }
+
+
+        function DeleteClick(id) {
+
+            $('.updatemsg').hide();
+            $('.Trash').hide();
+            $('#Tash' + id).show();
+            $('#updmsg' + id).show();
+        }
+
+        function DeleteMessage(id) {
+
+            $('#msgid').val(id);
+            $('#DeleteModal').modal('show');
+        }
+
+        $('#DeleteMsg').click(function () {
+
+            var id = $('#msgid').val();
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                url: '/Home/DeleteRoombyId?id=' + id,
+                type: 'Delete',
+                success: function (response) {
+                    location.reload();
+                }
+            })
+        })
+
+        $('#DeleteModalCancel').click(function () {
+            $('.Trash').hide();
+            $('#DeleteModal').modal('hide');
+        })
+
+        function EditMessage(id, Message) {
+
+            $('#ResText').val(Message);
+            $('.justsend').hide();
+            $('#updmsg' + id).show();
+            $('#nupdatemsg').show();
+            $('#msgid').val(id);
+        }
+
+        function updatereply() {
+
+            var Text = $('#ResText').val();
+            var Id = $('#msgid').val();
+            $.ajax({
+                url: '/Home/UpdateAdminChatbyId',
+                data: { Text, Id },
+                success: function (response) {
+                    location.reload();
+                }
+            })
+        }
+
+        function GetAllAdmin(){
+            var token= sessionStorage.getItem('token');
+            $.ajax({
+                headers:{
+                    authorization : 'Berear ' +token
+                },
+                url: '/Home/GetAllAdmins',
+                type: 'Get',
+                success: function (response) {
+                    var opti = "";
+                    $.each(response , function(key,item){
+                         console.log('admins',item);
+                            opti += '<option id="'+item.userId+'" value="'+item.userId+'">'+item.userName+'</option>';
+                    })
+                    $('#AssignTo').append(opti);
+                }
+            })
+        }
+
+        $('#SendStatus').click(function(){
+            debugger
+            var RoomId = $('#RoomId').val();
+            var AssignedTo = $('#AssignTo').val();
+            var token = sessionStorage.getItem('token');
+            debugger
+            $.ajax({
+                headers:{
+                    authorization: 'Berear ' + token 
+                },
+                url: '/Home/UpdateAssigningStatus',
+                data:{RoomId, AssignedTo},
+                type: 'POST',
+                 success: function (response) {
+                      AssignedStatus(RoomId);
+                      $('#SuccessMod').modal('show');
+                }
+            })
+        })
+
+        $('#SuccessModCancel').click(function(){
+            $('#SuccessMod').modal('hide');
+        })
+
+        $('#SuccessModClose').click(function(){
+            $('#SuccessMod').modal('hide');
+        })
+    </script>
+
+
+        <style>
+          .spantext_backgrou {
+                background-color: #6DAAD7;
+            }
+    </style>

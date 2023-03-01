@@ -1,0 +1,68 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+
+@{
+	ViewData["Title"] = "GetProductsbyUserId";
+	Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+    }
+
+	<section class="padding-y">
+		<div class="container">
+			<header class="section-heading">
+				<h3 class="section-title">Seller Products</h3>
+			</header>
+			<div class="row" id="ProductsShow">
+			</div>
+		</div>
+	</section>
+
+
+
+
+	<script>
+		$(document).ready(function(){
+			GetProductsbyUserId();
+		})
+
+		function GetProductsbyUserId(){
+		let url_str = window.location.href;
+		let url = new URL(url_str);
+		let search_params = url.searchParams;
+
+		let id = search_params.get('id');
+		debugger
+		console.log(id);
+			$.ajax({
+				url: '/Item/GetProductsbySellerId?id=' + id,
+				type: 'Get',
+			success: function (response) {
+				var html="";
+					var date = new Date();
+			console.log('res',response);
+					let diff = 6.048e+8;
+
+			$.each(response, function(key, item){
+						console.log('item',item);
+					html +='<div class="col-lg-3 col-md-6 col-sm-6" >';
+					html += '<figure class="card-product-grid" >';
+					html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+					//html += '<img height = "250" class="mix-blend-multiply" src="' + item.productImage + '">';
+					html += '<figcaption class="pt-2" >';
+					html += '<a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i ></a>';
+					html += '<strong class="text-muted12d" > ' + item.productPrice + '</strong>';
+					html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate" > ' + item.productName + '</a>';
+					html +='</figcaption>';
+					html += '</figure>';
+					html += '</div>';
+				
+					})
+					$('#ProductsShow').append(html);
+			}
+			})
+		}
+	</script>

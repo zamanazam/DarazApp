@@ -1,0 +1,825 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "EditTable";
+    Layout = "~/Views/Shared/_Layout6.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+@*    <div class="container">
+
+        <div class="card bg-gray">
+            <div class="row mb-4"></div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <label>Product Name</label>
+                    <input class="form-control" type="text" id="ProductName" />
+                </div>
+                <div class="col-3">
+                    <label>Product Material</label>
+                    <input class="form-control" type="text" id="ProdMaterial" />
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <input type="file" name="file" id="file" />
+                    <Input class="form-control" hidden="hidden" type="text" id="ProdId" />
+                </div>
+                <div class="col-3">
+
+                    <div id="image"></div>
+                </div>
+
+                <div class="col-3"></div>
+            </div>
+
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <label>Product Brand</label>
+                    <input class="form-control" type="text" id="ProdBrand" />
+
+                </div>
+                <div class="col-3">
+                    <label>Product Quality</label>
+                    <input class="form-control" type="text" id="ProdQuality" />
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-6">
+                    <label>Product Descriptions</label>
+                    <input class="form-control" type="text" id="ProdDes" />
+                </div>
+                <div class="col-3">
+                </div>
+
+                <div class="col-3"></div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <input type="file" multiple="multiple" name="multiple" id="multiple" />
+                </div>
+                <div class="col-3">
+                    <div id="savedimages">
+                    </div>
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <input hidden="hidden" class="form-control" type="text" id="prodDescripid" />
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+            </div>
+
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <button>Add Variation</button>
+                </div>
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+            </div>
+
+
+            <section id="InventoryDetail">
+            </section>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <label>Camera Quality</label>
+                    <input class="form-control" type="text" id="ProdCameraQuality" />
+                </div>
+                <div class="col-3">
+                    <label>Product Graphics</label>
+                    <input class="form-control" type="text" id="ProdGraphics" />
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <label>Product Capacity</label>
+                    <input class="form-control" type="text" id="ProdCapacity" />
+                </div>
+                <div class="col-3">
+                    <label>Product Display</label>
+                    <input class="form-control" type="text" id="ProdDisplay" />
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <label>Warranty Info</label>
+                    <input class="form-control" type="text" id="ProdWarrantyInfo" />
+                </div>
+                <div class="col-3">
+                    <label>Product Shipping Info</label>
+                    <input class="form-control" type="text" id="ProdShippingInfo" />
+                    <input class="form-control" hidden="hidden" type="text" id="ProdDesId" />
+                    <input class="form-control" hidden="hidden" type="text" id="ProdColourId" />
+                    <input class="form-control" hidden="hidden" type="text" id="ProdSizeId" />
+                </div>
+                <div class="col-3"></div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-3"></div>
+                <div class="col-3"></div>
+                <div class="col-3">
+                    <button class="secondary btn btn-success" id="btnupdate">Update</button>
+                </div>
+                <div class="col-3"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Saved</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Product Added Successfully</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="ErrorModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Error</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Error </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+*@
+
+
+    <section class="padding-y" id="ProductInfo1">
+        <div class="ps-5">
+            <input type="text" hidden="hidden" id="ProdIdsss" />
+            <div class="row">
+                <aside class="col-lg-4">
+                    <article class="gallery-wrap">
+                       <div class="row">
+                        <div class="img-big-wrap img-thumbnail">
+                            <a data-fslightbox="mygalley" data-type="image" href="#">
+                               <div class="gallery-uploader-wrap" width="5" height="5">
+                                <label class="uploader-img1">
+                                    <input type="file" name="file" id="file">
+                                    <svg xmlns="" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                        <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                    </svg>
+                                </label>
+                                </div>
+                                <div class="img-big-wrap img-thumbnail" id="image"></div>
+                            </a>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2 d-flex">
+                                <div class="d-flex" id="savedimages"></div>
+                                <div class="gallery-uploader-wrap" width="5" height="5">
+                                <label class="uploader-img1">
+                                    <input type="file" multiple="multiple" name="multiple" id="multiple">
+                                    <svg xmlns="savedimages" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                        <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                    </svg>
+                                </label>
+                                </div>  
+                           </div>
+                        </div>
+                   
+                    <div class="row">
+                            <div class="card m-1 p-4">
+
+                            <label>Product Name</label>
+                            <input class="form-control" type="text" id="ProductName" />
+                            <input hidden="hidden" id="VariId" />
+                            <input hidden="hidden" id="batchId">
+                            <label>Product Material</label>
+                            <input class="form-control" type="text" id="ProdMaterial" />
+                            <label>Product Brand</label>
+                            <input class="form-control" type="text" id="ProdBrand" />
+                            <label>Camera Quality</label>
+                            <input class="form-control" type="text" id="ProdCameraQuality" />
+                            <label>Product Graphics</label>
+                            <input class="form-control" type="text" id="ProdGraphics" />
+                            <label>Product Capacity</label>
+                            <input class="form-control" type="text" id="ProdCapacity" />
+                            <label>Product Display</label>
+                            <input class="form-control" type="text" id="ProdDisplay" />
+                            <label>Warranty Info</label>
+                            <input class="form-control" type="text" id="ProdWarrantyInfo" />
+                            <label>Product Descriptions</label>
+                            <input class="form-control" type="text" id="ProdDes" />
+                            <Input class="form-control" hidden="hidden" type="text" id="ProdId" />
+                        </div>
+                        </div>
+                      
+                     </article>
+
+                </aside>
+                <div class="col-lg-8 bg-white">
+                    <article class="ps-lg-3 m-3">
+                        
+                        <button id="AddVariation" class="add_field_button btn btn-success float-end">Add New Variation</button>
+                        <button id="AddBatch" class="btn btn-success float-end">Add New Batch</button>
+                        <div class="row mb-4">
+                            <div class="input_fields_wrap m-3"></div>
+                                <div class="inputquen m-3"></div>
+                            <div class="float-end">
+                            <button id="SaveVariations" class="btn btn-primary float-end">Update</button>
+                            </div>
+                        </div>
+                       
+                        <hr>
+                        <div class="row">
+                            <div class="mb-2">
+                               <label class="form-label">Variations</label>
+                                 <section id="InventoryDetail"></section>
+                                   <div class="row mb-4">
+                            <div class="col-4"></div>
+                            <div class="col-4"></div>
+                                <div class="col-4">
+                                <button class="btn btn-success float-end" id="btnupdate">Update All</button>
+
+                            </div>
+                        </div>
+                            </div>
+                            
+                        </div>
+
+                    </article>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+      <div>
+        <div id="myModalns" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5>Success</h5>
+                        <button type="button" id="myModalnsclose" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>Function Completed Successfully!</h5>   
+                    </div>
+                    <div class="modal-footer">
+                            <button id="myModalnscancel" class="btn btn-primary float-end">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+       <div>
+        <div>
+        <div id="AddNewModale" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" style="border : none" id="AddTitle">Add Inventory</h5>
+                        <button type="button" id="AddNewcancele" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="input_chess form-select" id="Variationsnames" name="input_chess"></select>
+                       
+                              </div>
+                              <div class="mb-4">
+                                   <input type="text" class="form-control" id="Quantityss" placeholder="Quantity"/>
+                                </div>
+                            <div class="mb-4">
+                        <input type="text" class="form-control" id="Pricess" placeholder="Price"/>
+                        </div>
+                    
+                    <div class="modal-footer">
+                      <button id="SaveBatcheses" class="btn btn-primary">Update</button>                      
+                    </div>
+                 </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    
+  
+
+    <style>
+           .uploader-img1 
+       {
+        
+        position: relative;
+        display: inline-flex;
+        width: 50px;
+        height: 50px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        vertical-align: middle;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        border-radius: 0.35rem;
+        border: 1px dashed #ccd1d6;
+        overflow: hidden;
+        background-color: #f8f9fa;
+    }
+    </style>
+
+    <script>
+        debugger
+        var token = sessionStorage.getItem('token');
+        $(document).ready(function () {
+           
+             $('#SaveVariations').hide();
+            $('.input_fields_wrap m-3').hide();
+            GetAll();
+            //GetDatas();
+       
+            debugger
+
+            $('#ErrorModal').hide();
+            $('#myModal').hide();
+            var max_fields = 10;
+            var wrapper = $(".input_fields_wrap");
+            var add_button = $(".add_field_button");
+            var x = 1;
+
+            $(add_button).click(function (e) {
+                $('#SaveVariations').show();
+                e.preventDefault();
+                if (x < max_fields) {
+                    //$(wrapper).append('<div class="row mb-4"><div class="col-3"></div><div class="col-3 inputinput"><input type="text" class="inputspetexts form-control" placeholder="Text" name="mytext[]"/></div><div class="col-3"><input type="text" class="inputspetexts form-control" placeholder="Text" name="mytext[]"/></div><div class="col-3"></div><a href="#" class="remove_field">Remove</a></div>');
+                    $(wrapper).append('<div class="row mb-4"><div class="inputinput"><input type="text" class="inputspetexts form-control w-50" placeholder="Text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+                    x++;
+                }
+            });
+
+            $(wrapper).on("click", ".remove_field", function (e) {
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
+            })
+
+           $("#SearchProduct").on("keyup", function () {
+               debugger
+                var value = $(this).val().toLowerCase();
+                $("#InventoryDetail").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+
+        });
+        $('#AddNewcancele').click(function(){
+            debugger
+            $('#AddNewModale').modal('hide');
+        })
+
+
+         function previewFile(input) {
+            var file = $("input[type=file]").get(0).files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        $('#AddChanges').click(function () {
+            debugger
+            var form = new FormData();
+            var prices = $('.inputprice');
+            console.log(prices);
+            for (var i = 0; i < prices.length; i++) {
+                form.append('pprice', $(prices[i]).val());
+            }
+
+            var quati = $('.inputquant');
+            console.log(quati);
+            for (var i = 0; i < quati.length; i++) {
+                form.append('pquantity', $(quati[i]).val());
+            }
+            var Variations = $('.variids');
+            for (var i = 0; i < Variations.length; i++) {
+                form.append('VariationId', $(Variations[i]).val());
+            }
+
+            $.ajax({
+                url: '/Home/AddBatch',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    debugger
+                    $('#AddNewModaln').modal('hide');
+                    $('#myModalns').modal('show');
+                },
+                error: function (data) {
+                    debugger
+                    $('#AddNewModaln').modal('hide');
+                    $('#ErrorModal').modal('show');
+
+                }
+
+            })
+        })
+
+        function GetAll() {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let id = search_params.get('id');
+            var token = sessionStorage.getItem('token');
+            debugger
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Table/ProductDetailsbyId?id=' + id,
+                type: 'Get',
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    var html = "";
+                    debugger
+                    console.log('response',response);
+                    $("#ProdId").val(response.productId);
+                    $("#ProductName").val(response.productName);
+                    $("#prodPrice").val(response.productPrice);
+                    $("#image").append('<img style="height: 575px ; width : 620px"  src = "' + response.productImage + '" >');
+                    $.each(response.productViewModels.colours, function (key, item) {
+                        console.log(item);
+                        $("#ProdColour").append('<option value="' + item.colourId + '">' + item.colourName + '</option>');
+                    })
+
+                    $.each(response.productViewModels.sizes, function (key, item) {
+                        console.log(item);
+                        $("#ProdSize").append('<option value="' + item.sizeid + '">' + item.sizeName + '</option>');
+                    })
+                    let x= 1;
+
+                    $.each(response.productViewModels.productVariations, function (key, obj) {
+                        console.log('obj', obj);
+                        var x1 = x++;
+                        console.log('objn', obj.productBatches);
+                        html += '<article class="bg-gradient-light mb-4">';
+                        html += '<div class="row">';
+                        html += '<h5 class="colour:black">'+ x1 +'.' + obj.p_VariationsName + '</h5>';
+                        html += '</div>';
+                        
+                        $.each(obj.productBatches, function (key, objss) {
+                            console.log('nn', objss);
+                            html += '<div class="row">';
+                            html += '<div class="col-3">';
+                            html += '<label>Total Stock</label>';
+                            html += '<input type="text" readonly class=" form-control w-50" value="' + objss.quantity + '"/>';
+                            html += '<input type="text" hidden="hidden" class="VariationId form-control w-50" value="' + objss.batchId + '"/>';
+                            html += '</div>';
+                             html += '<div class="col-3">';
+                            html += '<label>Price</label>';
+                            html += '<input type="text" class="ProdPrice form-control w-50" value="' + objss.price + '"/>';
+                            html += '</div>';
+                            html += '<div class="col-3">';
+                            html += '<label>Date</label>';
+                            html += '<input type="text" readonly class=" form-control w-75" value="' + objss.uploadOn + '"/>';
+                            html += '</div>';
+                            html += '<div class="col-3">';
+                            html += '<label>Remaining Stock </label>';
+                            html += '<input type="text" readonly class="ProdQuantity form-control w-50" value="' + objss.remainingQuantity + '"/>';
+                            html += '</div>';
+                           
+                            html += '</div>';
+                        })
+                        html += '</div>';
+                        html += '</article>';
+                    })
+                    $('#InventoryDetail').append(html);
+
+                    $.each(response.productViewModels.productDescriptions, function (key, item) {
+                        console.log(item);
+                        $("#ProdDesId").append('<option>' + item.pdescriptionId + '</option>');
+                        $("#ProdBrand").val(item.productBrand);
+                        $("#ProdDes").val(item.productDes);
+                        $("#ProdMaterial").val(item.productMaterial);
+                        $("#ProdQuality").val(item.productQuality);
+                        $("#ProdQuantity").val(item.productQuantity);
+                        $("#ProdType").val(item.productType);
+
+                    })
+
+                    $.each(response.productViewModels.productDescriptionimages, function (key, item) {
+                        console.log('id',item);
+                        $("#savedimages").append('<label class="uploader-img mb-1" onclick="ChangeImage(' + item.productDescriptionImagesId +',\'' + response.uploadDate + '\')"><img style="height: 50px ; width : 70px" src = "' + item.productdesImage1 + '" ></label>');
+                    })
+
+                    $.each(response.productViewModels.productSpecifications, function (key, item) {
+                        console.log(item);
+                        $("#ProdCameraQuality").val(item.cameraQuality);
+                        $("#ProdGraphics").val(item.graphics);
+                        $("#ProdMemory").val(item.memory);
+                        $("#ProdCapacity").val(item.processorCapacity);
+                        $("#ProdDisplay").val(item.productDisplay);
+                        $("#ProdShippingInfo").val(item.productShippingInfo);
+                        $("#ProdSpecificationText").val(item.productSpecificationsText);
+                        $("#ProdWarrantyInfo").val(item.productWarrantyInfo);
+                    })
+
+                    $.each(response.productViewModels.productSize, function (key, item) {
+                        console.log(item);
+                        $("#ProdSizeId").val(item.productSizeId);
+                    })
+
+                    $.each(response.productViewModels.productColours, function (key, item) {
+                        console.log(item);
+                        $("#ProdColourId").val(item.productColourId);
+                    })
+                }
+            })
+        };
+
+        function ChangeImage(id,newdate){
+            debugger
+            $.ajax({
+                url: '/Home/GetImagebyProductImageId?id=' + id,
+                success: function (response) {
+                    console.log('image', response);
+
+                    let diff = 6.048e+8;
+                    var date = new Date();
+                    $('#image').empty();
+                    $("#image").append(((date - (new Date(newdate))) <= diff) ? '<a href="#" class=""><div class="d-flex justify-content-end"><span class="badge bg-danger">New</span></div><img style="height: 575px ; width : 620px" src = "' + response.productdesImage1 + '" ></a> ' : ' <a href="#" class="img-wrap rounded bg-gray-light"><img style="height: 575px ; width : 620px" src = "' + response.productdesImage1 + '" ></a>');
+
+                }
+            })
+        }
+
+        $('#SaveVariations').click(function(){
+              var ProductIds = $('#ProdId').val();
+              console.log(ProductIds);
+            var form = new FormData();
+              var spetext = $('.inputspetexts');
+             
+            for (i = 0; i < spetext.length; i++) {
+
+                form.append('Texts', $(spetext[i]).val());
+            }
+         
+              form.append('ProductId', $('#ProdId').val());
+              debugger
+          $.ajax({
+              url: '/Home/AddVariat',
+              data: form,
+              type: 'POST',
+              processData: false,
+              contentType: false,
+              success: function(response){  
+                    GetDatas();
+              }
+
+          })
+
+        })
+
+        $('#AddBatch').click(function(){
+            GetDatas();
+        })
+           
+        $('#myModalnsclose').click(function(){
+            $('#myModalns').modal('hide');
+        })
+
+         $('#myModalnscancel').click(function(){
+            $('#myModalns').modal('hide');
+        })
+
+        $('#AddNewcanceln').click(function(){
+               $('#AddNewModal').modal('hide');
+        })
+        function GetDatas() {
+           
+            debugger
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let id = search_params.get('id');
+           
+            //$('.input_fields_wrap').empty();
+            $.ajax({
+                url: '/Home/GetProductVariationsbyId?id=' + id,
+                type: 'Post',
+                success: function (response) {
+                   
+                    console.log('res', response);
+                    $('.input_chess').empty();
+                    $.each(response, function (key, item) {
+                        console.log('itemmmmm', item.p_VariationsName);
+                        debugger
+                        //$('#SaveBatch').show();
+                        
+                        var vale = $('.input_chess');
+                      
+                        $(vale).append('<option class="vari form-select" onchange="AddQuantPrice();" value="' + item.p_VariationsID + '">' + item.p_VariationsName + '</option>');
+                        $('#AddNewModale').modal('show');
+                    })
+                },
+            })
+        }
+
+        $('#btnupdate').click(function () {
+            debugger
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let id = search_params.get('id');
+
+            var productname = $('#ProductName').val();
+            var productid = $('#ProdId').val();
+            var ProductMaterial = $('#ProdMaterial').val();
+            var ProductPrice = $('#prodPrice').val();
+            var ProductBrand = $('#ProdBrand').val();
+            var ProductType = $('#ProdType').val();
+            var ProductQuantity = $('#ProdQuantity').val();
+            var PdescriptionId = $('#ProdDesId').val();
+            var ProductDes = $('#ProdDes').val();
+            var ProductQuality = $('#ProdQuality').val();
+            var Productwarantyinfo = $('#ProdWarrantyInfo').val();
+            var ProdCameraQuality = $('#ProdCameraQuality').val();
+            var ProdDisplay = $('#ProdDisplay').val();
+            var ProdShippingInfo = $('#ProdShippingInfo').val();
+            var ProdSpecificationText = $('#ProdSpecificationText').val();
+            var ProdMemory = $('#ProdMemory').val();
+            var ProdGraphics = $('#ProdGraphics').val();
+            var ProdCapacity = $('#ProdCapacity').val();
+
+
+            var form = new FormData();
+            form.append('file', $('#file')[0].files[0]);
+            debugger
+
+            var variid = $('.VariationId');
+            console.log('variid', variid);
+            for (i = 0; i < variid.length; i++) {
+                form.append('BatchIds', $(variid[i]).val());
+            }
+
+            var proprice = $('.ProdPrice');
+            console.log('pric', proprice);
+            for (i = 0; i < proprice.length; i++) {
+                form.append('ProdPrice', $(proprice[i]).val());
+            }
+
+            var proquntity = $('.ProdQuantity');
+            console.log('qua', proquntity);
+            for (i = 0; i < proquntity.length; i++) {
+                form.append('ProdQuantity', $(proquntity[i]).val());
+            }
+
+            var multiple = $('#multiple').get(0).files;
+            for (i = 0; i < multiple.length; i++) {
+                form.append('savedimages', $(multiple)[i]);
+            }
+            var savedimagesid = $('#savedimagesid').text();
+            for (i = 0; i < savedimagesid.length; i++) {
+                form.append('savedimagesid', $(savedimagesid)[i]);
+            }
+            form.append('ProductId', id);
+            form.append('PdescriptionId', PdescriptionId);
+            form.append('ProductName', productname);
+            form.append('ProductMaterial', ProductMaterial);
+            form.append('ProductPrice', ProductPrice);
+            form.append('ProductBrand', ProductBrand);
+            form.append('ProductQuantity', ProductQuantity);
+            form.append('ProductType', ProductType);
+            form.append('ProductQuality', ProdCameraQuality);
+            form.append('ProductDisplay', ProdDisplay);
+            form.append('ProductWarrantyInfo', Productwarantyinfo);
+            form.append('ProductShippingInfo', ProdShippingInfo);
+            form.append('ProductSpecificationsText', ProdSpecificationText);
+            form.append('CameraQuality', ProdCameraQuality);
+            form.append('Memory', ProdMemory);
+            form.append('Graphics', ProdGraphics);
+            form.append('ProcessorCapacity', ProdCapacity);
+            form.append('ProductDes', ProductDes);
+
+            console.log(form);
+            debugger
+            $.ajax({
+                url: '/Table/EditTabledata',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    debugger
+                    console.log(data);
+                   
+                    //window.location.replace('/Table/EditTable?id='+id);
+                    $('#myModalns').modal('show');
+                },
+                error: function (data) {
+                    debugger
+                    console.log(data);
+                    alert("Error");
+                }
+            })
+        })
+
+
+        $('#modelcancel').click(function () {
+            $('#myModal').modal('hide');
+            window.reload();
+            //window.location.replace('/Table/EditTable?id=' + id);
+        })
+
+        $('#modelclose').click(function () {
+            $('#myModal').modal('hide');
+              window.reload();
+        })
+
+
+        $('#SaveBatcheses').click(function(){
+            debugger
+            var form = new FormData();
+         
+            form.append('pricesval', $('#Pricess').val());
+            form.append('quatival',  $('#Quantityss').val());
+             form.append('VariationId',  $('#Variationsnames').val());
+             console.log('form',form);
+             $.ajax({
+                url: '/Home/AddSingleBaatch',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    debugger
+                    $('#AddNewModaln').modal('hide');
+                    $('#myModalns').modal('show');
+                    },
+                    error: function (data) {
+                        debugger
+                        alert("Error");
+                    }
+            })
+        })
+
+       
+    </script>
+

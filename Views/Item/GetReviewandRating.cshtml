@@ -1,0 +1,81 @@
+﻿@using DarazApp.Services
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "GetReviewandRating";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    
+    <div class="container">
+        <card id="ReviewandRating">
+            <div class="rating d-flex">
+           <span id="star1" value="0" class="1st fa fa-star"></span>
+           <span id="star2" class="2nd fa fa-star"></span>
+           <span id="star3" class="3rd fa fa-star"></span>
+           <span id="star4" class="4th fa fa-star"></span>
+           <span id="star5" class="5ve fa fa-star"></span>
+            </div>
+
+            <div>
+                <input type="text" id="Review"/>
+                <input type="text" hidden="hidden" value="" id="firs" />
+                <button type="submit" id="RatingReview">Send</button>
+            </div>
+        </card>
+    </div>
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+    <script>
+      
+        $('#star1').click(function(){
+            let ratval = 1;
+            debugger
+            $(this).parent().find('star1').css('color', 'orange');
+            $('.1st').css('color', '#FFFF00');
+           var as= $('#firs').val(1); 
+           console.log('1',as);
+   
+        })
+        $('#star2').click(function(){
+            debugger
+            $(this).parent().find('star2').css('color', 'orange');
+            $('.1st, .2nd').css('color', '#FFFF00');
+            $('#firs').val(2);
+            var a=$('#firs').text();
+            
+            console.log('c', a);
+        })
+        $('#star3').click(function(){
+            debugger
+            $(this).parent().find('star3').css('color', 'orange');
+            $(this).css('color', '#FFFF00');
+            $('#firs').val(3);
+            var b=$('#firs').text();
+            console.log('c', b);
+        })
+        $('#star4').click(function(){
+            debugger
+            $(this).parent().find('star4').css('color', 'orange');
+            $(this).css('color', '#FFFF00');
+            $('#firs').val(4);
+            var c= $('#firs').text();
+            console.log('c',c);
+        })
+        $('#star5').click(function () {
+            debugger
+            $(this).parent().find('star5').css('color', 'orange');
+            $(this).css('color', '#FFFF00');
+            $('#firs').val(5);
+            var d=$('#firs').text();
+            console.log('5',d);
+        })
+       
+
+    </script>

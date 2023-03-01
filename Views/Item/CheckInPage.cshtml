@@ -1,0 +1,1003 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "CheckInPage";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <section class="padding-y bg-light" id="Main">
+        <div class="container">
+
+            <div class="row">
+                <aside class="col-lg-3 col-xl-3">
+                    <nav class="nav flex-lg-column nav-pills mb-4">
+                        <a class="nav-link active">New Order</a>
+                        <a class="nav-link" href="/Home/UpdateUserAccount">Update Profile</a>
+                        <a class="nav-link" id="GetAllOrders">Orders history</a>
+                        <a class="nav-link" href="/Item/GOrdersSellerView">Orders by Sellers</a>
+
+                    </nav>
+
+                </aside>
+                <main class="col-lg-9  col-xl-9">
+                    <article class="card">
+                        <div class="content-body">
+
+                            <figure class="itemside align-items-center">
+                                <div href="/Home/UpdateUserAccount" class="aside">
+                                    <span class="bg-gray icon-md rounded-circle">
+                                        <a href="/Home/UpdateUserAccount"><div id="UserImage"></div></a>
+                                    </span>
+                                </div>
+                                <figcaption href="/Home/UpdateUserAccount" class="info" id="UserInfo">
+                                    <h6 class="title" id="UserName1"></h6>
+                                    <div id="UserEmail1"></div>
+                                </figcaption>
+                            </figure>
+
+                            <hr>
+
+                            <div class="row g-2 mb-3">
+                                <div class="col-md-6">
+                                    <article class="box bg-light">
+                                        <b class="mx-2 text-muted" id="UserAddress"><i class="fa fa-map-marker-alt"></i></b>
+                                    </article>
+                                </div>
+                                <div class="col-md-6">
+                                    <article class="box bg-light">
+                                        <b class="mx-2 text-muted" id="UserAddress1"><i class="fa fa-map-marker-alt"></i></b>
+                                    </article>
+                                </div>
+                            </div>
+
+                            <hr class="my-4">
+
+                            <h5 class="card-title"> Your orders </h5>
+                            <div class="card border-primary mb-4" id="Orders2">
+                            </div>
+
+                        </div>
+                    </article>
+                </main>
+            </div>
+
+            <br><br>
+        </div>
+    </section>
+
+        <section class="padding-y bg-light" id="ReturnInfo">
+        <div class="container">
+            <div class="row">
+                <main class="col-xl-12 col-lg-12">
+                  
+            <input type="text" hidden="hidden" id="ProdIds"/>
+            <input type="text" hidden="hidden" id="OrderIds"/>
+            <input type="text" hidden="hidden" id="VariIds"/>
+                    <input type="text" hidden="hidden" id="BatchIds" />
+
+                    <article class="card">
+                        <div class="content-body">
+                            <h5 class="card-title"> Return Info </h5>
+
+                            <div class="row">
+                                <div class="col-6">
+
+                                    <label class="form-label">Product Image</label>
+                                    <div class="gallery-uploader-wrap" width="5" height="5">
+                                        <label class="uploader-img1">
+                                            <input type="file" multiple="multiple" name="multiple" id="multiple" onchange="previewFile(this);">
+                                            <svg xmlns="savedimages" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                                <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                            </svg>
+                                        </label>
+                                    </div>
+                                     
+                                    <label class="form-label mt-4 ">Return Number </label>
+                                    <input type="text" class="form-control" placeholder="Return Number" id="ReturnNumber">
+
+                                    <label class="form-label mt-4">Return Quantity </label>
+                                    <input type="text" class="form-control" placeholder="Return Quantity" id="ReturnQuantity">
+
+                                    <textarea type="text" class="form-control mt-4" Placeholder="Return Reason" id="ReasonText"></textarea>
+
+                                </div>
+                                <div class="col-6">
+                                    <article class="gallery-wrap">
+                                        <div class="img-big-wrap img-thumbnail">
+                                            <a data-fslightbox="mygalley" data-type="image" href="images/items/detail1/big.webp">
+                                                <img class="img-big-wrap img-thumbnail" id="image" />
+                                            </a>
+                                        </div>
+
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="float-end">
+                                <button class="btn btn-success" id="Update">Continue</button>
+                            </div>
+                        </div> <!-- card-body end.// -->
+                    </article> <!-- card end.// -->
+
+
+                </main> <!-- col.// -->
+                <!-- col.// -->
+            </div> <!-- row.// -->
+
+            <br><br>
+
+        </div> <!-- container .//  -->
+    </section>
+
+        <div id="RatingModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label for="exampleInputEmail1">Rating</label>
+                        <button type="button" id="RatingModalCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <input hidden="hidden" id="orderid" />
+                        <input hidden="hidden" id="variid" />
+                        <div id="prodid"></div>
+                        <div id="prodimage"></div>
+                        <div id="prodName"></div>
+                        <div class="rating d-flex">
+                            <span id="star1" class="1st fa fa-star"></span>
+                            <span id="star2" class="2nd fa fa-star"></span>
+                            <span id="star3" class="3rd fa fa-star"></span>
+                            <span id="star4" class="4th fa fa-star"></span>
+                            <span id="star5" class="5ve fa fa-star"></span>
+
+                            <input type="text" hidden="hidden" value="" id="firs" />
+                        </div>
+                        <label for="exampleInputEmail1">Rating</label>
+                        <input type="text" id="Review" class="form-control" />
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" id="RatingReview">Send</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    
+
+         <div>
+        <div id="InstructPopUp" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Instructions For Return</h4>
+                        <button type="button" id="Imodelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            <li typeof="checkbox">Please Read All Instruction Carefully.</li>
+                            <li>Pack the Product in Which you Recieved the Order.</li>
+                            <li>Avoid to Pack in Other Packets.</li>
+                            <li>Make Sure It is fully safely Packed and will not be effected by Enviromental Condition.</li>
+                            <li>Make Sure It is fully safely Packed and will not be effected by Enviromental Condition.</li>
+                            <li>First You have to Deliver it in nearest Daraz WareHouse.</li>
+                            <li>Return Number will be Created and you have to write it on Parcel and write it in Return Number Field.</li> 
+                            <li>After Verify You will received returned Amount on your Registered Phone Number by JazzCash.</li>
+                            <li>Return Product Procedure Take upto 07 days.</li>
+                            
+                        </ul>
+                        @*<input type="text" class="form-control" placeholder="Reason" id="Reason"/>
+                        <input type="text" class="form-control" placeholder="Return Number" id="ReturnNumber"/>*@
+                    </div>
+                    <div class="modal-footer">
+                        @*<button type="button" id="ImodelSend" class="btn btn-primary" data-dismiss="modal">Send</button>*@
+                          <button type="button" id="Imodelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="LoginModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login Error</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please Login First</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+    <div>
+        <div id="ThanksReview" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    </div>
+                    <div class="modal-body">
+                        <p>Thanks for Review</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="ThanksReviewClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+           $('#ReturnInfo').hide();
+           $('#RatingModal').modal('hide');
+           $('#InstructPopUp').modal('hide');
+            var token = sessionStorage.getItem('token');
+            if (token == null) {
+                $('#LoginModal').modal('show');
+            }
+            else {
+                $('#LoginModal').modal('hide');
+                $('#ReviewandRating').hide();
+                GetDatas();
+
+            }
+        })
+        $('#modelclose').click(function () {
+            debugger
+            $('#LoginModal').modal('hide');
+            window.location.replace('/Home/FirstPage');
+        })
+
+        $('#modelcancel').click(function () {
+            $('#LoginModal').modal('hide');
+
+        })
+        $('#Imodelclose').click(function () {
+            debugger
+            $('#InstructPopUp').modal('hide');
+             $('#Main').hide();
+            $('#ReturnInfo').show();
+        })
+
+        $('#Imodelcancel').click(function () {
+            $('#InstructPopUp').modal('hide');
+             $('#Main').hide();
+            $('#ReturnInfo').show();
+
+        })
+       
+        function ReturnOrder(id, orderid, variid, batchid) {
+            debugger
+            $.ajax({
+                url: '/Item/DeleteOrder',
+                data: { id, orderid, variid, batchid },
+                success: function (response) {
+                    var ret1 = "";
+                    console.log('response', response);
+                    $.each(response, function (key, items) {
+                        console.log('itm', items);
+                        ret1 += '<article class="card border-primary mb-4">';
+                        ret1 += '<div class="card-body">';
+                        ret1 += '<header class="d-lg-flex">';
+                        ret1 += '<div class="flex-grow-1">';
+                        ret1 += '<h6 class="mb-0" id="OrderId">' + 'Orderid' + ':' + items.odOrderdetailId + '</h6>';
+                        //html += '<input type="text" id="OrderDataId" value="' + items.odOrderdetailId + '"/>';
+                        ret1 += '<h6 class="mb-0" id="OrderStatus">' + items.statusName + '</h6>';
+                        ret1 += '<span class="text-muted" id="OrderDate">' + 'Date ' + ':' + items.uploadDate + '</span>';
+                        ret1 += '</div>';
+                        ret1 += '<div>';
+                        ret1 += '<div>';
+                        //ret1 += ((diff == items.stauts)) ? '<a><div><span class="badge bg-danger"> Review </span></div></a>' : '<div><p class="text-muted">Review</p></div>';
+                        //ret1 += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="ReturnOrder(' + items.odOrderdetailId + ');" class="badge bg-warning"> Return </span></div></a>' : '<div><p class="text-muted">Return </p></div>';
+                        ret1 += '</div>';
+                        ret1 += '</div>';
+                        ret1 += '</div>';
+                        ret1 += '<div>';
+                        ret1 += '</div>';
+                        ret1 += '</header>';
+                        ret1 += '<hr>';
+                        ret1 += ' <div class="row">';
+                        ret1 += ' <div class="col-lg-4">';
+                        ret1 += '  <p class="mb-0 text-muted">Contact</p>';
+                        ret1 += ' <p class="m-0">';
+                        ret1 += '  ' + items.odUserName + ' <br> ' + items.odPhoneNo + ' <br>' + items.odEmail + '</p>';
+                        ret1 += ' </div>';
+                        ret1 += ' <div class="col-lg-4 border-start">';
+                        ret1 += ' <p class="mb-0 text-muted">Shipping address</p>';
+                        ret1 += ' <p class="m-0">' + items.odNationality + '<br> ' + items.address + '</p>';
+                        ret1 += ' </div>';
+                        ret1 += '<div class="col-lg-4 border-start">';
+                        ret1 += ' <p class="mb-0 text-muted">Payment</p>';
+                        ret1 += ' </div>';
+                        ret1 += '  </div>';
+                        ret1 += '<hr>';
+                        ret1 += ' <div class="d-flex">';
+                        ret1 += '<ul class="row">';
+                        ret1 += '<li class="col-xl-4  col-lg-6">';
+                        ret1 += '<figure class="itemside mb-3 d-flex">';
+                        //html += '<img width="72" height="72" class="prdimag" alt="' + items.orderHistoryView?.productImage + '" id="' + items.orderHistoryView?.productId + '" src="' + items.orderHistoryView?.productImage + '" class="img-sm rounded border">';
+                        $.each(items.orderHistoryView, function (key, itemss) {
+                            console.log('itemsss', itemss);
+                            ret1 += '<div class="d-flex">';
+                            ret1 += '<img width="72" height="72" onclick="GetRatings(' + itemss.productId + ',' + items.odOrderdetailId + ',\'' + items.stauts + '\',' + itemss.productVariations?.p_VariationsID + ')" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border">';
+                            ret1 += '<input type="text" hidden="hidden" id="ProductIdss" value="' + itemss.productId + '" />';
+                            ret1 += '<input type="text" hidden="hidden" class="ordersidss" id="OrderDataId' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
+                            //html += '<input type="text" hidden="hidden" class="ordersidss" id="Variid' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
+                            ret1 += '<figcaption class="info">';
+                            $.each(itemss.productComments, function (key, obj) {
+                                console.log('obj', obj);
+                                console.log('ratings', obj.rating);
+                                ret1 += ((1 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((2 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((3 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((4 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((5 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star checked" ></span>' : '';
+                            })
+                            ret1 += '<p class="title" id="ProdDes">' + itemss.productName + '</p>';
+                            ret1 += '<div class="d-flex">';
+                            ret1 += '<p class="title" id="ProdDes">' + itemss.productQuantity + 'x' + '</p>';
+                            ret1 += '<p id="ProdQuantityandPrize">' + '=' + itemss.totalPrice + 'Rs' + '</p>';
+                            ret1 += '</div>';
+                            ret1 += '<p id="ProdQuantityandPrize">' + itemss.netPrice + 'Rs' + '</p>';
+                            ret1 += '</figcaption>';
+                        })
+                        ret1 += '</div>';
+                        ret1 += '</figure>';
+                        ret1 += '</li>';
+                        ret1 += '</ul>';
+                        ret1 += '</div>';
+                        ret1 += '</article>';
+                    })
+                    $('#Returns1').append(ret1);
+                    $('#Main').hide();
+                    $('#Returns123').show();
+
+                }
+            })
+        }
+
+        function previewFile(input) {
+            debugger
+            var file = $("input[type=file]").get(0).files[0];
+
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function () {
+                    $("#image").attr("src", reader.result);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        $('#Update').click(function(){
+            debugger
+            var token = sessionStorage.getItem('token');
+            var form = new FormData();
+            var ReturnNumber = $('#ReturnNumber').val();
+            var Reason = $('#ReasonText').val();
+            var ReturnQuantity = $('#ReturnQuantity').val();
+        
+            form.append('ReturnNumber',$('#ReturnNumber').val());
+            form.append('Reason',$('#ReasonText').val());
+            form.append('ReturnQuantity',$('#ReturnQuantity').val());
+            form.append('Image', $('#multiple')[0].files[0]);
+            form.append('ProductId',$('#ProdIds').val());
+            form.append('OrderId',$('#OrderIds').val());
+            form.append('VariationId',$('#VariIds').val());
+            form.append('BatchId',$('#BatchIds').val());
+            console.log('form',form);
+            $.ajax({
+                headers:{
+                    'authorization' : 'Berear ' +token
+                },
+                url: '/Item/ReturnProductbyOrderId',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                 success: function (response) {
+                 alert('Your Payment will be returned through JazzCash');
+                 },
+                 error:function (response){
+                     alert('Return Quantity Should be Less than Purchased Quantity');
+                 }
+            })
+
+        })
+
+
+        function GetDatas() {
+            debugger
+            var token = sessionStorage.getItem('token');
+            var html = "";
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/CheckInPage',
+                type: 'Post',
+                data: 'Json',
+                success: function (response) {
+                    debugger
+                    let deliver = 6.048e+8;
+                    var date = new Date();
+                    let diff = 4;
+                    let rating = 5;
+                    var itotprice = 0;
+                    console.log('first',response);
+                    $.each(response, function (key, items){
+                        console.log('itm',items);
+                        $('#UserImage').append('<img class="icon-md rounded-circle" src="' + items.odUserImage + '"/>');
+                        $('#UserName1').append('<h6 class="title">' + items.userName + '</h6>');
+                        $('#UserEmail1').append('<p id="UserEmail" >' + items.email + ',' + items.phoneNo + '<a href="#" class="px-2"></a>');
+                        $('#UserAddress').append(items.address);
+                        $('#UserAddress1').append(items.shippingAddress);
+                        $('#UserNamea').append(items.odUserName);
+                        $('#UserEmaila').append(items.odEmail);
+                        $('#UserPhonea').append(items.odPhoneNo);
+
+                        //html += '<div class="card border-primary mb-4">';
+                        html += '<div class="card-body">';
+                        html += '<header class="d-lg-flex">';
+                        html += '<div class="flex-grow-1">';
+                        html += '<input type="text" hidden="hidden" value="' + items.odOrderdetailId + '" id="OrderDataid" />';
+                        html += '<h6 class="mb-0" id="OrderId">' + 'OrderId' + ':' + items.odOrderdetailId + '</h6>';
+                        html += '<h6 class="mb-0" id="OrderStatus">' + items.statusName + '</h6>';
+                        html += '<span class="text-muted" id="OrderDate">' + 'Date ' + ':' + items.uploadDate + '</span>';
+
+                        html += '</div>';
+                        html += '<div>';
+                        html += '<div>';
+                        html += ((diff == items.stauts)) ? ' <a><div><span onclick="GetRatings(' + items.odOrderdetailId + ');" class="badge bg-danger"> Review </span></div></a>' : '<div><p class="text-muted">Review</p></div>';
+                        html += '</div>';
+                        html += '</div>';
+                        html += '<div>';
+                        html += '</div>';
+                        html += '</header>';
+                        html += '<hr>';
+                        html += ' <div class="row">';
+                        html += ' <div class="col-lg-4">';
+                        html += '  <p class="mb-0 text-muted">Contact</p>';
+                        html += ' <p class="m-0">';
+                        html += '  ' + items.odUserName + ' <br> ' + items.odPhoneNo + ' <br>' + items.odEmail + '</p>';
+                        html += ' </div>';
+                        html += ' <div class="col-lg-4 border-start">';
+                        html += ' <p class="mb-0 text-muted">Shipping address</p>';
+                        html += ' <p class="m-0">' + items.odNationality + '<br> ' + items.address + '</p>';
+                        html += ' </div>';
+                        html += '<div class="col-lg-4 border-start">';
+                        html += ' <p class="mb-0 text-muted">Payment</p>';
+                        html += ' <p class="mb-0 text-muted">'+items.totalPrice+'</p>';
+                        html += ' </div>';
+                        html += '  </div>';
+                        html += '<hr>';
+                        html += ' <div class="d-flex">';
+                        html += '<ul class="row">';
+                        html += '<li class="col-xl-4  col-lg-6">';
+                        html += '<figure class="itemside mb-3 d-flex">';
+                        $.each(items.orderHistoryView, function (key, itemss) {
+                            console.log('itemsss', itemss);
+                            html += '<div class="d-flex">';
+                            html += '<img width="72" height="72" onclick="GetRatings(' + itemss.productId + ',' + items.odOrderdetailId + ',\'' + items.stauts + '\' ,' + itemss.productVariations?.p_VariationsID + ')" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border">';
+                            html += '<input type="text" hidden="hidden" id="ProductIdss" value="' + itemss.productId + '" />';
+                            html += '<input type="text" hidden="hidden" class="ordersidss" id="OrderDataId' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
+                            html += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="InstructionsReturn(' + items.odOrderdetailId + ',' + itemss.orderId + ',' + itemss.productVariations?.p_VariationsID + ',' + itemss.productBatches?.batchId + ');" class="badge bg-warning"> Return </span></div></a>' : '';
+
+                            html += '<figcaption class="info">';
+                            $.each(itemss.productComments, function (key, obj) {
+                                console.log('obj', obj);
+                                console.log('ratings', obj.rating);
+                                html += ((1 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html += ((2 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html += ((3 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html += ((4 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                html += ((5 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star checked" ></span>' : '';
+                            })
+                            html += '<p class="title" id="ProdDes">' + itemss.productName + '</p>';
+                            html += '<div class="d-flex">';
+                            html += '<p class="title" id="ProdDes">' + itemss.remainingQuantity + 'x' + '</p>';
+                            html += '<p id="ProdQuantityandPrize">' + '=' + itemss.totalPrice + 'RS' + '</p>';
+                            html += '</div>';
+                            html += '<p id="ProdQuantityandPrize">' + itemss.netPrice + 'RS' + '</p>';
+                            html += '</figcaption>';
+                        })
+                         console.log('itotalpric', itotprice);
+                        $('#PaymentValue').val(itotprice);
+                        html += '</div>';
+                        html += '</figure>';
+                        html += '</li>';
+                        html += '</ul>';
+                        html += '</div>';
+                    })
+                    $('#Orders2').append(html);
+                }
+            })
+        }
+
+
+        function GetRatings(id,orderid, val, variationid) {
+            debugger
+            let Delivered = 4;
+            if (val != Delivered) 
+            {
+
+            }
+            else {
+                $('#variid').val(variationid);
+                $('#orderid').val(orderid);
+                $.ajax({
+                    url: '/Item/GetProductsbyOrderDId?id=' + id,
+                    type: 'Get',
+                    success: function (response) {
+                        debugger
+                        console.log('newresp', response);
+                        var rati = "";
+                        $('#Main').hide();
+                        $('#prodid').append('<input type="text" hidden="hidden" id="ProductIdest" value="' + response.productId + '" />');
+                        $('#prodimage').append('<img width="72" height="72" id="' + response.productId + '" src="' + response.productImage + '" class="img-sm rounded border">');
+                        $('#prodName').append('<p class="title" id="ProdDes">' + response.productName + '</p>');
+                         
+                            $('#RatingModal').modal('show');
+                    }
+                })
+            }
+        }
+
+        $('#Review').click(function () {
+            debugger
+            $('#ReviewandRating').show();
+            $('#Main').hide();
+        })
+        $('#RatingModalCancel').click(function () {
+            window.location.replace('/Item/CheckInPageView');
+        })
+        $('#ThanksReviewClose').click(function () {
+            window.location.replace('/Item/CheckInPageView');
+        })
+
+        $('#star1').click(function () {
+            debugger
+            var val = $('#firs').val();
+
+            if (val >= 1) {
+                $(this).parent().find('star1').css('color', 'orange');
+                $('.1st, .2nd,.3rd,.4th,.5ve').css('color', 'black');
+                $('#firs').val(0);
+            }
+            else {
+                $('.2nd,.3rd,.4th,.5ve').parent().find('star1').css('color', 'black');
+                $('.1st').css('color', '#FFFF00');
+                $('#firs').val(1);
+
+            }
+        })
+        $('#star2').click(function () {
+            debugger
+            var val = $('#firs').val();
+            if (val >= 2) {
+                $(this).parent().find('star2').css('color', '#FFFF00');
+                $('.2nd,.3rd,.4th,.5ve').css('color', 'black');
+                $('#firs').val(1);
+            }
+            else {
+
+                $('.3rd,.4th,.5ve').parent().find('star12').css('color', 'black');
+                $('.1st, .2nd').css('color', '#FFFF00');
+                $('#firs').val(2);
+
+            }
+        })
+        $('#star3').click(function () {
+            debugger
+            var val = $('#firs').val();
+            if (val >= 3) {
+                $(this).parent().find('star3').css('color', '#FFFF00');
+                $('.3rd,.4th,.5ve').css('color', 'black');
+                $('#firs').val(2);
+            }
+            else {
+
+                $(this).parent().find('star3').css('color', 'orange');
+                $('.1st, .2nd,.3rd').css('color', '#FFFF00');
+                $('#firs').val(3);
+            }
+        })
+        $('#star4').click(function () {
+            debugger
+            var val = $('#firs').val();
+            if (val >= 4) {
+                $(this).parent().find('star4').css('color', '#FFFF00');
+                $('.4th,.5ve').css('color', 'black');
+                $('#firs').val(3);
+            }
+            else {
+
+                $(this).parent().find('star4').css('color', 'orange');
+                $('.1st, .2nd,.3rd,.4th').css('color', '#FFFF00');
+                $('#firs').val(4);
+            }
+        })
+        $('#star5').click(function () {
+            debugger
+            var val = $('#firs').val();
+            if (val == 5) {
+                $(this).parent().find('star5').css('color', '#FFFF00');
+                $(this).css('color', 'black');
+                $('#firs').val(4);
+
+            }
+            else {
+                $(this).parent().find('star5').css('color', 'orange');
+                $('.1st, .2nd,.3rd,.4th,.5ve').css('color', '#FFFF00');
+                $('#firs').val(5);
+            }
+        })
+
+
+        $('#RatingReview').click(function () {
+            debugger
+            var VariationsId = $('#variid').val();
+            var Rating = $('#firs').val();
+            var CommentDescription = $('#Review').val();
+            var OrderDetailsId = $('#orderid').val();
+            var ProductId = $('#ProductIdest').val();
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/AddReviewandRating',
+                //type: 'POST',
+                datatype: 'JSON',
+                data: { Rating, CommentDescription, OrderDetailsId, ProductId, VariationsId },
+
+                processData: true,
+                contentType: false,
+                success: function (response) {
+
+                    $('#RatingModal').modal('hide');
+                    $('#ThanksReview').modal('show');
+                    //$('#ReviewandRating').hide();
+                    $('#Main').show();
+                }
+            })
+        })
+
+        function InstructionsReturn(ProdId,OrderId,VariId,BatchId) {
+            debugger
+            $('#ProdIds').val(ProdId);
+            $('#OrderIds').val(OrderId);
+            $('#VariIds').val(VariId);
+            $('#BatchIds').val(BatchId);
+            $('#InstructPopUp').modal('show');
+        }
+
+
+        //function InstructionsReturn(){
+        //    $('#InstructPopUp').modal('show');
+        //}
+
+        function DeleteOrder() {
+            var token = sessionStorage.getItem('token');
+            var OrderId = $('#OrderId').text();
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/DeleteOrder',
+                type: 'Delete',
+                data: { OrderId },
+                success: function (response) {
+                    alert("Deleted Successfully");
+                },
+                error: function (data) {
+                    alert('Error');
+                }
+            })
+        }
+        $('#SignOut').click(function () {
+            sessionStorage.clear('token');
+            window.location.replace("/Home/FirstPage");
+        })
+
+        $('#GetAllOrders').click(function () {
+            window.location.replace("/Item/GetAllOrders");
+        })
+
+
+        function ReturnOrder(id, orderid, variid, batchid) {
+            debugger
+            $.ajax({
+                url: '/Item/DeleteOrder',
+                data: { id, orderid, variid, batchid },
+                success: function (response) {
+                    var ret1 = "";
+                    console.log('response', response);
+
+                    $.each(response, function (key, items) {
+                        console.log('itm', items);
+                        ret1 += '<article class="card border-primary mb-4">';
+                        ret1 += '<div class="card-body">';
+                        ret1 += '<header class="d-lg-flex">';
+                        ret1 += '<div class="flex-grow-1">';
+                        ret1 += '<h6 class="mb-0" id="OrderId">' + 'Orderid' + ':' + items.odOrderdetailId + '</h6>';
+                        //html += '<input type="text" id="OrderDataId" value="' + items.odOrderdetailId + '"/>';
+                        ret1 += '<h6 class="mb-0" id="OrderStatus">' + items.statusName + '</h6>';
+                        ret1 += '<span class="text-muted" id="OrderDate">' + 'Date ' + ':' + items.uploadDate + '</span>';
+                        ret1 += '</div>';
+                        ret1 += '<div>';
+                        ret1 += '<div>';
+                        //ret1 += ((diff == items.stauts)) ? '<a><div><span class="badge bg-danger"> Review </span></div></a>' : '<div><p class="text-muted">Review</p></div>';
+                        //ret1 += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="ReturnOrder(' + items.odOrderdetailId + ');" class="badge bg-warning"> Return </span></div></a>' : '<div><p class="text-muted">Return </p></div>';
+                        ret1 += '</div>';
+                        ret1 += '</div>';
+                        ret1 += '</div>';
+                        ret1 += '<div>';
+                        ret1 += '</div>';
+                        ret1 += '</header>';
+                        ret1 += '<hr>';
+                        ret1 += ' <div class="row">';
+                        ret1 += ' <div class="col-lg-4">';
+                        ret1 += '  <p class="mb-0 text-muted">Contact</p>';
+                        ret1 += ' <p class="m-0">';
+                        ret1 += '  ' + items.odUserName + ' <br> ' + items.odPhoneNo + ' <br>' + items.odEmail + '</p>';
+                        ret1 += ' </div>';
+                        ret1 += ' <div class="col-lg-4 border-start">';
+                        ret1 += ' <p class="mb-0 text-muted">Shipping address</p>';
+                        ret1 += ' <p class="m-0">' + items.odNationality + '<br> ' + items.address + '</p>';
+                        ret1 += ' </div>';
+                        ret1 += '<div class="col-lg-4 border-start">';
+                        ret1 += ' <p class="mb-0 text-muted">Payment</p>';
+                        ret1 += ' </div>';
+                        ret1 += '  </div>';
+                        ret1 += '<hr>';
+                        ret1 += ' <div class="d-flex">';
+                        ret1 += '<ul class="row">';
+                        ret1 += '<li class="col-xl-4  col-lg-6">';
+                        ret1 += '<figure class="itemside mb-3 d-flex">';
+                        //html += '<img width="72" height="72" class="prdimag" alt="' + items.orderHistoryView?.productImage + '" id="' + items.orderHistoryView?.productId + '" src="' + items.orderHistoryView?.productImage + '" class="img-sm rounded border">';
+                        $.each(items.orderHistoryView, function (key, itemss) {
+                            console.log('itemsss', itemss);
+                            ret1 += '<div class="d-flex">';
+                            ret1 += '<img width="72" height="72" onclick="GetRatings(' + itemss.productId + ',' + items.odOrderdetailId + ',\'' + items.stauts + '\',' + itemss.productVariations?.p_VariationsID + ')" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border">';
+                            ret1 += '<input type="text" hidden="hidden" id="ProductIdss" value="' + itemss.productId + '" />';
+                            ret1 += '<input type="text" hidden="hidden" class="ordersidss" id="OrderDataId' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
+                            //html += '<input type="text" hidden="hidden" class="ordersidss" id="Variid' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
+                            ret1 += '<figcaption class="info">';
+                            $.each(itemss.productComments, function (key, obj) {
+                                console.log('obj', obj);
+                                console.log('ratings', obj.rating);
+                                ret1 += ((1 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((2 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((3 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((4 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                ret1 += ((5 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star checked" ></span>' : '';
+                            })
+                            ret1 += '<p class="title" id="ProdDes">' + itemss.productName + '</p>';
+                            ret1 += '<div class="d-flex">';
+                            ret1 += '<p class="title" id="ProdDes">' + itemss.productQuantity + 'x' + '</p>';
+                            ret1 += '<p id="ProdQuantityandPrize">' + '=' + itemss.totalPrice + 'Rs' + '</p>';
+                            ret1 += '</div>';
+                            ret1 += '<p id="ProdQuantityandPrize">' + itemss.netPrice + 'Rs' + '</p>';
+                            ret1 += '</figcaption>';
+                        })
+                        ret1 += '</div>';
+                        ret1 += '</figure>';
+                        ret1 += '</li>';
+                        ret1 += '</ul>';
+                        ret1 += '</div>';
+                        ret1 += '</article>';
+                    })
+                    $('#Returns1').append(ret1);
+                    $('#Main').hide();
+                    $('#Returns123').show();
+
+                }
+            })
+        }
+        
+        
+        //function GetRatings() {
+                            //    debugger
+                            //    var prodrat = $('.prdimag');
+                            //    var rati ="";
+                            //    console.log('prod',prodrat);
+                            //    $.each(prodrat ,function(key , item){
+                            //        console.log(item.id);
+                            //        console.log('imagepath', item.alt);
+                            //       rati += '<div class="col-12 mt-5 d-flex justify-content-center">';
+                            //       rati += '<form class="w-50 border p-5 bg-gray-light" style="margin:10%">';
+                            //       rati += '<h1 class="text-center">Rating and Review </h1>';
+                            //       rati += '<div class="form-group">';
+                            //       rati += '<label for="exampleInputEmail1">Rating</label>';
+                            //       rati += '<div class="rating d-flex">';
+                            //       rati += '<img width="72" height = "72" class="prdimag" id = "' + item.id + '" src = "' + item.alt + '" class="img-sm rounded border">';
+                            //       //rati += '<span id="star1" value="' + item.id + '" class="fa fa-star"></span>';
+                            //       rati += '<span id="star2" class="fa fa-star"></span>';
+                            //       rati += '<span id="star3" class="fa fa-star"></span>';
+                            //       rati += '<span id="star4" class="fa fa-star"></span>';
+                            //       rati += '<span id="star5" class="fa fa-star"></span>';
+                            //       rati += '<input type="text" hidden="hidden" value="" id="firs"/>';
+                            //       rati += '</div>';
+                            //       rati += '<label for="exampleInputEmail1">Rating</label>';
+                            //       rati +='<input type="text" id="Review" class="form-select"/>';
+                            //       rati += '</div>';
+                            //       rati += '<button class="btn btn-primary btn-lg btn-block" type="submit" id="RatingReview">Send</button>';
+                            //       rati += '</form>';
+                            //        rati +='</div>';
+                            //    })
+                            //    $('#ProductRatingss').append(rati);
+                            //    $('#Main').hide();
+                            //}
+
+                                          //function CheckInPage() {
+                                    //    var token = sessionStorage.getItem('token');
+                                    //    debugger
+                                    //    $.ajax({
+                                    //        headers: {
+                                    //            'authorization': 'Bearer ' + token
+                                    //        },
+                                    //        url: '/Item/CheckInPage',
+                                    //        type: 'Get',
+                                    //        success: function (response) {
+                                    //            debugger
+                                    //            console.log(response);
+                                    //            $('#UserImage').append('<img class="icon-md rounded-circle" src="' + responses.userImage + '"/>');
+                                    //            $('#UserName').append('<h6 class="title">' + response.userName + '</h6>');
+                                    //            $('#UserEmail').append('<p id="UserEmail" >' + response.email + ',' + response.phoneNo + '<a href="#" class="px-2"><i class="fa fa-pen"></i></a>');
+                                    //            $('#UserAddress').append(response.address);
+                                    //            $('#UserAddress1').append(response.address);
+                                    //            $('#UserNamea').append(response.userName);
+                                    //            $('#UserEmaila').append(response.email);
+                                    //            $('#UserPhonea').append(response.phoneNo);
+                                    //            debugger
+                                    //        }
+
+                                    //    })
+              
+                                    //}
+
+
+                                            //$('#RatingReview').click(function () {
+        //    debugger
+        //    var Rating =$('#firs').val();
+        //    var Reviews =$('#Review').val();
+        //    var OrderDataId = $('#OrderDataid').val();
+        //    var ProductId = $('#ProductId').val();
+        //    var token= sessionStorage.getItem('token');
+        //    $.ajax({
+        //        headers: {
+        //            'authorization': 'Bearer ' + token
+        //        },
+        //        url: '/Item/AddReviewandRating',
+        //        type: 'Post',
+        //        data:{Rating, Reviews, OrderDataId,ProductId},
+        //        success: function (response) {
+        //            alert("Thanks For Review");
+        //            $('#ReviewandRating').hide();
+        //            $('#Main').show();
+        //        }
+        //    })
+        //})
+
+
+
+                //$('#star1').click(function () {
+                //    debugger
+                //    var val = $('#firs').val();
+
+                //    if (val == 0) {
+                //        $(this).parent().find('star1').css('color', 'orange');
+                //        $(this).css('color', '#FFFF00');
+                //        $('#firs').val(1);
+                //    }
+                //    else {
+                //        $(this).parent().find('star1').css('color', '#FFFF00');
+                //        $(this).css('color', 'black');
+                //        $('#firs').val(0);
+
+                //    }
+                //})
+                //$('#star2').click(function () {
+                //    debugger
+                //    var val = $('#firs').val();
+                //    if (val >= 2) {
+                //        $(this).parent().find('star2').css('color', '#FFFF00');
+                //        $(this).css('color', 'black');
+                //        $('#firs').val(0);
+                //    }
+                //    else {
+
+                //        $(this).parent().find('star12').css('color', 'orange');
+                //        $(this).css('color', '#FFFF00');
+                //        $('#firs').val(2);
+
+                //    }
+                //})
+                //$('#star3').click(function () {
+                //    debugger
+                //    var val = $('#firs').val();
+                //    if (val >= 3) {
+                //        $(this).parent().find('star3').css('color', '#FFFF00');
+                //        $(this).css('color', 'black');
+                //        $('#firs').val(0);
+                //    }
+                //    else {
+
+                //        $(this).parent().find('star3').css('color', 'orange');
+                //        $(this).css('color', '#FFFF00');
+                //        $('#firs').val(3);
+                //    }
+                //})
+                //$('#star4').click(function () {
+                //    debugger
+                //    var val = $('#firs').val();
+                //    if (val >= 4) {
+                //        $(this).parent().find('star4').css('color', '#FFFF00');
+                //        $(this).css('color', 'black');
+                //        $('#firs').val(0);
+                //    }
+                //    else {
+
+                //        $(this).parent().find('star4').css('color', 'orange');
+                //        $(this).css('color', '#FFFF00');
+                //        $('#firs').val(4);
+                //    }
+                //})
+                //$('#star5').click(function () {
+                //    debugger
+                //    var val = $('#firs').val();
+                //    if (val == 5) {
+                //        $(this).parent().find('star5').css('color', '#FFFF00');
+                //        $(this).css('color', 'black');
+                //        $('#firs').val(0);
+
+                //    }
+                //    else {
+                //        $(this).parent().find('star5').css('color', 'orange');
+                //        $(this).css('color', '#FFFF00');
+                //        $('#firs').val(5);
+                //    }
+                //})
+
+                                //$('#OrdersbySellers').click(function (key, item) {
+                //    var token = sessionStorage.getItem('token');
+                //    $.ajax({
+                //        headers: {
+                //            'Authorization': 'Berear ' + token
+                //        },
+                //        url: '/Item/GetOrdersbySellers',
+                //        type: 'Get',
+                //        success: function (response) {
+
+                //        }
+                //    })
+                //})
+
+    </script>
+

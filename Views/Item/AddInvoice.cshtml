@@ -1,0 +1,257 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "CheckInPageView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+<section class="padding-y bg-light">
+	<div class="container">
+
+
+		<div class="row">
+			<main class="col-xl-8 col-lg-8">
+
+				<article class="card">
+					<div class="content-body">
+						<h5 class="card-title"> Guest checkout </h5>
+						<div class="row">
+							<div class="col-6 mb-3">
+								<label class="form-label"  >First name</label>
+									<input type="text" class="form-control" Placeholder="User Name" id="UserName">
+							</div> <!-- col end.// -->
+
+							<div class="col-6">
+								<label class="form-label">Last name</label>
+								<input type="text" class="form-control" placeholder="FatherName" id="FatherName">
+							</div> <!-- col end.// -->
+
+							<div class="col-6 mb-3">
+								<label class="form-label">Phone</label>
+								<input type="text" value="+998" class="form-control" placeholder="Phone No" id="PhoneNo">
+							</div> <!-- col end.// -->
+
+							<div class="col-6 mb-3">
+								<label class="form-label">Email</label>
+								<input type="text" class="form-control" placeholder="Email" id="Email">
+							</div> <!-- col end.// -->
+						</div> <!-- row.// -->
+
+						@*<label class="form-check mb-3">
+							<input class="form-check-input" type="checkbox" value="">
+							<span class="form-check-label"> Keep me up to date on news </span>
+						</label>*@
+
+						<hr class="my-4">
+
+						<h5 class="card-title"> Shipping info </h5>
+@*
+						<div class="row mb-3">
+							<div class="col-lg-4 mb-3">
+								<div class="box box-check">
+									<label class="form-check">
+										<input class="form-check-input" type="radio" name="dostavka" checked>
+										<b class="border-oncheck"></b>
+										<span class="form-check-label">
+											Express delivery  <br>
+											<small class="text-muted">3-4 days via Fedex </small>
+										</span>
+									</label>
+								</div>
+							</div> <!-- col end.// -->
+							<div class="col-lg-4 mb-3">
+								<div class="box box-check">
+									<label class="form-check">
+										<input class="form-check-input" type="radio" name="dostavka">
+										<b class="border-oncheck"></b>
+										<span class="form-check-label">
+											Post office <br>
+											<small class="text-muted">20-30 days via post</small>
+										</span>
+									</label>
+								</div>
+							</div> <!-- col end.// -->
+							<div class="col-lg-4 mb-3">
+								<div class="box box-check">
+									<label class="form-check">
+										<input class="form-check-input" type="radio" name="dostavka">
+										<b class="border-oncheck"></b>
+										<span class="form-check-label">
+											Self pick-up  <br>
+											<small class="text-muted"> Come to our shop </small>
+										</span>
+									</label>
+								</div>
+							</div> <!-- col end.// -->
+						</div>*@ <!-- row end.// -->
+
+						<div class="row">
+							<div class="col-sm-8 mb-3">
+								<label for="" class="form-label">Address</label>
+								<input type="text" class="form-control" placeholder="Address" id="Address">
+							</div> <!-- col end.// -->
+
+							<div class="col-sm-4 mb-3">
+								<label for="" class="form-label">City</label>
+									<input type="text" class="form-control" placeholder="City" id="City">
+							</div> <!-- col end.// -->
+
+							<div class="col-sm-4 col-6 mb-3">
+								<label for="" class="form-label">Postal code</label>
+								<input type="text" class="form-control" placeholder="PostalCode" id="PostalCode">
+							</div> <!-- col end.// -->
+						</div> <!-- row.// -->
+
+						@*<label class="form-check mb-4">
+							<input class="form-check-input" type="checkbox" value="">
+							<span class="form-check-label"> Save this address </span>
+						</label>
+*@
+						<div class="mb-4">
+							<label for="" class="form-label">Message to seller</label>
+							<textarea class="form-control"></textarea>
+						</div> <!-- col end.// -->
+
+						<div class="float-end">
+							<button class="btn btn-light">Cancel</button>
+							<button class="btn btn-success" id="Continue">Continue</button>
+						</div>
+
+					</div> <!-- card-body end.// -->
+				</article> <!-- card end.// -->
+		
+
+			</main> <!-- col.// -->
+			<aside class="col-xl-4 col-lg-4">
+				<article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+					<h6 class="card-title">Summary</h6>
+
+					<dl class="dlist-align">
+						<dt>Total price:</dt>
+						<dd class="text-end"> $195.90</dd>
+					</dl>
+					<dl class="dlist-align">
+						<dt>Discount:</dt>
+						<dd class="text-end text-danger"> - $60.00 </dd>
+					</dl>
+					<dl class="dlist-align">
+						<dt>Shipping cost:</dt>
+						<dd class="text-end"> + $14.00 </dd>
+					</dl>
+					<hr>
+					<dl class="dlist-align">
+						<dt> Total: </dt>
+						<dd class="text-end"> <strong class="text-dark">$252.90</strong> </dd>
+					</dl>
+
+					<div class="input-group my-4">
+						<input type="text" class="form-control" name="" placeholder="Promo code">
+						<button class="btn btn-light text-primary">Apply</button>
+					</div>
+
+					<hr>
+					<h6 class="mb-4">Items in cart</h6>
+
+					<figure class="itemside align-items-center mb-4">
+						<div class="aside">
+							<b class="badge bg-secondary rounded-pill">1</b>
+							<img src="images/items/7.webp" class="img-sm rounded border">
+						</div>
+						<figcaption class="info">
+							<a href="#" class="title">Gaming Headset with Mic <br> Darkblue color</a>
+							<div class="price text-muted">Total: $295.99</div> <!-- price .// -->
+						</figcaption>
+					</figure>
+
+					<figure class="itemside align-items-center mb-4">
+						<div class="aside">
+							<b class="badge bg-secondary rounded-pill">1</b>
+							<img src="images/items/5.webp" class="img-sm rounded border">
+						</div>
+						<figcaption class="info">
+							<a href="#" class="title">Apple Watch Series 4 Space <br> Large size</a>
+							<div class="price text-muted">Total: $217.99</div> <!-- price .// -->
+						</figcaption>
+					</figure>
+
+					<figure class="itemside align-items-center mb-4">
+						<div class="aside">
+							<b class="badge bg-secondary rounded-pill">3</b>
+							<img src="images/items/1.webp" class="img-sm rounded border">
+						</div>
+						<figcaption class="info">
+							<a href="#" class="title">GoPro HERO6 4K Action Camera - Black</a>
+							<div class="price text-muted">Total: $910.00</div> <!-- price .// -->
+						</figcaption>
+					</figure>
+				</article>
+			</aside> <!-- col.// -->
+		</div> <!-- row.// -->
+
+		<br><br>
+
+	</div> <!-- container .//  -->
+</section>
+<script>
+	$(document).ready(function(){
+		GetUserInfo();
+	})
+	function GetUserInfo(){
+		debugger
+		var token = sessionStorage.getItem('token');
+		$.ajax({
+			headers : {
+			Authorization : 'Bearer '+ token
+			},
+			url : '/Home/GetUserData',
+			type: 'Get',
+				success: function (response) {
+					debugger
+					console.log(response);
+					$('#UserName').val(response.userName);
+					$('#Fathername').val(response.fatherName);
+					$('#Email').val(response.email);
+					$('#PhoneNo').val(response.phoneNo);
+					$('#Address').val(response.address);
+					$('#City').val(response.city);
+					$('#PostalCode').val(response.postalCode);
+				}
+		})
+	}
+	$('#Continue').click(function({
+		var UserName =$('#UserName').val();
+		var Fathername = $('#Fathername').val();
+		var Email = $('#Email').val();
+		var PhoneNo = $('#PhoneNo').val();
+		var Address = $('#Address').val();
+		var City = $('#City').val();
+		var token = sessionStorage.getItem('token');
+		$.ajax({
+			headers: {
+				Authorization : 'Bearer ' + token
+			},
+			url:'/Home/AddtoOrders',
+			type: 'Post',
+			data: {
+				UserName,
+				FatherName,
+				Email,
+				phoneNo,
+				Address,
+				City
+			},
+			success: function (response) {
+				debugger
+				console.log(response);
+				
+			}
+		})
+	}))
+</script>

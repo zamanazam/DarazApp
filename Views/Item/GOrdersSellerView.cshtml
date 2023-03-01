@@ -1,0 +1,118 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "GetAllOrders";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+<section class="padding-y bg-light" id="Main">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9  col-xl-9">
+                <div id="Orders1"></div>
+            </div>
+        </div>
+        <br><br>
+    </div>
+</section>
+
+<script>
+
+        $(document).ready(function () {
+            GetDatas();
+       
+        })
+
+        function GetDatas() {
+            debugger
+            var token = sessionStorage.getItem('token');
+            var html = "";
+            let diff = "Received";
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/GetOrdersbySellers',
+                type: 'Get',
+                data: 'Json',
+                success: function (response) {
+                    debugger
+                    console.log('response', response);
+                    $.each(response, function (key, items) {
+                        console.log('items', items);
+
+                        html += '<article class="card border-primary mb-4">';
+                        html += '<div class="card-body">';
+                        html += '<header class="d-lg-flex">';
+                        html += '<div class="flex-grow-1">';
+                        html += ' <div class="row">';
+                        html += ' <div class="col-lg-4">';
+                        html += '  <p class="mb-0 text-muted">Contact</p>';
+                        html += ' <p class="m-0">';
+                        html += '  ' + items.storeName + ' <br> ' + items.storePhoneNo + ' <br>' + items.storeCnic + ' <br>' + items.storeEmail + '</p>';
+                        html += ' </div>';
+                        html += ' <div class="col-lg-4 border-start">';
+                        html += ' <p class="mb-0 text-muted">Shipping address</p>';
+                        html += ' <p class="m-0">' + items.storeNationality + '<br> ' + items.storeCity + '<br> ' + items.storeAddress + '</p>';
+                        html += ' </div>';
+                        html += '<div class="col-lg-4 border-start">';
+                        html += ' <p class="m-0">';
+                        html += '  ' + items.storeCnic + ' <br> ' + items.postalCode + ' <br>' + items.storeCnic + ' <br>' + items.storeEmail + '</p>';
+                        html += ' </div>';
+                     
+                        html += '</div>';
+                        html += '<div>';
+                        html += '</div>';
+                        html += '</header>';
+                        html += '<hr>';
+                  
+                        html += '<hr>';
+                        html += ' <div class="d-flex">';
+                        html += '<ul class="row">';
+                        html += '<li class="col-xl-4  col-lg-6">';
+                        html += '<figure class="itemside mb-3 d-flex">';
+                       
+                        $.each(items.ordersSellerViewChild, function (key, itemss) {
+                            console.log('itemsss', itemss);
+                            html += '<div class="d-flex">';
+                            html += '<img width="72" height="72" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border">';
+                            html += '<input type="text" hidden="hidden" class="ordersidss" id="OrderDataId' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
+                            html += '<figcaption class="info">';
+                            
+                             html += '<p class="title" id="ProdDes">' + itemss.productName + '</p>';
+                            $.each(itemss.productVariationModels, function (key, itemsss) {
+                                    $.each(itemsss.productComments, function (key, obj) {
+                                         console.log('obj', obj);
+                                         console.log('ratings', obj.rating);
+                                         html += ((1 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                         html += ((2 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                         html += ((3 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                         html += ((4 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star" ></span>' : '';
+                                         html += ((5 == obj.rating)) ? '<span class="fa fa-star checked" style="font-size:8px"></span><span style="font-size:8px" class="fa fa-star checked"></span ><span style="font-size:8px" class="fa fa-star checked" ></span><span style="font-size:8px" class="fa fa-star checked" ></span ><span style="font-size:8px" class="fa fa-star checked" ></span>' : '';
+                                        })
+                            })
+                           
+                            html += '<p class="title" id="ProdDes">' + itemss.productQuantity + '</p>';
+                            html += '<p id="ProdQuantityandPrize">' + itemss.totalPrice + '</p>';
+                            html += '</figcaption>';
+                        })
+                        html += '</div>';
+                        html += '</figure>';
+                        html += '</li>';
+                        html += '</ul>';
+                        html += '</div>';
+                        html += '</article>';
+                    })
+                    $('#Orders1').append(html);
+                }
+            })
+
+        }
+</script>

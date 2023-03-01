@@ -1,0 +1,142 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.SaveData;
+@{
+    ViewBag.Title = "RegisterSeller";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <div class="container">
+        <div class="card mb-12" id="MainCard">
+            <article class="card-body">
+                <h4 class="mb-8">Create Account</h4>
+
+                <div class="row mb-4">
+                    <div class="col-6">
+                    <label for="exampleInputEmail1">Store Name</label>
+                    <input type="text" class="form-control mb-4" placeholder="StoreName" id="UserName" />
+                    </div>
+                        <div class="col-6">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="text" class="form-control mb-4" placeholder="Password" id="Password" />
+                        </div>
+                </div>
+               
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <input class="form-control" placeholder="Email" type="text" id="Email" />
+                    </div>
+                    <div class="col-6">
+                        <input class="form-control" type="text" placeholder="Phone No" id="PhoneNo" />
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <div>
+                        <input type="file" id="file" name="file" onchange="previewFile(this);"/>
+                   
+                        <div class="float-end">
+                            <span class="bg-gray icon-md rounded-circle">
+                                <img id="previewImg" src="previewImg" />
+
+                            </span>
+                        </div>
+                 
+                    </div>
+                    
+                </div>
+
+                <div class="row mb-4">
+                    <div>
+                        <input class="form-control" placeholder="Per Address" multiple="multiple" type="text" id="Address" />
+
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="Save">Save</button>
+    </article>
+        </div>
+    </div>
+   @* <div id="successMessage">
+        <form method="POST" id="update_form" onsubmit="return false;">
+            <div id="errorMessage"></div>
+            <table align="center">
+                <tr>
+                    <td align="right">First Name:</td>
+                    <td align="left">
+                        <input type="text" name="firstName" value="<?php echo $firstName; ?>" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">Last Name:</td>
+                    <td align="left">
+                        <input type="text" name="lastName" value="<?php echo $lastName; ?>" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right" colspan="2">
+                        <input type="hidden" name="userId" value="<?php echo $userId; ?>" />
+                        <input type="button" name="updateUserDetails" value="Update" onclick="updateUserDetails();">
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>*@
+    <script>
+        $(document).ready(function () {
+            $('#Security').hide();
+          
+        })
+        $('#Next').click(function () {
+            $('#Security').show();
+            $('#MainCard').hide();
+        })
+        $('#Save').click(function () {
+            var form = new FormData();
+            debugger
+            form.append('StoreName', $('#UserName').val());
+            form.append('StorePassword', $('#Password').val());
+            form.append('StoreEmail', $('#Email').val());
+            form.append('ShippingAddress', $('#PerAddress').val());
+            form.append('StoreContact', $('#PhonNo').val());
+            form.append('StoreImage', $('#file')[0].files[0]);
+            console.log(form);
+            debugger
+            $.ajax({
+                url: '/Home/RegisterSeller',
+                type: 'Post',
+                data: form,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    debugger
+                    $('#newcard').show();
+
+                    if (data == "Updated Successfully") {
+                        $("#successMessage").html(msg);
+                        $("#update_form").hide();
+                    }
+                    else {
+                    $("#errorMessage").html(msg);
+                    $("#errorMessageDialog").dialog();
+                }
+                }
+            })
+
+        })
+        function previewFile(input) {
+            var file = $("input[type=file]").get(0).files[0];
+            debugger
+            if (file) {
+                var reader = new FileReader();
+
+                reader.onload = function () {
+                    $("#previewImg").attr("src", reader.result);
+                }
+
+                reader.readAsDataURL(file);
+            }
+        };
+    </script>

@@ -1,0 +1,440 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+
+@{
+    ViewData["Title"] = "ProductDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <body>
+
+        @* <section class="bg-primary padding-y-sm">
+    <div class="container">
+
+    <ol class="breadcrumb ondark mb-0">
+    <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
+    <li class="breadcrumb-item"><a href="#">Library</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Data</li>
+    </ol>
+
+    </div>
+    </section>
+
+    <section class="padding-y">
+    <div class="container">
+    @foreach (var item in Model.ProductVm)
+    {
+    <div class="row">
+    <aside class="col-lg-6">
+    <article class="gallery-wrap">
+    <div class="img-big-wrap img-thumbnail">
+    <a data-fslightbox="mygalley" data-type="image" href="images/items/detail1/big.webp">
+    <img height="560" src="@item.ProductImage">
+    </a>
+    </div>
+
+
+    <div class="row">
+
+    <div class="row">
+    @foreach (var descrip in Model.productDescriptionimages)
+    {
+    <div class="col-lg-2 col-md-2 col-sm-2">
+
+    <a data-fslightbox="mygalley" data-type="image" href="/Home/GetImageDesbyImagesId/?Id=@descrip.ProductDescriptionImagesId" class="item-thumb">
+    <img width="45" height="45" src="@descrip.ProductdesImage1">
+    </a>
+
+    </div>
+    }
+    </div>
+    </div>
+    </article>
+    </aside>
+    @foreach (var des in Model.ProductDescriptionVm)
+    {
+    <main class="col-lg-6">
+    <article class="ps-lg-3">
+    <h4 class="title text-dark">@item.ProductName </h4>
+    <h4 class="title text-dark">@des.ProductDes</h4>
+    <h4 class="title text-dark">@des.ProductType </h4>
+    <div class="rating-wrap my-3">
+    <ul class="rating-stars">
+    <li style="width:80%" class="stars-active"> <img src="images/misc/stars-active.svg" alt=""> </li>
+    <li>
+    <img src="images/misc/starts-disable.svg" alt="">
+    </li>
+    </ul>
+    <b class="label-rating text-warning"> 4.5</b>
+    <i class="dot"></i>
+    <span class="label-rating text-muted"> <i class="fa fa-shopping-basket"></i> 154 orders </span>
+    <i class="dot"></i>
+    <span class="label-rating text-success">@des.ProductQuantity</span>
+    </div>
+
+    <div class="mb-3">
+    <var class="price h5">@item.ProductPrice</var>
+    <span class="text-muted">/per box</span>
+    </div>
+    <dl class="row">
+    <dt class="col-3">Type: @des.ProductType</dt>
+    <dd class="col-9">@des.ProductType</dd>
+    <dt class="col-3">Color</dt>
+    <dd class="col-9">@des.ProductColor</dd>
+    <dt class="col-3">Material</dt>
+    <dd class="col-9">@des.ProductMaterial </dd>
+    <dt class="col-3">Brand</dt>
+    <dd class="col-9">@des.ProductBrand </dd>
+    </dl>
+    <hr>
+    <card id="CardSize">
+    @foreach (var prodcolor in Model.productSizesvm)
+    {
+    <div id="data">
+    <input type="text" id="optionvalue1" value="@prodcolor.ProductSizes">
+    <input type="text" id="optionvalue2" value="@prodcolor.ProductSizes">
+    <input type="text" id="optionvalue3" value="@prodcolor.ProductSizes">
+    </div>
+    }
+    </card>
+    <div class="row mb-4">
+    <div class="col-md-4 col-6 mb-2">
+
+    <label class="form-label">Size</label>
+    <input type="text" id="options1" name="options1">
+    <input type="text" id="options2" name="options2">
+    <input type="text" id="options3" name="options3">
+    <select class="form-select" id="dropdown">
+    <option value="1"></option>
+    <option value="2"></option>
+    <option value="3"></option>
+    </select>
+
+    </div> <!-- col.// -->
+    <div class="col-md-4 col-6 mb-3">
+    <label class="form-label d-block">Quantity</label>
+    <div class="input-group input-spinner">
+    <button class="btn btn-icon btn-light" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
+    <path d="M19 13H5v-2h14v2z"></path>
+    </svg>
+    </button>
+    <input class="form-control text-center" placeholder="" value="14">
+    <button class="btn btn-icon btn-light" type="button">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="#999" viewBox="0 0 24 24">
+    <path></path>
+    </svg>
+    </button>
+    </div> <!-- input-group.// -->
+    </div> <!-- col.// -->
+    </div> <!-- row.// -->
+
+    <a href="#" class="btn  btn-warning"> Buy now </a>
+    <a href="#" class="btn  btn-primary"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+    <a href="#" class="btn  btn-light"> <i class="me-1 fa fa-heart"></i> Save </a>
+
+    </article>
+    <!-- product-info-aside .// -->
+    </main>
+    }
+    <!-- col.// -->
+    </div> <!-- row.// -->
+    } <!-- container .//  -->
+    </section>
+    <section class="padding-y bg-light border-top">
+    <div class="container">
+    <div class="row">
+    <div class="col-lg-8">
+    <!-- =================== COMPONENT SPECS ====================== -->
+    <div class="card">
+    <header class="card-header">
+    <ul class="nav nav-tabs card-header-tabs">
+    <li class="nav-item">
+    <a href="#" data-bs-target="#tab_specs" data-bs-toggle="tab" class="nav-link active">Specification</a>
+    </li>
+    <li class="nav-item">
+    <a href="#" data-bs-target="#tab_warranty" data-bs-toggle="tab" class="nav-link">Warranty info</a>
+    </li>
+    <li class="nav-item">
+    <a href="#" data-bs-target="#tab_shipping" data-bs-toggle="tab" class="nav-link">Shipping info</a>
+    </li>
+    <li class="nav-item">
+    <a href="#" data-bs-target="#tab_seller" data-bs-toggle="tab" class="nav-link">Seller profile</a>
+    </li>
+    </ul>
+    </header>
+    <div class="tab-content">
+    <article id="tab_specs" class="tab-pane show active card-body">
+    <p>With supporting text below as a natural lead-in to additional content. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. </p>
+    <ul class="list-check cols-two">
+    <li>Some great feature name here </li>
+    <li>Lorem ipsum dolor sit amet, consectetur </li>
+    <li>Duis aute irure dolor in reprehenderit </li>
+    <li>Optical heart sensor </li>
+    <li>Easy fast and ver good </li>
+    <li>Some great feature name here </li>
+    <li>Modern style and design</li>
+    </ul>
+    <table class="table border table-hover">
+    <tr>
+    <th>  Display: </th>
+    <td> 13.3-inch LED-backlit display with IPS </td>
+    </tr>
+    <tr>
+    <th>  Processor capacity: </th>
+    <td> 2.3GHz dual-core Intel Core i5 </td>
+    </tr>
+    <tr>
+    <th>  Camera quality: </th>
+    <td>720p FaceTime HD camera  </td>
+    </tr>
+    <tr>
+    <th>  Memory </th>
+    <td> 8 GB RAM or 16 GB RAM </td>
+    </tr>
+    <tr>
+    <th>  Graphics </th>
+    <td> Intel Iris Plus Graphics 640 </td>
+    </tr>
+    </table>
+    </article> <!-- tab-content.// -->
+    <article id="tab_warranty" class="tab-pane card-body">
+    Tab content or sample information now <br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    </article>
+    <article id="tab_shipping" class="tab-pane card-body">
+    Another tab content  or sample information now <br>
+    Dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </article>
+    <article id="tab_seller" class="tab-pane card-body">
+    Some other tab content  or sample information now <br>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur.  Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    </article>
+    </div>
+    </div>
+    <!-- =================== COMPONENT SPECS .// ================== -->
+    </div> <!-- col.// -->
+    <aside class="col-lg-4">
+    <!-- =================== COMPONENT ADDINGS ====================== -->
+    <div class="card">
+    <div class="card-body">
+    <h5 class="card-title">Similar items</h5>
+    @foreach (var similar in Model.similarproducts)
+    {
+    <article class="itemside mb-3">
+
+    <a href="#" class="aside">
+    <img src="@similar.ProductImage" width="96" height="96" class="img-md img-thumbnail">
+    </a>
+    <div class="info">
+    <a href="#" class="title mb-1"> @similar.ProductName <br></a>
+    <strong class="price">@similar.ProductPrice</strong> <!-- price.// -->
+    </div>
+
+    </article>
+    }
+    </div> <!-- card-body .// -->
+    </div> <!-- card .// -->
+    <!-- =================== COMPONENT ADDINGS .// ================== -->
+    </aside> <!-- col.// -->
+    </div>
+
+    <br><br>
+
+    </div><!-- container // -->
+    </section>*@
+        <table border="1" id="example">
+            <thead style="color:black">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Name</th>
+                    <th>User Name</th>
+                    <th>Category Name</th>
+                    <th>Created At</th>
+                    <th>Product Price</th>
+                    <th>Product Quality</th>
+                    <th>Product Quantity</th>
+                    <th>Product Image</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+
+
+
+        <div class="card mb-4" id="AddProductCard">
+            <article class="card-body">
+                <h4 class="mb-4">Submit product</h4>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Title</label>
+                    <div class="col-9">
+                        <input type="text" id="text" class="form-control" placeholder="Product Name here">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Price</label>
+                    <div class="col-9">
+                        <input type="text" id="ProductPrice" class="form-control" placeholder="$ 0.00">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">
+
+                        <small class="text-muted">(Max 10 mb)</small>
+                    </label> <div class="col-9">
+                        <div class="gallery-uploader-wrap">
+                            <label style="width: 80px; height: 80px" class="uploader-img">
+                                <img width="100" src="./Ecommerce templates for Figma and Sketch_files/1.webp">
+                            </label>
+                            <label style="width: 80px; height: 80px" class="uploader-img">
+                                <img width="100" src="./Ecommerce templates for Figma and Sketch_files/2.webp">
+                            </label> <label style="width: 80px; height: 80px" class="uploader-img">
+
+                                <input type="file" id="file" name="lorem">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="3">
+                                    </circle>
+                                    <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                </svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Description</label>
+                    <div class="col-9">
+                        <textarea class="form-control" id="ProductDes" placeholder="Type here"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Features</label>
+                    <div class="col-9">
+                        <ul class="row row-cols-xxl-3 row-cols-2">
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-label"> HD camera </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-label"> Voice control </span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Metallic </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> 5K Display </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> High speed </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Ultra wide </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label">
+                                        5K Display
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Blootooth 3.0 </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    <div class="col-9 offset-3">
+                        <button type="button" id="btnshow" class="btn btn-primary">Add product</button>
+
+                        <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                    </div>
+
+                </div>
+
+            </article>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            $('#AddProductCard').hide();
+            debugger
+            //$('#example').Datatable({
+            $.ajax({
+                url: '/Table/ProductDetails',
+                type: 'Get',
+                data: 'JSON',
+                success: function (response) {
+                    console.log(response);
+                    debugger
+                    var html = "";
+
+                    $.each(response, function (key, item) {
+
+                        var value = item[key];
+                        html += '<tr>' + productName + ':' + item.productName + '</tr>';
+
+                        html += '<tr>' + uploadDate + ':' + item.uploadDate + '</tr>';
+                        html += '<tr>' + productName + ':' + item.productName + '</tr>';
+                        html += '<tr>' + productPrice + ':' + item.productPrice + '</tr>';
+                        html += '<tr>' + productImage + ':' + item.productImage + '</tr>';
+
+                        $("#tbody").append(html);
+
+                    })
+
+                }
+            })
+        })
+
+    </script>
+
+
+

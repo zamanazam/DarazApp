@@ -1,0 +1,214 @@
+﻿@using DarazApp.Services
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+	
+    <section class="padding-y">
+        <div class="container" >
+			<section class="padding-top">
+
+					<nav class="row gy-5 row-cols-xl-8 row-cols-sm-5 row-cols-3" id="Categor">
+
+				</nav>
+			
+		</section>
+			<header class="section-heading">
+				<h3 class="section-title">New products</h3>
+			</header>
+			<div class="row" id="Produc">
+
+			</div>
+		</div>
+	</section>
+	  
+        <div id="myModal12" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login Error</h4>
+                        <button type="button" id="modelcancel12" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please Login First</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose12" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+   
+
+	<div id="SuccessModallist" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Success</h4>
+					<button type="button" id="modelcancellist" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>Product Added to WishList Successfully.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="modelcloselist" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="ErrorModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title">Error</h4>
+					<button type="button" id="Errormodelclose" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+				</div>
+				<div class="modal-body">
+					<p>Product not Added to WishList.</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="Errormodelclose1" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+		
+    <script>
+		
+
+		$('#modelclose12').click(function () {
+			$('#myModal12').modal('hide');
+			$('#SuccessModallist').modal('hide');
+			//window.location.replace('/Home/Index');
+		})
+
+		$('#modelcancel12').click(function () {
+			$('#myModal12').modal('hide');
+		
+			//window.location.replace('/Home/Index');
+
+		})
+
+		$('#modelcloselist').click(function(){
+			$('#SuccessModallist').modal('hide');
+		})
+
+		$('#modelcancellist').click(function(){
+			$('#SuccessModallist').modal('hide');
+		})
+		function GetProductDates(){
+		
+			$.ajax({
+				url: '/Home/GetOnlyProducts',
+				success: function (response) {
+				var html="";
+				let diff = 6.048e+8;
+				$.each(response , function(key, item){
+				var dat = item.uploadDate;
+				var date = new Date();
+				var pricesvalue= [];
+				html += '<div class="col-lg-3 col-md-6 col-sm-6">';
+				html += '<figure class="card-product-grid" >';
+				html += ((date  - (new Date( item.uploadDate )))  <=  diff  ) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+				html += '<figcaption class="pt-2" >';
+				//html += '<a href="/Home/GetProductbyId?Id='+ item.productId +'" class="float-end btn btn-light btn-icon"></a>';
+				html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart"></i></a>';
+				$.each(item.productViewModels?.productVariations, function (key, itemss) {
+					$.each(itemss.productBatches, function (key, obj) {
+							pricesvalue = obj.price;
+					})	
+				})
+				var first = $(pricesvalue).get(0);
+				html += '<strong class="text-muted12d"> RS :' + first + '</strong>';
+				html += '<a href="/Home/GetProductbyId?Id='+ item.productId +'" class="title text-truncate">'+ item.productName +'</a>';
+				html += '<small class="text-muted"></small>';
+				html += '</figcaption>';
+				html += '</figure>';
+				html += '</div>';
+				html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>'
+				})
+				$('#Produc').append(html);
+				}
+			})
+		}
+		function GetCatDatas() {
+			var date = new Date();
+			$.ajax({
+				url: '/Home/GetOnlyCategories',
+				success: function (response) {
+					var cated = "";
+					$.each(response, function (key, item) {
+						var dat = item.uploadDate;
+						cated += '<div class="col">';
+						cated += '<a href="/Home/GetCategoiesbyID?id='+item.categoryId+'" class="item-link text-center">';
+						cated += '<i class="'+item.categoryIcon+'" style="font-size:24px"></i>';
+						cated += '<span class="text"> '+item.categoryName+'</span>';
+						cated += '</a>';
+						cated += '</div>';
+					})
+					$('#Categor').append(cated);
+				}
+			})
+		}
+
+		
+		function AddtoWishList(id){
+			debugger
+			var token =sessionStorage.getItem('token');
+			if(token == null){
+				$('#myModal12').modal('show');
+			}
+			else{
+				$.ajax({
+					headers: {
+						Authorization: `Bearer ` + token
+					},
+					url: '/Item/AddtoWishtLists?id=' + id,
+					type: 'Post',
+					success: function (response) {
+						debugger
+						$('#SuccessModallist').modal('show');
+					},
+					error: function (data) {
+						$('#ErrorModal').modal('show');
+					}
+				})	
+			}
+		}
+
+		$(document).ready(function () {
+			GetProductDates();
+			GetCatDatas();
+			$('#NewTag').hide();
+			//$('#myModal').modal('hide');
+			//ChangeAllRecords();
+		})
+
+		function ChangeAllRecords(){
+
+			$.ajax({
+				url: '/Home/ChangeAllDataonUserBlock',
+				success: function (response) {
+
+				}
+			})
+		}
+
+		$('#Errormodelclose').click(function(){
+			$('#ErrorModal').modal('hide');
+		})
+		$('#Errormodelclose1').click(function () {
+			$('#ErrorModal').modal('hide');
+		})
+    </script>
+	

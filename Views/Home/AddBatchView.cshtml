@@ -1,0 +1,338 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+@{
+    ViewBag.Title = "AddBatchView";
+    Layout = "~/Views/Shared/_Layout3.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <div id="ProductData">
+        <div id="ProdImage"></div>
+        <div id="ProdName"></div>
+        <div id="ProdRating"></div>
+        </div>
+
+    <div class="row mb-4" id="refreshdiv">
+        <div class="col-3">
+            <div class="float-end">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="selectBox float-start">
+                <div class="float-end">
+                    
+                </div>
+            </div>
+
+        </div>
+        @*<div class="col-6">
+            <div id="pricc" class="pprice float-start">
+            </div>
+               <div id="quenn" class="pquantity">
+            </div>
+        </div>
+    </div>*@
+
+    <div>
+        <div id="AddNewModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <input class="modal-title" style="border : none" id="AddTitle" />
+                        <button type="button" id="AddNewcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="sizes" class="newvariations" name="sizes1">
+                           
+                        </div>
+                        <div id="quenn" class="pquantity">
+                @*        <input for="exampleInputEmail1" style="border : none" id="AddText" />
+                        <input type="email" class="form-control" id="AddedInput" aria-describedby="emailHelp" placeholder="Enter Size/Colour Name">*@
+                    </div>
+                    <div class="modal-footer">
+@*                        <button type="button" id="AddColour" class="btn btn-danger" data-dismiss="modal">Save Colour</button>
+*@                        <button type="button" id="AddChanges" class="btn btn-danger" data-dismiss="modal">Save</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="SaveError" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <input class="modal-title" style="border : none" id="SaveTitle" />
+                        <button type="button" id="SavemodelCancel" onclick="HideExistingError();" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <input for="exampleInputEmail1" style="border : none" id="SaveStatus" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="SavemoCancel" onclick="HideExistingError();" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+        <div>
+            <div id="SuccessModel" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4> Batch Added Successfully</h4>
+                            <button type="button" id="SavemodelCancel" onclick="HideExistingError();" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                           <h4> Status Ok</h4>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" id="savestatus" onclick="HideExistingError();" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    <script>
+        $(document).ready(function () {
+            $('#newcard').hide();
+            $('#btnshow').hide();
+            //$('#AddNewModal').modal('hide');
+            //GetProductDes();
+       
+            //GetColours();
+            //GetSIzes();
+            $('#ErrorModal').hide();
+            $('#myModal').hide();
+            //GetsCardData();
+            GetDatas();
+        });
+
+
+     
+        $('#back').click(function () {
+            $('#newcard').hide();
+            $('#btnshow').hide();
+            $('#maincard').show();
+        })
+
+        $('#AddNewColours').click(function () {
+            $('#AddSize').hide();
+            $('#AddColour').show();
+            $('#AddTitle').val('Colours');
+            $('#AddText').val('Write Colour');
+            $('#AddNewModal').modal('show');
+        })
+
+        $('#AddNewSizes').click(function () {
+            $('#AddColour').hide();
+            $('#AddSize').show();
+            $('#AddTitle').val('Sizes');
+            $('#AddText').val('Write Size');
+            $('#AddNewModal').modal('show');
+        })
+
+        function HideExistingError(){
+            $('#SaveError').modal('hide');
+        }
+
+
+
+        $('#AddNewcancel').click(function () {
+            $('#AddNewModal').modal('hide');
+        })
+
+        $('#btnnew').click(function () {
+            $('#newcard').show();
+            $('#btnshow').show();
+            $('#maincard').hide();
+        });
+
+   
+    function GetDatas(){
+        debugger
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            $.ajax({
+                url: '/Home/GetProductVariationsbyId?id='+id,
+                type: 'Post',
+                success: function (response) {
+                    $('#AddNewModaln').modal('show');
+                    console.log('res',response);
+                    $.each(response, function(key,item){
+                        debugger
+                            $("#sizes").append('<input type="checkbox" class="vari" onchange="AddQuantPrice();" value="' + item.p_VariationsID + '"/><label>' + item.p_VariationsName + '</label>');
+                    }) 
+                },
+            })
+    }
+            function AddQuantPrice(e) {
+                $('.inputquen').parent('div').empty();
+                debugger
+             
+                var sizeses = $('.vari:checkbox');
+                console.log(sizeses);
+                $.each(sizeses, function(key, item) {
+                    if (item.checked == true) {
+                      console.log(item);
+                        var max_fields = 10;
+                        var Quant = $(".pquantity");
+                        var add_quan = $(".quents");
+                        $(Quant).append('<div class="inputquen"><input type="text" Placeholder="Quantity" class="variids" value="'+item.value+'" maxlength="4" name="myQuantid[]"/><input type="text" Placeholder="Quantity" class="inputquant" maxlength="4" name="myQuant[]"/><input type="text" class="inputprice" maxlength="4" placeholder="Price" name="myQuantity[]"/><a href="#" class="remove_quanprice">Remove</a></div>');
+                   
+                    }
+                })
+            };
+
+         
+    $('#savestatus').click(function(){
+
+        window.location.replace('/Home/AllUsersProducts');
+                 
+    })
+
+            $('#AddChanges').click(function () {
+                debugger
+                var form = new FormData();
+               
+                
+                var prices = $('.inputprice');
+                console.log(prices);
+                for (var i = 0; i < prices.length; i++) {
+                    form.append('pprice', $(prices[i]).val());
+                }
+             
+                var quati = $('.inputquant');
+                console.log(quati);
+                for (var i = 0; i < quati.length; i++) {
+                    form.append('pquantity', $(quati[i]).val());
+                }
+                var Variations = $('.variids');
+                for (var i = 0; i < Variations.length; i++) {
+                    form.append('VariationId', $(Variations[i]).val());
+                }
+
+                $.ajax({
+                    url: '/Home/AddBatch',
+                    type: 'Post',
+                    data: form,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                    $('#AddNewModal').modal('hide');
+                    $('#SuccessModel').modal('show');
+                    }
+                })
+            })
+
+
+
+            function GetSIzes() {
+                //var token = sessionStorage.getItem('token');
+                //debugger
+                //$.ajax({
+                //    headers: {
+                //        Authorization: `Bearer ` + token
+                //    },
+                //    url: '/Table/ProdSizes',
+                //    type: 'Get',
+                //    success: function (response) {
+                //        debugger
+                //        console.log(response);
+                //        $.each(response, function (key, item) {
+                //            console.log(item);
+                //            debugger
+                //            $("#sizes").append('<option value"' + item.sizeId + '">' + item.sizeName + '</option>');
+                //        })
+                //    }
+                //})
+            };
+
+            $('#AddColour').click(function () {
+                //var id = $('#AddedInput').val();
+                //$.ajax({
+                //    url: '/Item/AddColour',
+                //    data: {
+                //        id
+                //    },
+                //    type: 'Post',
+                //    success: function (response) {
+                //        debugger
+                //        $('#AddNewModal').modal('hide');
+
+                //        $('#SaveTitle').val('Saved');
+                //        $('#SaveStatus').val('Colours Saved Successfully');
+                //        $('#SaveError').modal('show');
+                //    },
+                //    error: function (response) {
+                //        $('#AddNewModal').modal('hide');
+                //        $('#SaveTitle').val('Error');
+                //        $('#SaveStatus').val('Colour Already Exists');
+                //        $('#SaveError').modal('show');
+                //    }
+
+                //})
+            })
+                           //var Quant = $(".pquantity");
+                        //$(Quant).on("click", ".remove_quanprice", function (e) {
+                        //    e.preventDefault();
+                        //    $(this).parent('div').remove();
+
+                        //})
+
+                //$('#sizes').click(function(key,item){
+
+                //})
+
+                    //function AddQuantPrice(e) {
+                    //    $('.inputquen').parent('div').empty();
+                    //    debugger
+                    //    var data = new FormData();
+                    //    var colourses = $('#colours').val();
+                    //    console.log(colourses);
+                    //    var sizeses = $('#sizes').val();
+                    //    console.log(sizeses);
+
+                    //    if (colourses != "" && sizeses != "") {
+
+                    //        var max_fields = 10;
+                    //        var Quant = $(".pquantity");
+                    //        var add_quan = $(".quents");
+
+                    //        $(Quant).append('<div class="inputquen"><input type="text" Placeholder="Quantity" class="inputquant" maxlength="4" name="myQuant[]"/><input type="text" class="inputprice" maxlength="4" placeholder="Price" name="myQuantity[]"/><a href="#" class="remove_quanprice">Remove</a></div>'); //add input box
+                    //    }
+
+                    //};
+                    //var Quant = $(".pquantity");
+                    //$(Quant).on("click", ".remove_quanprice", function (e) {
+                    //    e.preventDefault();
+                    //    $(this).parent('div').remove();
+
+                    //})
+
+                           //        debugger
+                            //        $('#AddNewModal').modal('hide');
+
+                            //        $('#SaveTitle').val('Saved');
+                            //        $('#SaveStatus').val('Size Saved Successfully');
+                            //        $('#SaveError').modal('show');
+                            //    },
+                            //    error: function (response) {
+                            //        $('#AddNewModal').modal('hide');
+
+                            //        $('#SaveTitle').val('Error');
+                            //        $('#SaveStatus').val('Size Already Exists');
+                            //        $('#SaveError').modal('show');
+                            //    }
+    </script>

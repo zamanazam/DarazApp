@@ -1,0 +1,1013 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "GetProductbyId";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+
+    <section class="padding-y" id="ProductInfo1">
+        <div class="container">
+            <input type="text" hidden="hidden" id="ProdIdsss" />
+            <div class="row">
+                <aside class="col-lg-6">
+                    <article class="gallery-wrap">
+                        <div class="img-big-wrap img-thumbnail">
+                            <a data-fslightbox="mygalley" data-type="image" href="images/items/detail1/big.webp">
+                                <div class="img-big-wrap img-thumbnail" id="image"></div>
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-2 col-md-2 col-sm-2">
+                                <div class="d-flex" id="savedimages"></div>
+                            </div>
+                        </div>
+                    </article>
+                </aside>
+
+                <main class="col-lg-6">
+                    <article class="ps-lg-3">
+                        <div class="row">
+                            <div class="col-9">
+                                <h4 id="ProdName"></h4>
+                                <h4 id="ProdPrice"></h4>
+                                <input hidden="hidden" id="VariId"/>
+                                <input hidden="hidden" id="batchId">
+    
+                            </div>
+                            <div class="col-3">
+                                <a class="btn btn-light float-end">
+                                    <div id="SellerImage"></div>
+                                    <p id="SellerName"></p>
+                                    <input hidden="hidden" id="SellerId"/> 
+                                </a>
+                               
+                                
+                            </div>
+                        </div>
+
+                        <p class="title text-dark" id="ProdDes"></p>
+                        <div id="Ratings"></div>
+                        <div class="rating-wrap my-3">
+                            <ul class="rating-stars">
+                                <li style="width:80%" class="stars-active"> <img src="images/misc/stars-active.svg" alt=""> </li>
+                                <li>
+                                    <img src="images/misc/starts-disable.svg" alt="">
+                                </li>
+                            </ul>
+
+                        </div>
+
+                        <dl class="row">
+
+                            <dt class="col-3">Material</dt>
+                            <dd class="col-9" id="ProdMaterial"></dd>
+                            <dt class="col-3">Brand</dt>
+                            <dd class="col-9" id="ProdBrand" value="ProdBrand"></dd> 
+                            <dt class="col-3" id="QuantTag">Available </dt>
+                            <dd class="col-9" id="ProdQuantity" ></dd>
+                           
+                        </dl>
+                        <hr>
+
+                        <div class="row mb-4">
+                            <div class="col-md-8 col-12 mb-4">
+                         
+                                <label class="form-label float-left">Variations</label>
+                                <div id="ProdColour" class="float-start"></div>
+
+                            </div>
+                            <div class="col-md-4 col-6 mb-2">
+                                <label class="form-label">Quantity</label>
+                                <input class="form-control" type="number" value="1" id="prdquant" name="quantity" min="0" max="100" step="1" >
+                            </div>
+                           
+                        </div>
+                        <a href="#" class="btn btn-warning" id="Continue"> Buy now </a>
+                        <a href="#" class="btn btn-primary" id="AddtoCart"> <i class="me-1 fa fa-shopping-basket"></i> Add to cart </a>
+                        <button id="ChatSeller" class="btn btn-warning" onclick="GetChatsbyUserId();">Chat</button>
+                    </article>
+                </main>
+            </div>
+        </div>
+    </section>
+    <section class="padding-y bg-light border-top" id="ProductInfo2">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+
+
+                    <div class="card">
+                        <header class="card-header">
+                            <ul class="nav nav-tabs card-header-tabs">
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_specs" data-bs-toggle="tab" class="nav-link active">Specification</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_warranty" data-bs-toggle="tab" class="nav-link">Warranty info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_shipping" data-bs-toggle="tab" class="nav-link">Shipping info</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" data-bs-target="#tab_seller" data-bs-toggle="tab" class="nav-link" id="Reviewsbyproductid">Review</a>
+                                </li>
+                            </ul>
+                        </header>
+                        <div class="tab-content">
+                            <article id="tab_specs" class="tab-pane show active card-body">
+                                <p id="ProdSpecificationText"></p>
+
+                                <table class="table border table-hover" id="Specifications">
+                                    <tr>
+                                        <th>  Display: </th>
+                                        <td id="ProdDisplay"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Processor capacity: </th>
+                                        <td id="ProdCapacity"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Camera quality: </th>
+                                        <td id="ProdCameraQuality"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Memory </th>
+                                        <td id="ProdMemory"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>  Graphics </th>
+                                        <td id="ProdGraphics"></td>
+                                    </tr>
+                                </table>
+                            </article>
+                            <article id="tab_warranty" class="tab-pane card-body">
+                                <p id="ProdWarrantyInfo"></p>
+                            </article>
+                            <article id="tab_shipping" class="tab-pane card-body">
+                                <p id="ProdShippingInfo"></p>
+                            </article>
+
+                            <article id="tab_seller" class="tab-pane card-body">
+                               <div id="reviewsdata"></div>
+                           </article>
+                            <input id="productId" hidden="hidden" />
+                        </div>
+                    </div>
+
+                </div>
+
+               
+                <aside class="col-lg-4">
+                    <h5 class="card-title">Similar items</h5>
+                    <div id="similaritems">
+                    </div>
+
+                </aside>
+            </div>
+
+            <br><br>
+
+        </div>
+    </section>
+
+    <section class="padding-y bg-light" id="ShippingInfo">
+        <div class="container">
+            <div class="row">
+                <main class="col-xl-8 col-lg-8">
+
+                       <article class="card">
+                <div class="content-body">
+                <h5 class="card-title"> Guest checkout </h5>
+                <div class="row">
+                <div class="col-6 mb-3">
+                <label class="form-label">First name</label>
+                <input type="text" class="form-control" Placeholder="User Name" id="UserNameses">
+                </div> <!-- col end.// -->
+
+                <div class="col-6">
+                <label class="form-label">Last name</label>
+                <input type="text" class="form-control" placeholder="FatherName" id="FatherNameses">
+                </div> <!-- col end.// -->
+
+                <div class="col-6 mb-3">
+                <label class="form-label">Phone</label>
+                <input type="text" value="+998" class="form-control" placeholder="Phone No" id="PhoneNoses">
+                </div> <!-- col end.// -->
+
+                <div class="col-6 mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" placeholder="Email" id="Email">
+                </div> <!-- col end.// -->
+                </div> <!-- row.// -->
+                <hr class="my-4">
+                <h5 class="card-title"> Shipping info </h5>
+                <div class="row">
+                <div class="col-sm-8 mb-3">
+                <label for="" class="form-label">Address</label>
+                <input type="text" class="form-control" placeholder="Address" id="Address">
+                </div> <!-- col end.// -->
+
+                <div class="col-sm-4 mb-3">
+                <label for="" class="form-label">City</label>
+                <input type="text" class="form-control" placeholder="City" id="City">
+                </div> <!-- col end.// -->
+
+                <div class="col-sm-4 col-6 mb-3">
+                <label for="" class="form-label">Postal code</label>
+                <input type="text" class="form-control" placeholder="PostalCode" id="PostalCode">
+                </div> <!-- col end.// -->
+                </div> <!-- row.// -->
+
+                <div class="mb-4">
+                <label for="" class="form-label">Message to seller</label>
+                <textarea class="form-control" id="Message"></textarea>
+                </div> <!-- col end.// -->
+
+                <div class="float-end">
+                <button class="btn btn-light">Cancel</button>
+                <button class="btn btn-success" id="AddtoOrder">Continue</button>
+                </div>
+
+                </div> <!-- card-body end.// -->
+                </article> <!-- card end.// -->
+
+
+                </main> <!-- col.// -->
+                <aside class="col-xl-4 col-lg-4">
+                    <article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+                        <h6 class="card-title">Summary</h6>
+
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-end"> $195.90</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Discount:</dt>
+                            <dd class="text-end text-danger"> - $60.00 </dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Shipping cost:</dt>
+                            <dd class="text-end"> + $14.00 </dd>
+                        </dl>
+                        <hr>
+                        <dl class="dlist-align">
+                            <dt> Total: </dt>
+                            <dd class="text-end"> <strong class="text-dark">$252.90</strong> </dd>
+                        </dl>
+
+                        <div class="input-group my-4">
+                            <input type="text" class="form-control" name="" placeholder="Promo code">
+                            <button class="btn btn-light text-primary">Apply</button>
+                        </div>
+
+                        <hr>
+                        <h6 class="mb-4">Items in cart</h6>
+                    </article>
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+            
+            <br><br>
+
+        </div> <!-- container .//  -->
+
+    </section>
+
+
+    <div>
+        <div id="myQuantityModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Error</h4>
+                        <button type="button" id="model1cancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Purchased Quantity Should be Less then Available Quantity.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="model1close" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="ChatModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Chat</h4>
+                        <button type="button" id="ChatModalCancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="ChatModalBody">
+                      
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="ChatModalClose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Login Error</h4>
+                        <button type="button" id="modelcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please Login First</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="modelclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    <div>
+        <div id="SuccessModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Success</h4>
+                        <button type="button" id="SuccessModalcancel" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Product Added To Cart Successfully.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="SuccessModalclose" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+     <div>
+        <div id="AddNewModalnst" class="modal fade text-container" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <label class="modal-title" style="border : none" id="AddTitle">Chat with Store</label>
+                        <button type="button" id="AddNewcancelnst" class="close btn btn-danger" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="User Name" id="UserNamenst" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="Email" id="Emailnst" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control mb-4" placeholder="Phone No" id="PhoneNonst" />
+                            </div> 
+                            <div class="form-group">
+                                <textarea class="form-control mb-4" id="Addressdnst" placeholder="Address"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control mb-4" id="HelpTextnst" placeholder="Request Description"></textarea>
+                            </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-light float-end mb-4" id="Savenst">Send</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+    <script>
+        function GetAll() {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            var html = "";
+            let diff = 6.048e+8;
+            $.ajax({
+                url: '/Table/ProductDetailsbyId?id=' + id,
+                type: 'Get',
+                success: function (response) {
+                    var priceses = [];
+                    var quan = [];
+                    var html = "";
+                    var date = new Date();
+         
+                    $('#ProdIdsss').val(response.productId);
+                    $("#ProdId").append(response.productId);
+                    $("#ProdName").append(response.productName);
+                    $("#image").append(((date - (new Date(response.uploadDate))) <= diff) ? '<a href="/Home/GetProductbyId?id=' + response.productId + '" class=""><div class="d-flex justify-content-end"><span class="badge bg-danger">New</span></div><img style="height: 575px ; width : 620px" src = "' + response.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + response.productId + '" class="img-wrap rounded bg-gray-light"><img style="height: 575px ; width : 620px" src = "' + response.productImage + '" ></a>');
+
+                    $("#SellerName").append(response.sellerName);
+                    $('#SellerId').val(response.sellerId);
+                    $("#SellerImage").append('<a href="/Item/GetProductsbyUserId?id=' + response.sellerId + '"><img class="icon-md rounded-circle" src = "' + response.sellerImage + '" ></a>');
+                   
+                    let prodlength =0;
+                    prodlength =+ (response.productComments.length);
+                
+                    let endrat = 0;
+                    let lowpric = 0;
+                    $.each(response.productComments, function (key, item) {
+                        let productrate = (item.rating);
+                        let newrating = (productrate / prodlength);
+                        endrat += newrating;
+                      
+                       })
+            
+                    html += (((0 == endrat)) ? '<div class="d-flex"><span class="fa fa-star " style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (No Rating)<p style="color:green">' + prodlength + 'Orders</p></div>' : '');
+                    html += (((1 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star " style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((2 < endrat.toFixed() > 1)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((2 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((3 < endrat.toFixed() > 2)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((3 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + endrat.toFixed(1) + ')<p style="color:green">'+prodlength+'Orders</p></div>' : '');
+                    html += (((4 < endrat.toFixed() > 3)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + endrat.toFixed(1) + ')<p style="color:green">' + prodlength + 'Orders</p></div>' : '');
+                    html += (((4 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + endrat.toFixed(1) + ')<p style="color:green">'+ prodlength +'Orders</p></div>' : '');
+                    html += (((5 < endrat.toFixed() > 4)) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">'+ prodlength +'Orders</p></div>' : '');
+                    html += (((5 == endrat.toFixed())) ? '<div class="d-flex"><span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + endrat.toFixed(1) + ')<p style="color:green">' + prodlength + 'Orders</p></div>' : '');
+
+                    $('#Ratings').append(html);
+
+                    $.each(response.productViewModels.productVariations, function (key, item) {
+                        $("#ProdColour").append('</br><label class="rounded-3"><input type="radio" id="contactChoice1" name ="contact" class="float-start prodcolor m-1" onchange="GetSizes(' + item.p_VariationsID + ');" value="' + item.p_VariationsID + '"/><span class="bg-#F8F9FA rounded-3">' + item.p_VariationsName + '</span></label>');
+                        $.each(item.productBatches, function(key, prices){
+                            console.log(prices);
+                               priceses = prices.price;
+                               quan = prices.remainingQuantity;
+                               console.log('ste',prices.remainingQuantity);
+                        });    
+                    })
+                       var first = $(priceses).get(0);
+                        var firstquan = $(quan).get(0);
+                        console.log('quant',firstquan);
+                       $('#ProdPrice').append(first);
+                       if(firstquan > 20)
+                       {
+                          $('#QuantTag').hide();
+                          $('#ProdQuantity').empty();
+                       }
+                       else
+                       {
+                          $('#QuantTag').show();
+                          $('#ProdQuantity').append(firstquan);
+                       }
+                              
+                    $.each(response.productViewModels.productDescriptions, function (key, item) {
+                        $("#ProdDesId").append('<option>' + item.pdescriptionId + '</option>');
+                        $("#ProdBrand").append(item.productBrand);
+                        $("#ProdDes").append(item.productDes);
+                        $("#ProdMaterial").append(item.productMaterial);
+                        $("#ProdQuality").append(item.productQuality);
+                        $("#ProdType").append(item.productType);
+                    })
+                    $.each(response.productViewModels.productDescriptionimages, function (key, item) {
+                        $("#savedimages").append('<a href="#" onclick="ChangeImage('+item.productDescriptionImagesId+',\'' + response.uploadDate + '\')"><img style="height: 70px ; width : 90px" src = "' + item.productdesImage1 + '"></a>');
+                    })
+
+                    $.each(response.productViewModels.productSpecifications, function (key, item) {
+                        $("#ProdCameraQuality").append(item.cameraQuality);
+                        $("#ProdGraphics").append(item.graphics);
+                        $("#ProdMemory").append(item.memory);
+                        $("#ProdCapacity").append(item.processorCapacity);
+                        $("#ProdDisplay").append(item.productDisplay);
+                        $("#ProdShippingInfo").append(item.productShippingInfo);
+                        $("#ProdSpecificationText").append(item.productSpecificationsText);
+                        $("#ProdWarrantyInfo").append(item.productWarrantyInfo);
+                    })
+                },
+                error: function (err) {
+                    
+                }
+            })
+        };
+
+        $(document).ready(function () {
+             GetAll();
+            Simmilar();
+            $('#ChatModal').modal('hide');
+            //$('#QuantTag').hide();
+            $('#myModal').modal('hide');
+            $('#myQuantityModal').modal('hide');
+            $('#SuccessModal').modal('hide');
+           
+            $('#ShippingInfo').hide();
+        });
+
+        function ChangeImage(id,newdate){
+            debugger
+
+            $.ajax({
+                url:'/Home/GetImagebyProductImageId?id='+id,
+                success: function (response) {
+                console.log('image',response);
+
+            let diff = 6.048e+8;
+            var date = new Date();
+            $('#image').empty();
+            $("#image").append(((date - (new Date(newdate))) <= diff) ? '<a href="#" class=""><div class="d-flex justify-content-end"><span class="badge bg-danger">New</span></div><img style="height: 575px ; width : 620px" src = "' + response.productdesImage1 + '" ></a> ' : ' <a href="#" class="img-wrap rounded bg-gray-light"><img style="height: 575px ; width : 620px" src = "'+ response.productdesImage1 +'" ></a>');
+
+                }
+            })
+        }
+
+        function GetSizes(VariationId) {
+            $('#QuantTag').hide();
+            $('#ProdQuantity').empty();
+            $('#ProdPrice').empty();
+            $('#VariId').val(VariationId);
+            $.ajax({
+                url: '/Table/GetAllColorsandSizes',
+                type: 'POST',
+                data: { VariationId },
+                success: function (response) {
+                    debugger
+                    console.log('remain',response);
+                    $('#ProdSize').empty();
+                    $.each(response, function (key, item) {
+                      
+                        $('#batchId').val(item.batchId);
+                        $('#ProdPrice').append(item.price);
+                        if(item.remainingQuantity > 20)
+                        {
+                            $('#QuantTag').hide();
+                            $('#ProdQuantity').empty();
+                        }
+                        else
+                        {
+                            $('#QuantTag').show();
+                            $('#ProdQuantity').append(item.remainingQuantity);
+                            $('#ProdQuantinty').show();
+                            console.log('qu',item.remainingQuantity);
+                        }
+                    })
+                }
+            })
+        }
+
+        function GetColourss(e) {
+            var ProductId = $('#ProdIdsss').val();
+            var SizeId = [];
+            var sizeId = $('.prodsize:checkbox');
+            $.each(sizeId, function (key, item) {
+                if (item.checked == true) {
+                    SizeId.push(item.value);
+                }
+            })
+            var ColourId = [];
+            var colourId = $('.prodcolor:checkbox');
+            $.each(colourId, function (key, item) {
+                if (item.checked == true) {
+                    ColourId.push(item.value);
+                }
+            })
+
+            $.ajax({
+                url: '/Table/GetAllColorsandSizes',
+                type: 'POST',
+                data: { ProductId, SizeId, ColourId },
+                success: function (response) {
+                    $('#ProdColour').empty();
+                    $.each(response, function (key, item) {
+                        $('#ProdColour').append('<input type="radio" class="prodcolor" onchange="GetSizes();" value="' + item.colourId + '">' + item.colourName + '<span class="label label-info">' + item.price + '</span></input>')
+                    })
+                }
+            })
+        }
+
+        $('#modelclose').click(function () {
+            $('#myModal').modal('hide');
+            window.location.replace('/Home/FirstPage');
+        })
+
+        $('#modelcancel').click(function () {
+            $('#myModal').modal('hide');
+
+        })
+
+        $('#ChatModalCancel').click(function(){
+            $('#ChatModal').modal('hide');
+        })
+        $('#ChatModalClose').click(function(){
+            $('#ChatModal').modal('hide');
+        })
+
+
+        function Simmilar() {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            $.ajax({
+
+                url: '/Table/SimmilarItems?id=' + id,
+                type: 'Post',
+                data: { id },
+                success: function (response) {
+                    var items = "";
+                    $.each(response, function (key, item) {
+                        let pric=[];
+                        let diff = 6.048e+8;
+                        var date = new Date();
+                        items += '<div class="row">';
+                        items += '<div class="d-flex">';
+                        items += (((date - (new Date(item.uploadDate))) <= diff) ? '<a href="/Home/GetProductbyId?id=' + item.productId + '" class=""><div class="d-flex justify-content-start"><span class="badge bg-danger">New</span></div><img width=90px class="img-md img-thumbnail" height=90px src = "' + item.productImage + '" ></a> ' : '<a href="/Home/GetProductbyId?id=' + item.productId + '" class=""><div class="d-flex justify-content-start"><span class="badge bg-danger"></span></div><img width=90px class="img-md img-thumbnail" height=90px src = "' + item.productImage + '" ></a> ');
+                       items +='<figcaption class="info">';
+                        items +='<a class="title mb-1">' + item.productName + '</a>';
+                       
+                        $.each(item.productViewModels, function (key, itemss) {
+                            $.each(itemss, function (key, itemsss) {
+                                 $.each(itemsss.productBatches,function(key,obj){
+                                     pric=obj.price;
+                                 })
+                            })
+                        })
+                        var firpric = $(pric).get(0);
+                         items += '<br />';
+                         items +='<strong class="price">' + firpric + '</strong>';
+                         items += '</figcaption>';
+                         items += '</div>';
+                         items += '</div>';
+                            
+                    })
+                    $('#similaritems').append(items);
+
+                }
+            })
+        };
+
+        $('#AddtoCart').click(function () {
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let ProductId = search_params.get('id');
+            var token = sessionStorage.getItem('token');
+            var StoreId = $('#SellerId').val();
+            if (token == null) {
+                $('#myModal').modal('show');
+            }
+            else {
+                var Quantity = $('#prdquant').val();
+                var ProductPrice = $('#ProdPrice').text();
+                var BatchId = $('#batchId').val();
+                var VariationId = $('#VariId').val();
+
+                $.ajax({
+                    headers: {
+                        Authorization: `Bearer ` + token
+                    },
+                    url: '/Item/AddtoCart',
+                    data: {
+                        ProductId,
+                        Quantity,
+                        ProductPrice,
+                        VariationId,
+                        BatchId,
+                        StoreId,
+                    },
+                    type: 'Post',
+                    success: function (response) {
+                       $('#SuccessModal').modal('show');
+                    },
+                    Error: function (response) {
+                        alert("Error");
+                    }
+                })
+            }
+        });
+
+        $('#Continue').click(function () {
+            var token = sessionStorage.getItem('token');
+            if (token == null) {
+                $('#myModal').modal('show');
+            }
+            else {
+                $('#ProductInfo1').hide();
+                $('#ProductInfo2').hide();
+                $('#ShippingInfo').show();
+            }
+        })
+        $('#AddtoOrder').click(function () {
+            var token = sessionStorage.getItem('token');
+            if (token == null) {
+                $('#myModal').modal('show');
+                window.location.replace('/Home/Index');
+            }
+            else {
+
+                let url_str = window.location.href;
+                let url = new URL(url_str);
+                let search_params = url.searchParams;
+
+                let ProductId = search_params.get('id');
+                var VariationId = $('#VariId').val();
+                var BatchId =$('#batchId').val();
+                var Quantity = $('#prdquant').val();
+                var ProductPrice = $('#ProdPrice').text();
+                var StoreId = $('#SellerId').val();
+                var TotalPrice = (Quantity * ProductPrice);
+                var UserName = $('#UserNameses').val();
+                var FatherName = $('#FatherNameses').val();
+                var Email = $('#Emailses').val();
+                var PhoneNo = $('#PhoneNoses').val();
+                var Address = $('#Address').val();
+                var City = $('#City').val();
+                var PostalCode = $('#PostalCode').val();
+                var Message = $('#Message').val();
+                $.ajax({
+                    headers: {
+                        Authorization: `Bearer ` + token
+                    },
+                    url: '/Item/AddtoOrders',
+                    data: {
+                        ProductId, Quantity, ProductPrice,BatchId, VariationId, TotalPrice, UserName, FatherName, Email, PhoneNo, Address, City, PostalCode,StoreId, Message
+                    },
+                    type: 'Post',
+                    success: function (response) {
+                        $('#SuccessModal').modal('show');
+                    },
+                    error: function (data) {
+                        $('#myQuantityModal').modal('show');
+
+                    }
+                })
+            }
+        })
+        $('#model1close').click(function () {
+            $('#myQuantityModal').modal('hide');
+            var id = $('#ProdIdsss').val();
+            window.location.replace('/Home/GetProductbyId?id=' + id);
+        })
+
+        $('#model1cancel').click(function () {
+            $('#myQuantityModal').modal('hide');
+            var id = $('#ProdIdsss').val();
+            window.location.replace('/Home/GetProductbyId?id=' + id);
+
+        })
+
+        $('#Reviewsbyproductid').click(function () {
+             $('#reviewsdata').empty();
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+
+            let id = search_params.get('id');
+            $.ajax({
+                url: '/Item/GetReviewbyProductId?id=' + id,
+                //data: {ProductId},
+                success: function (response) {
+                    var reve = "";
+                    $.each(response, function(key,item){
+                    reve += '<div class="card">';
+                    reve +='<div class="row">';
+                    reve +='<div class="col-3">';
+                    reve +='<img width=70px class="img-md img-thumbnail" height=70px src="'+item.user.userImage+'"/>';
+                    reve += '</div>';
+                    reve += '<div class="col-9">';
+                    reve += '<h6>'+item.user.userName+'</h6>';
+                    reve +='<br/>';
+                    reve += '<div>';
+                    reve +='<p>'+item.commentedOn+'</p>';
+                    reve += '</div>';
+                     reve += '<div>';
+                    //reve += (((1 < item.rating> 0)) ? '<span class="fa fa-star " style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((1 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((2 < item.rating> 1)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + item.rating + ')' : '');
+                    reve += (((2 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>             (' + item.rating + ')' : '');
+                    reve += (((3 < item.rating> 2)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + item.rating + ')' : '');
+                    reve += (((3 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star" ></span ><span style="font-size:16px" class="fa fa-star" ></span>                  (' + item.rating + ')' : '');
+                    reve += (((4 < item.rating> 3)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((4 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star" ></span>              (' + item.rating + ')' : '');
+                    reve += (((item.rating> 4)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + item.rating + ')' : '');
+                    //reve += (((5 == item.rating)) ? '<span class="fa fa-star checked" style="font-size:16px"></span><span style="font-size:16px" class="fa fa-star checked"></span ><span style="font-size:16px" class="fa fa-star checked" ></span><span style="font-size:16px" class="fa fa-star checked" ></span ><span style="font-size:16px" class="fa fa-star checked" ></span>             (' + item.rating + ')' : '');
+                    //reve += (((0 == response.productComments.length)) ? '<span class="fa fa-star" style = "font-size:16px"></span><span style="font-size:16px" class="fa fa-star"></spa><span style="font-size:16px" class="fa fa-star"></span><span style="font-size:16px" class="fa fa-star" ></span><span style="font-size:16px" class="fa fa-star"></span>                (No Rating)' : '');
+                    reve += '</div>';
+                    reve += '<div>';
+                    //reve += '<p id="revstarrating">' + item.rating + '</p >';
+                    reve +='</div>';
+
+                    reve +='</div>';
+                    reve +='</div>';
+                    reve +='<div>';
+                    reve += '<div id="revratingcomment">' + item.commentDescription + '</div>';
+                    reve +='</div>'; 
+                    reve +='</div>'; 
+                    })
+                    $('#reviewsdata').append(reve);
+                    
+                },
+                error: function (data) {
+                    
+                }
+
+            })
+        })
+
+        function GetChatsbyUserId() {
+            $('#ChatModalBody').empty();
+            var id = $('#SellerId').val();
+            debugger
+            var token = sessionStorage.getItem('token');
+            if(token != null)
+            {
+                
+              
+              $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/GetChatbyUserIdandStoreId?id=' + id,
+                type: 'POST',
+                success: function (response) {
+                    var id = 0;
+                    var uncheckst = "";
+                    console.log('res', response);
+                    $.each(response, function (key, item) {
+
+                        if (item.sender.userId == item.id) {
+                                uncheckst += '<div class="rounded-5 border">';
+                                uncheckst += '<div class="d-flex">';
+                                uncheckst += '<img float: right; class="icon-sm mt-1 ps-1 rounded-circle " src="' + item.sender.userImage + '"/>';
+                                uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                                uncheckst += '</div>';
+                                uncheckst += '<p class="ps-3">' + item.messageText + '</p>';
+                                uncheckst += '</div>';
+                        }
+                        else {
+                                uncheckst += '<div class="rounded-5 border">';
+                                uncheckst += '<div class="d-flex">';
+                                uncheckst += '<img class="icon-sm mt-1 ps-1 rounded-circle" src="' + item.sender.userImage + '"/>';
+                                uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                                uncheckst += '</div>';
+                                uncheckst += '<p class="ps-3">' + item.messageText + '</p>';
+                                uncheckst += '</div>';
+                        }
+                        id = item.id;
+                    })
+                                uncheckst += '<div class="row mb-lg-n3 modal-header" >';
+                                uncheckst += '<div class="col-9 float-end" >';
+                                uncheckst += '<input type="text" class="form-control" PlaceHolder="Reply Text" id = "ResText" />';
+                                uncheckst += '</div>';
+                                uncheckst += '<div class="col-3 float-start">';
+                                uncheckst += '<button class="btn btn-secondary" onclick="SavesReply();"> Send </button>';
+                                uncheckst += '</div>';
+                                uncheckst += '</div>';
+                                uncheckst += '<input hidden="hidden" id="ReceiverId" value="' + id + '"/>';
+                    $('#ChatModalBody').append(uncheckst);
+                    $('#ChatModal').modal('show');
+                }
+             })
+           }
+         else
+          {
+                     var secretkey = localStorage.getItem('secretkey');
+                     var storeid = $('#SellerId').val();
+                         if(secretkey != null )
+                         {
+                            $.ajax({
+                                url: '/Home/GetG_SChatbySecretKey',
+                                data:{secretkey, storeid},
+                                type: 'POST',
+                              success: function (response)
+                              {
+                                var id = 0;
+                                var uncheckst = "";
+                                console.log('res', response);
+                                $.each(response, function (key, item) {
+
+                                    if (item.sender.userId == item.id) 
+                                    {
+                                        uncheckst += '<div class="rounded-5 border">';
+                                        uncheckst += '<div class="d-flex">';
+                                        uncheckst += '<img float: right; class="icon-sm mt-1 ps-1 rounded-circle " src="' + item.sender.userImage + '"/>';
+                                        uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                                        uncheckst += '</div>';
+                                        uncheckst += '<p class="ps-3">' + item.messageText + '</p>';
+                                        uncheckst += '</div>';
+                                    }
+                                    else 
+                                    {
+                                        uncheckst += '<div class="rounded-5 border">';
+                                        uncheckst += '<div class="d-flex">';
+                                        uncheckst += '<img class="icon-sm mt-1 ps-1 rounded-circle" src="' + item.sender.userImage + '"/>';
+                                        uncheckst += '<p class="badge-pill b btn-info ml-auto m-xxl-3">' + item.sender.userName + '</p>';
+                                        uncheckst += '</div>';
+                                        uncheckst += '<p class="ps-3">' + item.messageText + '</p>';
+                                        uncheckst += '</div>';
+                                    }
+                                        id = item.id;
+                                })
+                                        uncheckst += '<div class="row mb-lg-n3 modal-header" >';
+                                        uncheckst += '<div class="col-9 float-end" >';
+                                        uncheckst += '<input type="text" class="form-control" PlaceHolder="Reply Text" id = "ResText" />';
+                                        uncheckst += '</div>';
+                                        uncheckst += '<div class="col-3 float-start">';
+                                        uncheckst += '<button class="btn btn-secondary" onclick="SavesReply();"> Send </button>';
+                                        uncheckst += '</div>';
+                                        uncheckst += '</div>';
+                                        uncheckst += '<input hidden="hidden" id="ReceiverId" value="' + id + '"/>';
+                                        $('#ChatModalBody').append(uncheckst);
+                                        $('#ChatModal').modal('show');
+                              }
+                            })
+                         }
+                         else
+                         {
+                             $('#AddNewModalnst').modal('show');
+                         }
+         }
+        }
+
+        $('#Savenst').click(function(){
+        
+            var storeid = $('#SellerId').val();
+            var Email = $('#Emailnst').val();
+            var UserName = $('#UserNamenst').val();
+            var HelpText = $('#HelpTextnst').val();
+            var PhoneNumber = $('#PhoneNonst').val();
+            var Address =$('#Addressdnst').val();
+            debugger
+            $.ajax({
+                url: '/Home/AddStoreChatbyNewGuest',
+                data: {Email,UserName,HelpText,PhoneNumber,storeid,Address},
+                type: 'Post',
+                 success: function (secretkey)
+                 {
+                      localStorage.setItem('secretkey', secretkey);
+                 }
+            })
+        })
+
+
+        $('#AddNewcancelnst').click(function(){
+            $('#AddNewModalnst').modal('hide');
+        })
+
+
+            function SavesReply() {
+             var token = sessionStorage.getItem('token')
+               
+            var Message = $('#ResText').val();
+            var receiverid = $('#SellerId').val();
+            debugger
+            if(token == null)
+            {       
+                        debugger
+                        var storeid = $('#SellerId').val();
+                        var secretkey = localStorage.getItem('secretkey');
+                        $.ajax({
+                            url: '/Home/ChatwithStorebySecretKey',
+                            data: {secretkey, Message , storeid},
+                            type: 'POST',
+                              success: function (response) {
+                                 debugger
+                                 GetChatsbyUserId();
+                                 //GetChatsbyUserId(response);
+                             }
+                        })
+
+            }
+            else{
+            debugger
+              $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/SaveReplyChat',
+                data: { receiverid, Message },
+                success: function (response) {
+                    debugger
+                    GetChatsbyUserId(response);
+                }
+
+              })
+            }
+        }
+
+             
+    </script>

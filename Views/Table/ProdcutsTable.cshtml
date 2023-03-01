@@ -1,0 +1,186 @@
+﻿@*@using DarazApp.Entities;
+@model IQueryable<DarazApp.Entities.Product>
+@{
+    ViewData["Title"] = "Prodcut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <body>
+        <table border="1" id="example">
+            <thead style="color:black">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Product Name</th>
+                    <th>User Name</th>
+                    <th>Category Name</th>
+                    <th>Created At</th>
+                    <th>Product Price</th>
+                    <th>Product Quality</th>
+                    <th>Product Quantity</th>
+                    <th>Product Image</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+        </table>
+
+
+
+        <div class="card mb-4" id="AddProductCard">
+            <article class="card-body">
+                <h4 class="mb-4">Submit product</h4>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Title</label>
+                    <div class="col-9">
+                        <input type="text" id="text" class="form-control" placeholder="Product Name here">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Price</label>
+                    <div class="col-9">
+                        <input type="text" id="ProductPrice" class="form-control" placeholder="$ 0.00">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">
+
+                        <small class="text-muted">(Max 10 mb)</small>
+                    </label> <div class="col-9">
+                        <div class="gallery-uploader-wrap">
+                            <label style="width: 80px; height: 80px" class="uploader-img">
+                                <img width="100" src="./Ecommerce templates for Figma and Sketch_files/1.webp">
+                            </label>
+                            <label style="width: 80px; height: 80px" class="uploader-img">
+                                <img width="100" src="./Ecommerce templates for Figma and Sketch_files/2.webp">
+                            </label> <label style="width: 80px; height: 80px" class="uploader-img">
+
+                                <input type="file" id="file" name="lorem">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="3">
+                                    </circle>
+                                    <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                </svg>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Description</label>
+                    <div class="col-9">
+                        <textarea class="form-control" id="ProductDes" placeholder="Type here"></textarea>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-3 col-form-label">Features</label>
+                    <div class="col-9">
+                        <ul class="row row-cols-xxl-3 row-cols-2">
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-label"> HD camera </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" checked="">
+                                    <span class="form-check-label"> Voice control </span>
+                                </label>
+                            </li>
+
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Metallic </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> 5K Display </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> High speed </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Ultra wide </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label">
+                                        5K Display
+                                    </span>
+                                </label>
+                            </li>
+                            <li>
+                                <label class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="">
+                                    <span class="form-check-label"> Blootooth 3.0 </span>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="row mb-2">
+                    <div class="col-9 offset-3">
+                        <button type="button" id="btnshow" class="btn btn-primary">Add product</button>
+
+                        <button type="reset" class="btn btn-outline-danger">Cancel</button>
+                    </div>
+
+                </div>
+
+            </article>
+        </div>
+    </body>
+
+    <script>
+        $(document).ready(function () {
+            $('#AddProductCard').hide();
+            var token = sessionStorage.getItem('token');
+            debugger
+            //$('#example').Datatable({
+            $.ajax({
+                Headers{
+                    Authorization: 'Bearer' + token
+            }
+                url: '/Table/ProdcutsTable',
+                type : 'Get',
+                data : 'JSON',
+                success: function (response) {
+                    console.log(response);
+                    debugger
+                    var html = "";
+            
+                    $.each(response, function (key, item) {
+                        
+                        var value = item[key];
+                        html += '<tr>' + productName + ':' + item.productName + '</tr>';
+
+                            html += '<tr>' + uploadDate + ':' + item.uploadDate + '</tr>';
+                            html += '<tr>' + productName + ':' + item.productName + '</tr>';
+                            html += '<tr>' + productPrice + ':' + item.productPrice + '</tr>';
+                            html += '<tr>' + productImage + ':' + item.productImage + '</tr>';
+
+                            $("#tbody").append(html);
+
+                    })
+
+                }
+            })
+        })
+    </script>*@

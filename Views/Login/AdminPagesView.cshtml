@@ -1,0 +1,68 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+
+@{
+    ViewData["Title"] = "AdminPagesView";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    
+<section class="padding-y">
+	<div class="container">
+		<header class="section-heading">
+@*			<h3 class="section-title">Seller Products</h3>*@
+</header>
+		<div class="row" id="ProductsShow">
+		</div>
+	</div>
+</section>
+
+	<script>
+		$(document).ready(function () {
+			GetProductsbyUserId();
+		})
+
+		function GetProductsbyUserId() {
+			let url_str = window.location.href;
+			let url = new URL(url_str);
+			let search_params = url.searchParams;
+			let id = search_params.get('id');
+			debugger
+			console.log(id);
+			$.ajax({
+				url: '/Item/GetAllSearchResults?Id=' + id,
+				type: 'Get',
+				success: function (response) {
+					var html = "";
+					var date = new Date();
+					let diff = 6.048e+8;
+					var pricesvalue = [];
+					$.each(response, function (key, item) {
+						html += '<div class="col-lg-3 col-md-6 col-sm-6" >';
+						html += '<figure class="card-product-grid" >';
+						html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyIdAdmin?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyIdAdmin?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+						html += '<figcaption class="pt-2" >';
+						html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="float-end btn btn-light btn-icon" > </a> <a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i > </a>';
+						$.each(item.productViewModels?.productVariations, function (key, itemss) {
+							//console.log('batch', itemss.productBatches?.price);
+							$.each(itemss.productBatches, function (key, obj) {
+								pricesvalue = obj.price;
+							})
+						})
+						var first = $(pricesvalue).get(0);
+						html += '<strong class="text-muted12d" > ' + first + '</strong>';
+						html += '<a href="/Home/GetProductbyIdAdmin?Id=' + item.productId + '" class="title text-truncate" > ' + item.productName + '</a>';
+						html += '</figcaption>';
+						html += '</figure>';
+						html += '</div>';
+					})
+					$('#ProductsShow').append(html);
+				}
+			})
+		}
+	</script>

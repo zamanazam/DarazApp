@@ -1,0 +1,103 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel;
+@{
+    ViewData["Title"] = "SellerAccountView";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    
+    <body>
+        <section class="padding-y">
+            <div class="container">
+                <header class="section-heading">
+                    <h3 class="section-title">Seller Products</h3>
+                </header>
+                <div class="row" id="ProductsShow">
+                </div>
+            </div>
+        </section>
+    </body>
+        <script>
+        $(document).ready(function () {
+            debugger
+            GetProductsbyUserId();
+        })
+
+        function GetProductsbyUserId() {
+            var token = sessionStorage.getItem('token');
+            debugger
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Item/GetProdSellerView',
+                type: 'Get',
+                success: function (response) {
+                    var html = "";
+                    var date = new Date();
+                    let diff = 6.048e+8;
+                    console.log('res', response);
+                    debugger
+                    $.each(response, function (key, item) {
+                        console.log('item', item);
+                        html += '<div class="col-lg-3 col-md-6 col-sm-6" >';
+                        html += '<figure class="card-product-grid" >';
+                        html += ((date - (new Date(item.uploadDate))) <= diff) ? '<a href="/Home/GetProductbyIdAdmin?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger">New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>' : '<a href="/Home/GetProductbyIdAdmin?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '"></a>';
+                        html += '<figcaption class="pt-2" >';
+                        html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="float-end btn btn-light btn-icon" > </a> <a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i > </a>';
+                        html += '<strong class="text-muted12d" > ' + item.productPrice + '</strong>';
+                        html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate" > ' + item.productName + '</a>';
+                        html += '</figcaption>';
+                        html += '</figure>';
+                        html += '</div>';
+
+                    })
+                    $('#ProductsShow').append(html);
+                }
+            })
+        }
+            //$('#btnSignIn').click(function () {
+            //    var UserName = $('#txtusername').val();
+            //    var Password = $('#txtpassword').val();
+            //    $.ajax({
+            //        url: '/Home/SellerLogin',
+            //        type: 'Post',
+            //        data: {
+            //            UserName,
+            //            Password,
+            //        },
+
+            //        success: function (obj) {
+            //            debugger
+            //            sessionStorage.setItem("token", obj.token);
+            //            $("#response").html("<h2>Usersuccessfully logged in.< /h2>");
+            //            window.location.href = '/Home/Index'
+            //        },
+            //        error: function (data) {
+            //            alert("Error");
+            //        }
+            //    })
+            //})
+
+            //$('#btnregister').click(function () {
+            //    window.location.href = '/Home/RegisterSellerView';
+            //})
+
+            //function ShowPassword(event) {
+            //    var show = document.getElementById('txtpassword');
+            //    debugger
+            //    if (show.type == 'password') {
+            //        show.type = 'text';
+            //    }
+            //    else {
+            //        if (show.type == 'text') {
+            //            show.type = 'password';
+            //        }
+            //    }
+            //}
+
+        </script>

@@ -1,0 +1,128 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "GetWishListView";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+  
+  
+        @*<section id="ShoppingCart">
+            <div class="row">
+                <div class="col-lg-9">
+                    <div class="card">
+                        <div class="content-body">
+                            <h4 class="card-title mb-4">Your WishList</h4>
+                            <div class="row gy-3 mb-4" id="WishList">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>*@
+        <div class=container>
+            <card>
+                <h4 class="bg-gray float:center">WishList</h4>
+                <div id="WishList" class="border"></div>
+            </card>
+        </div>
+
+        <img src=""/>
+
+    <script>
+        $(document).ready(function(){
+            var token = sessionStorage.getItem('token');
+            if(token == null)
+            {
+                alert("Please Login First");
+            }
+            else
+            {
+            var items = '';
+            $.ajax({
+                headers : {
+				'Authorization' : 'Berear ' + token
+			    },
+                url: '/Item/GetWishtList',
+                type: 'Get',
+                success: function(response){
+                    console.log(response);
+                    debugger
+                    if(response.length == 0)
+                    {
+                        items+='<h4>Empty!</h4>';
+                        items += '<h5> Please Add Product to Your WishList.</h5>';
+                            $('#WishList').append(items);
+                    }
+                    else
+                    {
+                        let x= 1;
+                    $.each(response, function(key, item){
+                    console.log(item);
+                    var Sr = x++;
+                        items += '<card class="row gy-3 mb-4">';
+                        //items += '<h4 class=bg-gray>My WishList</h4>';
+                        items += '<div class="col-lg-5">';
+                        items += '<figure class="itemside me-lg-5">';
+                        items += '<p class="text-black-50">' + Sr + '</p>';
+                        items += '<div class="aside"><img style="height:100px ; width:100px" src ="' + item.productImage + '"/></div>';
+                        items += '<figcaption class="info">';
+                        items += "<a><h5>" + item.productName + "</h5></a>";
+                        $.each(item.productDescription, function(key, obj){
+                                    items += '<p class="text-black-50">' + obj.productDes + '</p>';
+                        })
+                        items += '</figcaption>';
+                        items += ' </figure>';
+                        items += '</div>';
+                        items += '<div class="col-lg-2 col-sm-4 col-6">';
+                        items += '<div class="price-wrap lh-sm">';
+                        items += '<br>';
+                        items += '</div>';
+                        items += '</div>';
+                        items += '<div class="col-lg col-sm-4">';
+                        items += '<div class="float-lg-end">';
+                        items += '<a href="" onclick="RemoveWishList(' + item.wishListId + ')" class="btn btn-light text-danger" > Remove</a>';
+                        items += '<input type="hidden" id="(WishListid' + item.wishListId + ')" name="quantity" value="' + item.wishListId + '">';
+                        items += '<a href="/Home/GetProductbyId?id=' + item.productId + '" class="btn btn-light text-primary"> Detail</a>';
+                        items += '</div>';
+                        items += '</div>';
+                        items += ' </card>';
+                    })
+                            $('#WishList').append(items);
+                    }
+                   
+                }
+            })
+            }
+        })
+
+        function RemoveWishList(id) {
+            debugger
+            var token = sessionStorage.getItem('token');
+
+            debugger
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Item/DeleteWishList?id=' + id,
+                type: 'Delete',
+                //data: { WishListId },
+                success: function (data) {
+                    debugger
+                    console.log(data);
+                    alert('Deleted Successfully');
+
+                    
+                    
+                }
+            })
+        };
+
+    </script>
+  

@@ -1,0 +1,33 @@
+﻿@using DarazApp.Entities;
+@model DarazApp.Services.ViewModel
+@{
+	ViewData["Title"] = "GetCategoies";
+	Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+    }
+
+
+
+<section class="padding-top">
+	
+    <div class="container">
+        <nav class="row gy-5 row-cols-xl-8 row-cols-sm-5 row-cols-3">
+			@foreach (var item in Model.categoriesvm)
+			{
+			<div class="col">
+                <a href="/Home/GetCategoiesbyID?id=@item.CategoryId" class="item-link text-center">
+						<i class="@item.CategoryIcon" style='font-size:36px'></i>
+		
+              
+						<span class="text"> @item.CategoryName </span>
+                </a>
+            </div>
+			}
+		</nav>
+    </div>
+</section>

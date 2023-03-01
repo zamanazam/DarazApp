@@ -1,0 +1,112 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "AssignPages";
+    Layout = "~/Views/Shared/_Layout5.cshtml";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <div class="container-fluid">
+       
+
+        <table class="table table-striped table-hover border" id="example">
+            <thead>
+                <tr>
+                    <th scope="col">Sr.</th>
+                    <th scope="col">Customer </th>  
+                    <th scope="col">C-Image </th>
+                    <th scope="col">Phone </th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Request On</th>
+                    <th scope="col">Request</th>
+                    <th scope="col">Secret Key</th>
+                    <th scope="col">A-By</th>
+                    <th scope="col">A-To</th>
+                    <th scope="col">A-On</th>
+                
+                </tr>
+            </thead>
+            <tbody id="tbody" class="border">
+            </tbody>
+        </table>
+        <div id="Null">
+            <div class="row">
+                <p>Null!</p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#Null').hide();
+     
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let id = search_params.get('id');
+            GetAssignsTo(id);
+        })
+
+        function GetAssignsTo(id) {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    authorization: 'Berear ' + token
+                },
+                url: '/Home/Assigners?id=' + id,
+                success: function (response) {
+                   console.log('res', response.length);
+                    debugger
+                    var html = "";
+                    let x = 1;
+                    
+                    debugger
+                    if (response.length == 0) {
+                        $('#Null').show();
+                      
+                    }
+              else
+              {
+                    $.each(response, function (key, item) 
+                    {
+
+                        var nx = x++;
+                        html += '<tr id="Serialkey" ondblclick="ChatbyRoomId(' + item.r_Id + ');" class="border"><td class="border" style="border: 1px solid black">' + nx + '</td>';
+                        html += '<td class="border" style="border: 1px solid black">' + item.userName + '</td>';
+                        html += '<td class="border" style="border: 1px solid black">' + item.users?.userImage + '</td>';
+                        html += '<td class="border">' + item.phoneNo + '</td>';
+                        html += '<td class="border">' + item.email + '</td>';
+                        html += '<td class="border">' + item.roomOn + '</td>';
+                        html += '<td class="border">' + item.roomText + '</td>';
+                        html += '<td class="border">' + item.secretKey + '</td>';
+                        html += '<td class="border"><img style="height: 70px ; width : 90px" src="' + item.admins?.userImage + '"/></td>';
+                        html += '<td class="border"><img style="height: 70px ; width : 90px" src="' + item.assign?.userImage + '"/></td>';
+                        html += '<td class="border">' + item.assignedOn + '</td>';
+                           
+                    })
+
+                    $("#tbody").append(html);
+                    $('#example').show();
+              }
+
+                }
+            })
+        }
+
+
+        function ChatbyRoomId(id){
+
+            window.location.replace('/Home/ChatsHistoyAdminView?RoomId='+ id);
+       
+        }
+
+
+    </script>

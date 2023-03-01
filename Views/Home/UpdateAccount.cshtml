@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewData["Title"] = "SearchAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h1 class="text-center">Update Password </h1>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Enter UserName OR EmailId</label>
+                            <input type="email" class="form-control" id="txtusername" aria-describedby="emailHelp" placeholder="Enter UserName">
+                        </div>
+                        <button type="button" id="btnSignIn" class="btn btn-primary btn-lg btn-block" style="margin:13px">SignIn</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <script>
+        $(document).ready(function(){
+
+       
+        $('#btnSignIn').click(function () {
+            var UserName = $('#txtusername').val();
+            $.ajax({
+                url: '/Home/UPdateAccount',
+                type: 'Post',
+                data: {
+                    UserName,                
+                },
+                success: function (obj) {
+                debugger
+                $("#response").html("<h2>Password Successully Updated< /h2>");
+                window.location.href = '/Home/UpdatePassword'
+
+                },
+                error: function (data) {
+                    alert("User Name does not Exist");
+                }
+            })
+
+            });
+        });
+    </script>

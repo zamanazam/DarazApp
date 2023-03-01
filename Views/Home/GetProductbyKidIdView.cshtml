@@ -1,0 +1,300 @@
+﻿@using DarazApp.Services
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "GetProductbyKidIdView";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+
+    <div class="container-fluid ">
+        <div class="row d-flex">
+            <div class="col-md-3 bg-gray">
+                <div class="row">
+                    <div class="Pe-0 ps-0 bg-dark text-white p-2 mb-4">
+                        <header type="header" class="font-monospace">
+                            Show Results BY:
+                        </header>
+                    </div>
+                    <div class="mb-3">
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="card bg-white">
+@*                            <div aria-label="Default select example" id="Price"></div>*@ 
+                                <input type="text" onclick="SearchByPara();" id="MinimumPrice" class="form-control" placeholder="Minimun Price"/>
+                             <input type="text" onclick="SearchByPara();" id="MaximumPrice" class="form-control" placeholder="Maximum Price"/>
+                            
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="card bg-white">
+                            <div aria-label="Default select example" name="Brand" id="Brand"></div>                      
+                </div>
+                    </div>
+                    @*<div class="mb-3">
+                        <div class="card bg-white">
+                            <div aria-label="Default select example" name="Size" id="Size"> </div>
+
+                        </div>
+                    </div>*@
+                    <article class="filter-group">
+                        <header class="card-header bg-gray">
+                            <a href="#" class="title" data-bs-toggle="collapse" data-bs-target="#collapse_aside3">
+                                <i class="icon-control fa fa-chevron-down"></i>Size</a>
+                        </header>
+                        <div class="collapse show" name="Size" id="Size">
+                            <div class="card-body">
+                            </div>
+                        </div> 
+                    </article>
+                    @*<div class="mb-3">
+                        <div class="card bg-white">
+                            <div class="col" aria-label="Default select example" name="Colour" id="Colour"></div>
+
+                        </div>
+                    </div>*@
+                    <article class="filter-group">
+                        <header class="card-header bg-gray">
+                            <a href="#" class="title" data-bs-toggle="collapse" data-bs-target="#collapse_aside3">
+                                <i class="icon-control fa fa-chevron-down"></i>  Colour
+                            </a>
+                        </header>
+                        <div class="collapse show" id="Colour">
+                            <div class="card-body">
+                            </div>
+                        </div> 
+                    </article>
+
+
+                    <div class="input-group mb-3">
+                     
+                        <input type="text" id="ProductName" style="width:25%" class="form-control ForProdc" placeholder="Search">
+                        <span class="" id="basic-addon2">
+                            <button type="button" id="SelectiveSearch" onclick="SearchByPara()" class="btn btn-dark">GO</button>
+                        </span>
+                    </div>
+                    <h5 type="text" id="ProdNam"></h5>
+                    <input type="text" id="KidCategoryId"/>
+                    <input type="text" id="PriceText" />
+                    <input type="text" id="BrandText" />
+                    <input type="text" id="SizeText" />
+                    <input type="text" id="ColourText" />
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row" id="Produc"></div>
+                <div class="row" id="NewProduc"></div>
+            </div>
+           
+        </div>
+    </div>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+
+        function GetProductDates() {
+
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let Id = search_params.get('Id');
+            $('#KidCategoryId').val(Id);
+            var kkk = $('#KidCategoryId').val();
+
+            $.ajax({
+                url: '/Home/GetProductsbyKidId?Id=' + Id,
+                type: 'Post',
+
+                success: function (response) {
+                  debugger
+                    var html = "";
+                    var prodname = "";
+                    var price = "";
+                    var brand = "";
+                    var size = "";
+                    var colour = "";
+                    let diff = 6.048e+8;
+                    console.log('Test', response);
+                    $.each(response.products, function (key, item) {
+                        console.log('item', item);
+
+                        var dat = item.uploadDate;
+                        var date = new Date();
+                        html += '<div class="col-lg-3 col-md-6 col-sm-6">';
+                        html += '<figure class="card-product-grid">';
+                        html += ((date - (new Date(item.uploadDate))) <= diff) ? '<a href = "/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light" ><p class="topbar" > <span class="badge bg-danger" > New </span></p><img height="250" class="mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : '<a href = "/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light" ><img height="250" class="mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+                        html += ' <figcaption class="pt-2" >';
+                        html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="float-end btn btn-light btn-icon"></a>';
+                        html += '<a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i></a>';
+                        html += '<strong class="text-muted12d">' + item.productPrice + '</strong>';
+                        html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';
+                        html += '<small class="text-muted"></small>';
+                        html += '</figcaption>';
+                        html += '</figure>';
+                        html += '</div>';
+                        html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>';
+
+                        price += '<input type = "checkbox" class="pricework" name="price" id="'+ item.productPrice+'" prodprice="'+ item.productPrice+'" class="pricese" value="' + item.productPrice + '"/><label >' + item.productPrice + '</label>';
+                     })
+                        $.each(response.coloursvm, function (key, itemss) {
+       
+                        colour += '<label class="form-check mb-2"><input class="colourwork form-check-input" type="checkbox" name="colour" value="' + itemss.colourId + '" ><span class="form-check-label" > ' + itemss.colourName + '</span></label>';
+                        })
+
+                        $.each(response.sizesvm, function (key, itemss) {
+
+                        size += '<label class="form-check mb-2"><input class="sizework form-check-input" type ="checkbox" name="size" value="' + itemss.sizeid + '" ><span class="form-check-label">' + itemss.sizeName + '</span><b class="badge rounded-pill bg-gray-dark float-end"></b></label>';
+
+                        })
+                        
+                        $.each(response.productDescriptionVm, function(key,items){
+                            $('#Brand').append( '<input type = "checkbox" class="brandwork" name="brand" value="' + items + '"/><label >' + items + '</label>' );
+                        })
+
+                    $('#Price').append(price);
+                    $('#Colour').append(colour);
+                    $('#Size').append(size);
+                    $('#Produc').append(html);
+                }
+            })
+        }
+
+        $(document).ready(function () {
+            GetProductDates();
+        })
+
+        function SearchByPara(event) {
+           
+            debugger
+            let url_str = window.location.href;
+            let url = new URL(url_str);
+            let search_params = url.searchParams;
+            let KidId = search_params.get('Id');
+
+            var MinimumPrice = $('#MinimumPrice').val();
+            var MaximumPrice = $('#MaximumPrice').val();
+
+            var Brands =[];
+            var checkboxesbrand =$('.brandwork:checkbox');
+            $.each(checkboxesbrand, function(key,item){
+                if(item.checked == true)
+                {
+                    Brands.push(item.value);
+                }
+            })
+            console.log('Brands', Brands);
+
+            var SizeIds =[];
+            var checkboxessize = $('.sizework:checkbox');
+            $.each(checkboxessize, function(key,item){
+                if(item.checked == true)
+                {
+                    SizeIds.push(item.value);
+                }
+            })
+            console.log('sizes',SizeIds);
+
+            var ColourIds = [];
+            var checkboxescolours =$('.colourwork:checkbox');
+            $.each(checkboxescolours , function(key,item){
+                if(item.checked == true)
+                {
+                    ColourIds.push(item.value);
+                }
+            })
+            console.log('colour',ColourIds);
+
+            var productname = $('#ProductName').val();
+            var ProductName = "";
+            if (productname != 0) {
+                ProductName = productname;   
+            }
+
+            debugger
+            $.ajax({
+                url: '/Home/SelectedSearch',
+                type: 'Post',
+                datatype: 'JSON',
+                data: { KidId, Brands, ProductName, ColourIds, SizeIds,MinimumPrice, MaximumPrice },
+
+                success: function (response) {
+                    var html1 = "";
+                    $.each(response, function (key, item) {
+                        console.log('item111', item);
+                        var dat = item.uploadDate;
+                        var date = new Date();
+                        let diff = 6.048e+8;
+                        html1 += '<div class="col-lg-3 col-md-6 col-sm-6">';
+                        html1 += '<figure class="card-product-grid">';
+                        html1 += ((date - (new Date(item.uploadDate))) <= diff) ? '<a href = "/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light" ><p class="topbar" > <span class="badge bg-danger" > New </span></p><img height="250" class="mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : '<a href = "/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light" ><img height="250" class="mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+                        html1 += ' <figcaption class="pt-2" >';
+                        html1 += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="float-end btn btn-light btn-icon"></a>';
+                        html1 += '<a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i></a>';
+                        html1 += '<strong class="text-muted12d">' + item.productPrice + '</strong>';
+                        html1 += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';
+                        html1 += '<small class="text-muted"></small>';
+                        html1 += '</figcaption>';
+                        html1 += '</figure>';
+                        html1 += '</div>';
+                        html1 += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>'
+                    })
+                    $("#Produc").hide();
+                    $("#NewProduc").empty();
+                    $('#NewProduc').append(html1);
+ 
+                },
+                error: function (data) {
+                    alert("No Item is Available");
+                }
+            })
+
+        }
+
+
+        $('#MinimumPrice').keyup(function (e) {
+            debugger
+             SearchByPara();
+        })
+
+        $('#MaximumPrice').keyup(function (e) {
+            debugger
+             SearchByPara();
+        })
+
+        $('#Brand').click(function (e) {
+            SearchByPara();
+        })
+
+        $('#Colour').click(function (e) {
+            SearchByPara();
+        })
+
+        $('#Size').click(function (e) {
+            SearchByPara();
+        })
+
+        $("#ProductName").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '@Url.Action("TextBoxSearchProducts","Home")',
+                    dataType: "json",
+                    data: { ProductName: $("#ProductName").val() },
+                    success: function (data) {
+                        console.log('ProductName', data);
+                        response($.map(data, function (item) {
+                            return { label: item.productName, value: item.productName };
+                        }));
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Error");
+                    }
+                });
+            }
+        });
+
+
+    </script>

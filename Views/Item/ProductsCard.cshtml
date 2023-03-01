@@ -1,0 +1,552 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "ProductsCard";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <section id="ShoppingCart">
+        <div class="row">
+            <div class="col-lg-9">
+                <div class="card">
+                    <div class="content-body">
+                        <h4 class="card-title mb-4">Your shopping cart</h4>
+                        <button id="DeleteFullCart" class="btn btn-danger">Remove Cart</button>
+                        <article class="row gy-3 mb-4" id="Items">
+                        </article>
+                    </div>
+                    <div class="content-body border-top">
+                        <p><i class="me-2 text-muted fa-lg fa fa-truck"></i> Free Delivery within 1-2 weeks</p>
+                        <p class="text-muted">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                            quis nostrud exercitation ullamco laboris nisi ut aliquip
+                        </p>
+                        <input id="batchId" hidden="hidden"/>
+                    </div>
+                </div>
+            </div>
+            <aside class="col-lg-3">
+
+                <div class="card mb-3">
+                    <div class="card-body">
+                    </div> <!-- card-body.// -->
+
+                </div> <!-- card.// -->
+
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-end"> $329.00</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Discount:</dt>
+                            <dd class="text-end text-success"> - $60.00 </dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>TAX:</dt>
+                            <dd class="text-end"> $14.00 </dd>
+                        </dl>
+                        <hr>
+                        <dl class="dlist-align">
+                            <dt>Total:</dt>
+                            <dd class="text-end text-dark h5" id="TotalPrice"> </dd>
+                        </dl>
+
+                        <div class="d-grid gap-2 my-3">
+                            <a href="#" class="btn btn-success w-100" id="Continue"> Make Purchase </a>
+                            <a href="#" class="btn btn-light w-100" id="BacktoShop"> Back to shop </a>
+                        </div>
+                    </div> <!-- card-body.// -->
+
+                </div> <!-- card.// -->
+            </aside>
+        </div>
+    </section>
+
+    <section class="padding-y bg-light" id="ShippingInfo">
+        <div class="container">
+            <div class="row">
+                <main class="col-xl-8 col-lg-8">
+
+                    <article class="card">
+                        <div class="content-body">
+                            <h5 class="card-title"> Guest checkout </h5>
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">First name</label>
+                                    <input type="text" class="form-control" Placeholder="User Name" id="UserName">
+                                </div> <!-- col end.// -->
+
+                                <div class="col-6">
+                                    <label class="form-label">Last name</label>
+                                    <input type="text" class="form-control" placeholder="FatherName" id="FatherName">
+                                </div> <!-- col end.// -->
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Phone</label>
+                                    <input type="text" value="+998" class="form-control" placeholder="Phone No" id="PhoneNo">
+                                </div> <!-- col end.// -->
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="text" class="form-control" placeholder="Email" id="Email">
+                                </div> <!-- col end.// -->
+                            </div> <!-- row.// -->
+
+
+
+                            <hr class="my-4">
+
+                            <h5 class="card-title"> Shipping info </h5>
+
+
+                            <div class="row">
+                                <div class="col-sm-8 mb-3">
+                                    <label for="" class="form-label">Address</label>
+                                    <input type="text" class="form-control" placeholder="Address" id="Address">
+                                </div> <!-- col end.// -->
+
+                                <div class="col-sm-4 mb-3">
+                                    <label for="" class="form-label">City</label>
+                                    <input type="text" class="form-control" placeholder="City" id="City">
+                                </div> <!-- col end.// -->
+
+                                <div class="col-sm-4 col-6 mb-3">
+                                    <label for="" class="form-label">Postal code</label>
+                                    <input type="text" class="form-control" placeholder="PostalCode" id="PostalCode">
+                                </div> <!-- col end.// -->
+                            </div> <!-- row.// -->
+                           
+                            <div class="mb-4">
+                                <label for="" class="form-label">Message to seller</label>
+                                <textarea class="form-control" id="Message"></textarea>
+                            </div> <!-- col end.// -->
+
+                            <div class="float-end">
+                                <button class="btn btn-light">Cancel</button>
+                                <button class="btn btn-success" id="AddtoOrder">Continue</button>
+                            </div>
+
+                        </div> <!-- card-body end.// -->
+                    </article> <!-- card end.// -->
+
+
+                </main> <!-- col.// -->
+                <aside class="col-xl-4 col-lg-4" id="SimilarItems">
+                    <article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+                        <h6 class="card-title">Summary</h6>
+
+                        <dl class="dlist-align">
+                            <dt>Total price:</dt>
+                            <dd class="text-end"> $195.90</dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Discount:</dt>
+                            <dd class="text-end text-danger"> - $60.00 </dd>
+                        </dl>
+                        <dl class="dlist-align">
+                            <dt>Shipping cost:</dt>
+                            <dd class="text-end"> + $14.00 </dd>
+                        </dl>
+                        <hr>
+                        <dl class="dlist-align">
+                            <dt> Total: </dt>
+                            <dd class="text-end"> <strong class="text-dark">$252.90</strong> </dd>
+                        </dl>
+
+                        <div class="input-group my-4">
+                            <input type="text" class="form-control" name="" placeholder="Promo code">
+                            <button class="btn btn-light text-primary">Apply</button>
+                        </div>
+
+                        <hr>
+                        <h6 class="mb-4">Items in cart</h6>
+
+                        <figure class="itemside align-items-center mb-4" >
+                        </figure>
+                    </article>
+                </aside> <!-- col.// -->
+            </div> <!-- row.// -->
+
+            <br><br>
+
+        </div> <!-- container .//  -->
+    </section>
+
+    <script>
+        $(document).ready(function () {
+            var token = sessionStorage.getItem('token');
+            $('#ShippingInfo').hide();
+            SimilarCardData();
+            GetCardView();
+            GetUserInfo();
+            debugger
+        })
+        function GetCardView() {
+            var token = sessionStorage.getItem('token');
+            if(token == null)
+            {
+                alert("Please Login First");
+            }
+            else
+            {
+            debugger
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Item/Record',
+                type: 'Get',
+                //data: 'Json',
+                success: function (response) {
+                    debugger
+                    console.log('Test',response);
+                    var items = '';
+                    var html = "";
+                    var total = 0;
+                    $.each(response, function (key, item) {
+                        console.log('prdoc',item);
+
+                        var Quantity = (item.productQuantity);
+                        var Price = (item.productPrice);
+                        var TotalPrice = (Quantity * Price);
+                        debugger
+                        total += TotalPrice;
+                        $("#ProdQuantity").val(Quantity);
+                        debugger
+
+                        items += '<article class="row gy-3 mb-4"  >';
+                        items += '<div class="col-lg-5">';
+                        items += '<figure class="itemside me-lg-5">';
+                        items += "<div class='aside'><img height='100'  src =" + item.productImage + "> </img> </div>";
+                        items += '<figcaption class="info">';
+                        items += "<a  class='title' >" + item.productName + "</a>";
+                        //$.each(item.productVariations, function(key,items){
+                        //    console.log('items',items.p_VariationsName )
+                        items += "<a class='title' >" + item.productVariations?.p_VariationsName +"</a>";
+                        $('#batchId').val(item.productBatch?.batchId);
+
+                        //})   
+                        items += '</figcaption>';
+                        items += ' </figure>';
+                        items += '</div>';
+                        items += '<div class="col">';
+                        items += '<input type="number" id="ProdQuantity" value="'+ item.productQuantity +'" name="ProdQuantity" min="0" max="100" step="1" value="30">';
+                        //items += "<input type='text' name='quantity' value=" + item.productQuantity + '" id="productQuantity" min="0" max="100" step="10" value="30" />"';
+                        items += '</div>';
+                        items += '<div class="col-lg-2 col-sm-4 col-6">';
+                        items += '<div class="price-wrap lh-sm">';
+                        items += "<var class='price h6'>" + item.totalPrice + "</var>";
+                        items += '<br>';
+                        items += "<small class='text-muted' id='ProductPrice' value="+ item.productPrice +">" + item.productPrice + " </small>";
+                        items += '</div>';
+                        items += '</div>';
+                        items += '</div>';
+                        items += '<div class="col-lg col-sm-4">';
+                        items += '<div class="float-lg-end">';
+                        items += '<a href="#" class="btn btn-light"> <i class="fa fa-heart"></i></a>';
+                        items += '<a href="#" class="btn btn-light text-danger" onclick="RemoveCard()"> Remove</a>';
+                        items += '<input type="text" hidden="hidden" id="CardDataId" name = "quantity" value = "' + item.cardDataId + '" >';
+                        items += '<input type="text" hidden="hidden" id = "SizeId" name = "quantity" value = "' + item.productVariations?.p_VariationsID + '" >';
+                        items += '<input type="text" hidden="hidden" id = "ColourId" name = "quantity" value = "' + item.colourId + '" >';
+                        items += '<input type="text" hidden="hidden" id = "ProductId" name = "quantity" value = "' + item.productId + '" >';
+                             items += '<input type="text" hidden="hidden" id="Storeid" name = "quantity" value = "' + item.storeId + '" >';
+                        items += '</div>';
+                        items += '</div>';
+                        items += ' </article>';
+                    })
+                    $("#Items").append(items);
+                    $("#Total").append(total);
+                    $("#TotalPrice").append(total);
+                    //$("#total").append(total);
+
+                }
+            })
+            }
+        };
+        function GetUserInfo() {
+            debugger
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+                url: '/Home/GetUserData',
+                type: 'Get',
+                success: function (response) {
+                    debugger
+                    console.log(response);
+                    $('#UserName').val(response.userName);
+                    $('#FatherName').val(response.fatherName);
+                    $('#Email').val(response.email);
+                    $('#PhoneNo').val(response.phoneNo);
+                    $('#Address').val(response.address);
+                    $('#City').val(response.city);
+                    $('#PostalCode').val(response.postalCode);
+                }
+            })
+        }
+        $('#DeleteFullCart').click(function(){
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers:{
+                    Authorization : 'Bearer ' +token
+                },
+                url: '/Item/DeleteCartData',
+                type: 'Delete',
+                success: function(response){
+                    alert("Cart Removed Successfully");
+                    window.location.replace('/Item/ProductsCard');
+                },
+                error: function(response){
+                    alert("Error");
+                }
+            })
+        })
+
+        function RemoveCard() {
+            var token = sessionStorage.getItem('token');
+            var CardDataId = $('#CardDataId').val();
+            //var SizeId = $('select#ProdSize').find('option:selected').val();
+            debugger
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Item/DeleteCartData',
+                type: 'Delete',
+                data: { CardDataId },
+                success: function (response) {
+                    debugger
+                    console.log(response);
+                    alert("Item Deleted Successfully");
+                },
+                error : function(response){
+                    alert("Error");
+                }
+            })
+        };
+        $('#Continue').click(function () {
+            debugger
+            $('#ShoppingCart').hide();
+            $('#ShippingInfo').show();
+        })
+
+        $('#AddtoOrder').click(function () {
+            debugger
+            var token = sessionStorage.getItem('token');
+            var ProductId = $('#ProductId').val();
+            var StoreId = $('#Storeid').val();
+            var CardDataId = $('#CardDataId').val();
+            var ProductPrice = $('#ProductPrice').text();
+            var VariationId = $('#SizeId').val();
+            var BatchId = $('#batchId').val();
+            var UserName = $('#UserName').val();
+            var Quantity = $('#ProdQuantity').val();
+            var FatherName = $('#FatherName').val();
+            var Email = $('#Email').val();
+            var PhoneNo = $('#PhoneNo').val();
+            var Address = $('#Address').val();
+            var City = $('#City').val();
+            var PostalCode = $('#PostalCode').val();
+            var Message = $('#Message').val();
+            debugger
+            $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Item/AddtoOrders',
+                type: 'Post',
+                data: { ProductId, CardDataId, ProductPrice, VariationId, StoreId,BatchId, UserName, FatherName, Email, PhoneNo, Address, City, PostalCode, Message, Quantity },
+                success: function (response) {
+                    debugger
+                    console.log(response);
+                    alert("Successfully Order Created");
+                }
+            })
+        })
+        $('#BacktoShop').click(function () {
+            window.location.href = '/Home/Index';
+        })
+        function SimilarCardData(){
+            var token = sessionStorage.getItem('token');
+            var html ="";
+             $.ajax({
+                headers: {
+                    Authorization: `Bearer ` + token
+                },
+                url: '/Item/GetsCardData',
+                type: 'Get',
+                success: function (response) {
+                    debugger
+                    console.log(response);
+                    $.each(response, function (key, item) {
+                        console.log(item);
+                        html+= '<div class="aside">';
+                        html+= ' <b class="badge bg-secondary rounded-pill"></b>';
+                        html+= '<img src="' + item.productImage + '" class="img-sm rounded border">';
+                        html+= ' </div>';
+                        html+= '<figcaption class="info">';
+                        html += '<a href="#" class="title" id="SimilarItemsName">' + item.productName  + '</a>';
+                        html += ' <a class="title">' + item.productPrice + '</a>';
+                        html+= '</figcaption>';
+                    })
+                    $('#SimilarItems').append(html); 
+                }
+            })
+        }
+        //   $('#AddtoOrder').click(function({
+        //	var UserName =$('#UserName').val();
+        //	var Fathername = $('#Fathername').val();
+        //	var Email = $('#Email').val();
+        //	var PhoneNo = $('#PhoneNo').val();
+        //	var Address = $('#Address').val();
+        //	var City = $('#City').val();
+        //	var token = sessionStorage.getItem('token');
+        //	$.ajax({
+        //		headers: {
+        //			Authorization : 'Bearer ' + token
+        //		},
+        //		url:'/Home/AddtoOrders',
+        //		type: 'Post',
+        //		data: {
+        //			UserName,
+        //			FatherName,
+        //			Email,
+        //			phoneNo,
+        //			Address,
+        //			City
+        //		},
+        //		success: function (response) {
+        //			debugger
+        //			console.log(response);
+
+        //		}
+        //	})
+        //}))
+        //function AddPurchase(){
+        //    var token = sessionStorage.getItem('token');
+        //    var ProductId = $('#ProductId').val();
+        //    var CardDataId =$('#CardDataid').val();
+        //    var TotalPrice = $('#BuyValue').val();
+        //    //var ProductName =$('#ProductName').val();
+        //    var ColourId = $('#sizeId').val();
+        //    var SizeId = $('#colourId').val();
+
+        //     $.ajax({
+        //        headers: {
+        //            Authorization: `Bearer ` + token
+        //        },
+        //        url: '/Item/AddtoOrders',
+        //        type: 'Post',
+        //        data: { ProductId, CardDataId, TotalPrice },
+        //        success: function (response) {
+        //            debugger
+        //            console.log(response);
+
+        //            $.each(response, function (key, item) {
+        //                console.log(item);
+        //                debugger
+
+        //            })
+        //        }
+        //    })
+        //}
+        //onclick = "Remove(' + item.OrderDataId + ')"
+        //function Cartdata() {
+        //    debugger
+        //    var token = sessionStorage.getItem('Token');
+        //    $.ajax({
+        //        headers: {
+        //            Authorization: `Bearer ` + token
+        //        },
+        //        url: '/Daraz/CartData',
+        //        success: function (response) {
+        //            debugger
+        //            console.log(response);
+        //            var items = '';
+        //            var total = 0.0;
+
+        //            debugger
+        //            console.log(total);
+
+        //            $.each(response, function (key, obj) {
+        //                console.log(obj);
+        //                var Quantity = (obj.Quantity);
+        //                var Price = (obj.Product.Price);
+        //                var TotalPrice = (Quantity * Price);
+        //                total += TotalPrice;
+
+        //                //var Total = (TotalPrice + TotalPrice);
+        //                //$("#Total").append(total);
+
+        //                //if (let i = 0; i < TotalPrice;i++);
+        //                $("#quantity").val(Quantity);
+
+        //                console.log(TotalPrice);
+        //                items += '<article class="row gy-3 mb-4"  >'
+        //                items += '<div class="col-lg-5">';
+        //                items += '<figure class="itemside me-lg-5">';
+        //                items += "<div class='aside'><img height='100'  src =" + obj.Product.Image + "> </img> </div>";
+        //                items += '<figcaption class="info">';
+        //                items += "<a  class='title' >" + obj.Product.Description + "</a>";
+        //                // $.each(obj.Colors, function (data, item) {
+        //                //  items += "<p class='text-muted'>" + response.Colors[I].Color + "</p>";
+        //                //  // });
+        //                //  $.each(obj.Sizes, function (data, item) {
+        //                //  items += "<p class='text-muted'>" + response.Sizes[v].Size + "</p>";
+        //                // });
+        //                items += '</figcaption>';
+        //                items += ' </figure>';
+        //                items += '</div>';
+        //                items += '<div class="col">';
+        //items += '<input type="button" onclick="decrementValue(' + obj.Id + ')" value="-" />';
+        //items += "<input type='text' name='quantity' value=" + Quantity + "  maxlength='2' id='quantity" + obj.Id + "' max='10' size='1' />";
+        //items += '<input type="button" onclick="incrementValue(' + obj.Id + ')" value="+" />';
+        //                items += '</div>';
+        //                items += '<div class="col-lg-2 col-sm-4 col-6">';
+        //                items += '<div class="price-wrap lh-sm">';
+        //                items += "<var class='price h6'>" + TotalPrice + "</var>";
+        //                items += '<br>';
+        //                items += "<small class='text-muted'>" + Price + "/Per item </small>";
+        //                items += '</div>';
+        //                items += '</div>';
+        //                items += '</div>';
+        //                items += '<div class="col-lg col-sm-4">';
+        //                items += '<div class="float-lg-end">';
+        //                items += '<a href="#" class="btn btn-light"> <i class="fa fa-heart"></i></a>';
+        //                items += '<a href="#" class="btn btn-light text-danger"  onclick="Remove(' + obj.Id + ')" > Remove</a>';
+        //                items += '</div>';
+        //                items += '</div>';
+        //                items += ' </article>';
+
+        //            });
+        //            $("#Total").append(total);
+        //            $("#total").append(total);
+        //            $("#checkprice").val(total);
+        //            $("#Items").append(items);
+        //        }
+        //    });
+        //}
+
+        @*$("#CardTable").append('
+        <figure class="itemside me-lg-5">
+        <div class="aside"></div>
+        <a href="/Home/GetProductbyId?id=' + item.productImage + '"><img width=90px height=90px src="' + item.productImage + '"></a></div>');
+        $("#CardTable").append('
+        <figcaption class="info"><a class="title"><ProdName">' + item.productName + '</a></figcaption>');
+        $("#CardTable").append('
+        <p class="text-muted">' + item.productPrice + '</p>');
+        $("#CardTable").append('
+        <ProdPrice>' + item.productPrice + '</ProdPrice>');
+        $("#CardTable").append('
+        <TotalPrice>' + item.productPrice + '<TotalPrice></figcaption>
+        </figure>');*@
+    </script>

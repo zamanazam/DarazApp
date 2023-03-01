@@ -1,0 +1,49 @@
+﻿@using DarazApp.Services;
+@model DarazApp.Services.SaveData;
+@{
+    ViewBag.Title = "AddColour";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-12 mt-5 d-flex justify-content-center">
+                    <form class="w-50 border p-5 bg-gray-light" style="margin:10%">
+                        <h1 class="text-center">Add Colour </h1>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Colour Name</label>
+                            <input type="email" class="form-control" id="ProdColour" aria-describedby="emailHelp" placeholder="Enter Colour">
+                    
+                        </div>
+                        <button type="button" id="Add" class="btn btn-primary btn-lg btn-block" style="margin:13px">Add</button>
+                        <button type="button" id="Back" class="btn btn-primary btn-lg btn-block" style="margin:13px">Back</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        $('#Add').click(function(){
+            var id = $('#ProdColour').val();
+            $.ajax({
+                url: '/Item/AddColour',
+                data: {
+                    id
+                },
+                type:'Post',
+                success: function (response) {
+                    debugger
+                }
+                
+            })
+        })
+        $('#Back').click(function(){
+            window.location.href='/Home/AddProducts';
+        })
+    </script>
