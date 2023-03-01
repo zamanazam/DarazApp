@@ -50,7 +50,7 @@
 
 						html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
 						html += '<figcaption class="pt-2" >';
-						html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="float-end btn btn-light btn-icon"></a>';
+						//html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="float-end btn btn-light btn-icon"></a>';
 						html += '<a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i></a>';
 						html += '<strong class="text-muted12d">' + item.productPrice + '</strong>';
 						html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';

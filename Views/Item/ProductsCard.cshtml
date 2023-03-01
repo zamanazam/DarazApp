@@ -204,7 +204,7 @@
                 },
                 url: '/Item/Record',
                 type: 'Get',
-                //data: 'Json',
+     
                 success: function (response) {
                     debugger
                     console.log('Test',response);
@@ -225,7 +225,7 @@
                         items += '<article class="row gy-3 mb-4"  >';
                         items += '<div class="col-lg-5">';
                         items += '<figure class="itemside me-lg-5">';
-                        items += "<div class='aside'><img height='100'  src =" + item.productImage + "> </img> </div>";
+                        items += '<div class="aside"><img style="height:100px ; width:100px" src ="' + item.productImage + '"/></div>';
                         items += '<figcaption class="info">';
                         items += "<a  class='title' >" + item.productName + "</a>";
                         //$.each(item.productVariations, function(key,items){
