@@ -101,6 +101,7 @@ namespace DarazApp.Services
         public string? SizeName { get; set; }
         public int ProductQuantity { get; set; }
         public int TotalPrice { get; set; }
+        //public WishList wishList { get; set; }
         public KidCategory? KidCategory { get; set; }
 
         public List<ProductDescriptionimage> ProductDescriptionimages { get; set; } = new List<ProductDescriptionimage>();

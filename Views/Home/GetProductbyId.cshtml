@@ -490,6 +490,7 @@
                     })
 
                     $.each(response.productViewModels.productSpecifications, function (key, item) {
+                        console.log('emp',item);
                         $("#ProdCameraQuality").append(item.cameraQuality);
                         $("#ProdGraphics").append(item.graphics);
                         $("#ProdMemory").append(item.memory);
@@ -510,7 +511,6 @@
              GetAll();
             Simmilar();
             $('#ChatModal').modal('hide');
-            //$('#QuantTag').hide();
             $('#myModal').modal('hide');
             $('#myQuantityModal').modal('hide');
             $('#SuccessModal').modal('hide');

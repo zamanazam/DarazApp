@@ -14,7 +14,7 @@
     <div class="container">
     <div class="card-body bg-gray" id="newcard">
         <card>
-            <div class="row mb-4">
+          @*  <div class="row mb-4">
                 <div class="col-3">   
                 </div>  
                 <div class="col-3">
@@ -34,76 +34,105 @@
                     </div>
                 </div>
                 <div class="col-3"></div>
-            </div>
+            </div>*@
 
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+                <div class="row mb-4">
+                    <div class="col-3">
+                    </div>
+                    <div class="col-3">
+                        <div class="aside">
+                            <span class="bg-gray icon-md rounded-circle">
+                                <div id="UserImage"></div>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="gallery-uploader-wrap" width="5" height="5">
+                            <label class="uploader-img1">
+                                <input type="file" name="file" id="file" onchange="previewFile(this);">
+                                <svg xmlns="" fill="#999" width="32" height="32" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                    <path d="M16.83 4L15 2H9L7.17 4H2v16h20V4h-5.17zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"></path>
+                                </svg>
+                            </label>
+                        </div>
+                        <div class="aside">
+                            <span class="bg-gray icon-md rounded-circle">
+                                <img class="icon-md rounded-circle" id="previewImg" />
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="UserNames" class="form-control" placeholder="User Name">
                 </div>
-                <div class="col-3">
+                <div class="col-sm-12 col-md-3 col-lg-3">
                     <input type="text" id="FatherName" class="form-control" placeholder="Second Name">
                 </div>
-                <div class="col-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4"></div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+            <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="Emails" class="form-control" placeholder="Email">
                 </div>
-                <div class="col-3">
+                <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="CNIC" class="form-control" placeholder="CNIC">
                 </div>
-                <div class="col-3"></div>
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+            <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="Gender" class="form-control" placeholder="Gender">
                 </div>
-                <div class="col-3">
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="PhoneNos" class="form-control" placeholder="Phone No">
                 </div>
-                <div class="col-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3"></div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+            <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="Age" class="form-control" placeholder="Age">
                 </div>
-                <div class="col-3">
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="Nationality" class="form-control" placeholder="Nationality">
                 </div>
-                <div class="col-3"></div>
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
             </div>
 
-               <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+               <div class="row">
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                         <input type="text" id="PostalCodes" class="form-control" placeholder="Postal Code">
                 </div>
-                <div class="col-3">
+                <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                         <input type="text" readonly id="RoleName" class="form-control" placeholder="Role">
                 </div>
-                <div class="col-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3"></div>
             </div>
 
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+            <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="City" class="form-control" placeholder="City">
                 </div>
-                <div class="col-3">
+                    <div class="col-sm-12 col-md-3 col-lg-3">
 @*                    <input type="text" id="Nationality" class="form-control" placeholder="Postal Code">
 *@                </div>
-                <div class="col-3"></div>
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
             </div>
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-3">
+            <div class="row">
+                    <div class="col-sm-12 col-md-3 col-lg-3"></div>
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                    
                     <input type="password" id="Password" class="form-control" placeholder="Password">
                     <label for="show-password" class="field__toggle">
@@ -111,22 +140,22 @@
 				Show password
 			</label>
                 </div>
-                <div class="col-3">
+                    <div class="col-sm-12 col-md-3 col-lg-3 mb-4">
                     <input type="text" id="Password1" class="form-control" placeholder="Confirm Password">
                 </div>
-                <div class="col-3"></div>
+                <div class="col-sm-12 col-md-3 col-lg-3"></div>
             </div>
             
-            <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-6">
+            <div class="row">
+                    <div class="col-sm-12 col-md-4 col-lg-4"></div>
+                    <div class="col-sm-12 col-md-4 col-lg-4 mb-4">
                     <textarea class="form-control" id="Address" placeholder="Address"></textarea>
                 </div>
-                <div class="col-3"></div>
+                <div class="col-sm-12 col-md-4 col-lg-4"></div>
               @*  <div class="col-3"></div>*@
             </div>
          
-            <div class="row mb-4">
+                <div class="row mb-4">
                 <div class="col-3"></div>
                 <div class="col-9">
                     <button class="btn btn-primary" id="Update">Update</button>

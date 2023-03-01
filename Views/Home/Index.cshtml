@@ -13,9 +13,7 @@
     <section class="padding-y">
         <div class="container" >
 			<section class="padding-top">
-
 					<nav class="row gy-5 row-cols-xl-8 row-cols-sm-5 row-cols-3" id="Categor">
-
 				</nav>
 			
 		</section>
@@ -83,20 +81,22 @@
 		</div>
 	</div>
 		
+	<style>
+		.bgcolos{
+			color: dodgerblue;
+		}
+	</style>
+
     <script>
 		
 
 		$('#modelclose12').click(function () {
 			$('#myModal12').modal('hide');
 			$('#SuccessModallist').modal('hide');
-			//window.location.replace('/Home/Index');
 		})
 
 		$('#modelcancel12').click(function () {
 			$('#myModal12').modal('hide');
-		
-			//window.location.replace('/Home/Index');
-
 		})
 
 		$('#modelcloselist').click(function(){
@@ -106,8 +106,60 @@
 		$('#modelcancellist').click(function(){
 			$('#SuccessModallist').modal('hide');
 		})
+
+
+		function GetProducts(){
+			var token = sessionStorage.getItem('token');
+			if(token == null){
+				GetProductDates();
+			}
+			else{
+				GetProductDatesforWishLi();
+			}
+		}
+
+
+		function GetProductDatesforWishLi() {
+			var token = sessionStorage.getItem('token');
+			$.ajax({
+				headers:{
+					authorization : 'Berear ' +token
+				},
+				url: '/Home/GetOnlyProductsforWishList',
+				success: function (response) {
+					var html = "";
+					let diff = 6.048e+8;
+					$.each(response, function (key, item) {
+						var dat = item.uploadDate;
+						var date = new Date();
+						var din = 0;
+						var pricesvalue = [];
+						html += '<div class="col-lg-3 col-md-6 col-sm-6">';
+						html += '<figure class="card-product-grid" >';
+						html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+						html += '<figcaption class="pt-2" >';
+						html += ((item.wishList.length == din) ? '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart"></i></a>' : '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart" style="color: dodgerblue"></i></a>');
+						$.each(item.productViewModels?.productVariations, function (key, itemss) {
+							$.each(itemss.productBatches, function (key, obj) {
+								pricesvalue = obj.price;
+							})
+						})
+						var first = $(pricesvalue).get(0);
+						html += '<strong class="text-muted12d"> RS :' + first + '</strong>';
+						html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';
+						html += '<small class="text-muted"></small>';
+						html += '</figcaption>';
+						html += '</figure>';
+						html += '</div>';
+						html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>'
+					})
+					$('#Produc').append(html);
+				}
+			})
+		}
+
 		function GetProductDates(){
-		
+			debugger
 			$.ajax({
 				url: '/Home/GetOnlyProducts',
 				success: function (response) {
@@ -121,7 +173,6 @@
 				html += '<figure class="card-product-grid" >';
 				html += ((date  - (new Date( item.uploadDate )))  <=  diff  ) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
 				html += '<figcaption class="pt-2" >';
-				//html += '<a href="/Home/GetProductbyId?Id='+ item.productId +'" class="float-end btn btn-light btn-icon"></a>';
 				html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart"></i></a>';
 				$.each(item.productViewModels?.productVariations, function (key, itemss) {
 					$.each(itemss.productBatches, function (key, obj) {
@@ -163,7 +214,6 @@
 
 		
 		function AddtoWishList(id){
-			debugger
 			var token =sessionStorage.getItem('token');
 			if(token == null){
 				$('#myModal12').modal('show');
@@ -176,8 +226,7 @@
 					url: '/Item/AddtoWishtLists?id=' + id,
 					type: 'Post',
 					success: function (response) {
-						debugger
-						$('#SuccessModallist').modal('show');
+						location.reload();
 					},
 					error: function (data) {
 						$('#ErrorModal').modal('show');
@@ -187,11 +236,10 @@
 		}
 
 		$(document).ready(function () {
-			GetProductDates();
+			GetProducts();
 			GetCatDatas();
 			$('#NewTag').hide();
-			//$('#myModal').modal('hide');
-			//ChangeAllRecords();
+		
 		})
 
 		function ChangeAllRecords(){

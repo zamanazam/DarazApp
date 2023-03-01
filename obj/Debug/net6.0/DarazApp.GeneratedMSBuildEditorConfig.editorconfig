@@ -8,381 +8,381 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = DarazApp
 build_property.RootNamespace = DarazApp
-build_property.ProjectDir = D:\mysql\DarazAppFiles\DarazApp\DarazApp\
+build_property.ProjectDir = E:\DarazApp\DarazApp\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = true
-build_property.MSBuildProjectDirectory = D:\mysql\DarazAppFiles\DarazApp\DarazApp
+build_property.MSBuildProjectDirectory = E:\DarazApp\DarazApp
 build_property._RazorSourceGeneratorDebug = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AddBatchView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AddBatchView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRCYXRjaFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AddNewAdmin.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AddNewAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGROZXdBZG1pbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AddPoductsWithSpecifications.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AddPoductsWithSpecifications.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRQb2R1Y3RzV2l0aFNwZWNpZmljYXRpb25zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AddProductsView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AddProductsView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZGRQcm9kdWN0c1ZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AdminAccountUpdate.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AdminAccountUpdate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbkFjY291bnRVcGRhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AdminIndexView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AdminIndexView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pbkluZGV4Vmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBZG1pblZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AllUsersData.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AllUsersData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBbGxVc2Vyc0RhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AssignedTasksbyuserId.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AssignedTasksbyuserId.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBc3NpZ25lZFRhc2tzYnl1c2VySWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/AssignPages.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/AssignPages.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxBc3NpZ25QYWdlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/ChatsHistory.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/ChatsHistory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0c0hpc3RvcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/ChatsHistoryBuyerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/ChatsHistoryBuyerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0c0hpc3RvcnlCdXllclZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/ChatsHistoyAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/ChatsHistoyAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0c0hpc3RveUFkbWluVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/ChatsHistoyBuyerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/ChatsHistoyBuyerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0c0hpc3RveUJ1eWVyVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/CreateAccount.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/CreateAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDcmVhdGVBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/DashboarView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/DashboarView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEYXNoYm9hclZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/FilterTextBoxSearchView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/FilterTextBoxSearchView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWx0ZXJUZXh0Qm94U2VhcmNoVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/FirstPage.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/FirstPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaXJzdFBhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/ForgotPassword.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetAllProducts.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetAllProducts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRBbGxQcm9kdWN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetCategoies.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetCategoies.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRDYXRlZ29pZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetCategoiesbyID.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetCategoiesbyID.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRDYXRlZ29pZXNieUlELmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetCategoiesbyIDAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetCategoiesbyIDAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRDYXRlZ29pZXNieUlEQWRtaW5WaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetImageDesbyImagesId.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetImageDesbyImagesId.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRJbWFnZURlc2J5SW1hZ2VzSWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetKiDCate.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetKiDCate.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRLaURDYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetKiDCateAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetKiDCateAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRLaURDYXRlQWRtaW5WaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetPerCategoiesbyID.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetPerCategoiesbyID.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQZXJDYXRlZ29pZXNieUlELmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductbyId.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductbyId.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0YnlJZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductbyIdAdmin.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductbyIdAdmin.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0YnlJZEFkbWluLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductbyIdStoreView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductbyIdStoreView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0YnlJZFN0b3JlVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductbyKidId.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductbyKidId.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0YnlLaWRJZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductbyKidIdView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductbyKidIdView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0YnlLaWRJZFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductKidIdAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductKidIdAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0S2lkSWRBZG1pblZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductKidIdBuerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductKidIdBuerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0S2lkSWRCdWVyVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/GetProductsView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/GetProductsView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxHZXRQcm9kdWN0c1ZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/HelppageView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/HelppageView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIZWxwcGFnZVZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/Index.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/LoggedinIndex.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/LoggedinIndex.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxMb2dnZWRpbkluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/Privacy.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/QuantityError.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/QuantityError.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxRdWFudGl0eUVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/RegisterSellerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/RegisterSellerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RlclNlbGxlclZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/SaveProduct.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/SaveProduct.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTYXZlUHJvZHVjdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/SellerAccountView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/SellerAccountView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZWxsZXJBY2NvdW50Vmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/SellerDashBoard.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/SellerDashBoard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZWxsZXJEYXNoQm9hcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/UpdateAccount.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/UpdateAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGRhdGVBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/UpdatePassword.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/UpdatePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGRhdGVQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/UpdateSellerAccount.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/UpdateSellerAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGRhdGVTZWxsZXJBY2NvdW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/UpdateUserAccount.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/UpdateUserAccount.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGRhdGVVc2VyQWNjb3VudC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Home/UpdateUserAccountAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Home/UpdateUserAccountAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVcGRhdGVVc2VyQWNjb3VudEFkbWluVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/AddColour.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/AddColour.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxBZGRDb2xvdXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/AddInvoice.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/AddInvoice.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxBZGRJbnZvaWNlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/AddSize.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/AddSize.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxBZGRTaXplLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/AddtoWishList.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/AddtoWishList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxBZGR0b1dpc2hMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/CheckInPage.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/CheckInPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxDaGVja0luUGFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetAllOrders.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetAllOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRBbGxPcmRlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetOrdersSellerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetOrdersSellerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRPcmRlcnNTZWxsZXJWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetProductsbyProductName.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetProductsbyProductName.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRQcm9kdWN0c2J5UHJvZHVjdE5hbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetProductsbyUserId.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetProductsbyUserId.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRQcm9kdWN0c2J5VXNlcklkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetProductsbyUserIdAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetProductsbyUserIdAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRQcm9kdWN0c2J5VXNlcklkQWRtaW5WaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetReviewandRating.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetReviewandRating.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRSZXZpZXdhbmRSYXRpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetWishListView.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetWishListView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRXaXNoTGlzdFZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GetWishtList.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GetWishtList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHZXRXaXNodExpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/GOrdersSellerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/GOrdersSellerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxHT3JkZXJzU2VsbGVyVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/ProductsCard.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/ProductsCard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxQcm9kdWN0c0NhcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Item/QuantityError.cshtml]
+[E:/DarazApp/DarazApp/Views/Item/QuantityError.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxRdWFudGl0eUVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Login/AdminPages.cshtml]
+[E:/DarazApp/DarazApp/Views/Login/AdminPages.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQWRtaW5QYWdlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Login/AdminPagesView.cshtml]
+[E:/DarazApp/DarazApp/Views/Login/AdminPagesView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cQWRtaW5QYWdlc1ZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Login/ForgotPassword.cshtml]
+[E:/DarazApp/DarazApp/Views/Login/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cRm9yZ290UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Login/SellerPagesView.cshtml]
+[E:/DarazApp/DarazApp/Views/Login/SellerPagesView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cU2VsbGVyUGFnZXNWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/Error.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout1.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQxLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout2.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout2.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout3.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout3.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout4.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout4.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout5.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout5.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQ1LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout6.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout6.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQ2LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_ValidationScriptsPartial.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/AddCategory.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/AddCategory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcQWRkQ2F0ZWdvcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/AllUserProductsAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/AllUserProductsAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcQWxsVXNlclByb2R1Y3RzQWRtaW5WaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/AllUsersProducts.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/AllUsersProducts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcQWxsVXNlcnNQcm9kdWN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/DeleteTableRow.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/DeleteTableRow.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcRGVsZXRlVGFibGVSb3cuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/DeleteTableRowAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/DeleteTableRowAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcRGVsZXRlVGFibGVSb3dBZG1pblZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/EditTable.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/EditTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcRWRpdFRhYmxlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/EditTableAdminView.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/EditTableAdminView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcRWRpdFRhYmxlQWRtaW5WaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/ProdcutsTable.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/ProdcutsTable.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcUHJvZGN1dHNUYWJsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/Product.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/Product.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcUHJvZHVjdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/ProductbyIdSellerView.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/ProductbyIdSellerView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcUHJvZHVjdGJ5SWRTZWxsZXJWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/ProductDescImage.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/ProductDescImage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcUHJvZHVjdERlc2NJbWFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/ProductDetails.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/ProductDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcUHJvZHVjdERldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Table/TestingView.cshtml]
+[E:/DarazApp/DarazApp/Views/Table/TestingView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVGFibGVcVGVzdGluZ1ZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/_ViewImports.cshtml]
+[E:/DarazApp/DarazApp/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/_ViewStart.cshtml]
+[E:/DarazApp/DarazApp/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[D:/mysql/DarazAppFiles/DarazApp/DarazApp/Views/Shared/_Layout.cshtml]
+[E:/DarazApp/DarazApp/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-rhe0df12iv

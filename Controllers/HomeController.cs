@@ -94,6 +94,31 @@ namespace DarazApp.Controllers
 
                 ProductViewModels = new ProductViewModel()
                 {
+                    //wishList = y.WishList.Where(g=>g.ProductId == y.ProductId).FirstOrDefault(),
+                    productVariations = y.ProductVariations.Where(d => d.P_Id == y.ProductId).Select(z => new ProductVariations()
+                    {
+                        P_VariationsName = z.P_VariationsName,
+                        P_VariationsID = z.P_VariationsID,
+                        ProductBatches = z.ProductBatches,
+
+                    }).ToList(),
+                }
+            }).ToList();
+            return Json(product);
+        }
+        [Authorize]
+        public IActionResult GetOnlyProductsforWishList()
+        {
+            var userid = _userService.GetUserId();
+            var product = _commerceDb.Products.Where(x=>x.User.status != false).OrderByDescending(x => x.UploadDate).Select(y=> new ProductSelectView()
+            {
+                ProductName = y.ProductName,
+                ProductImage = y.ProductImage,
+                UploadDate = y.UploadDate,
+                ProductId = y.ProductId,
+                wishList = y.WishList.Where(g => g.ProductId == y.ProductId && g.UserId == userid).ToList(),
+                ProductViewModels = new ProductViewModel()
+                {
                     productVariations = y.ProductVariations.Where(d => d.P_Id == y.ProductId).Select(z => new ProductVariations()
                     {
                         P_VariationsName = z.P_VariationsName,

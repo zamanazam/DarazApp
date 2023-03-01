@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\mysql\\DarazAppFiles\\DarazApp\\DarazApp\\DarazApp.csproj": {}
+    "E:\\DarazApp\\DarazApp\\DarazApp.csproj": {}
   },
   "projects": {
-    "D:\\mysql\\DarazAppFiles\\DarazApp\\DarazApp\\DarazApp.csproj": {
+    "E:\\DarazApp\\DarazApp\\DarazApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\mysql\\DarazAppFiles\\DarazApp\\DarazApp\\DarazApp.csproj",
+        "projectUniqueName": "E:\\DarazApp\\DarazApp\\DarazApp.csproj",
         "projectName": "DarazApp",
-        "projectPath": "D:\\mysql\\DarazAppFiles\\DarazApp\\DarazApp\\DarazApp.csproj",
+        "projectPath": "E:\\DarazApp\\DarazApp\\DarazApp.csproj",
         "packagesPath": "C:\\Users\\Zaman\\.nuget\\packages\\",
-        "outputPath": "D:\\mysql\\DarazAppFiles\\DarazApp\\DarazApp\\obj\\",
+        "outputPath": "E:\\DarazApp\\DarazApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Zaman\\AppData\\Roaming\\NuGet\\NuGet.Config",

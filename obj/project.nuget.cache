@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "rjMzM+b8TgZtA7r6hcCpc3Gupr+AD7VPLFw3I9JpdC5RIG+Yip02YnTj8Nu/c0fRCm9FiXbHuee1sLTFJ+NGjQ==",
+  "dgSpecHash": "DmvwXXhBYwGb1gHtnGubqYTulZUL28drx8ShGyk4N3+NCaVl6bKjCUOGGs31NbPrdxlJf53hl8e8L+vk4RAd8w==",
   "success": true,
-  "projectFilePath": "D:\\mysql\\DarazAppFiles\\DarazApp\\DarazApp\\DarazApp.csproj",
+  "projectFilePath": "E:\\DarazApp\\DarazApp\\DarazApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Zaman\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Zaman\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

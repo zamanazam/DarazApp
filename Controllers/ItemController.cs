@@ -948,7 +948,9 @@ namespace DarazApp.Controllers
             List<WishList> wish = _commerceDbContext.WishList.Where(x => x.UserId == userid && x.ProductId == id).ToList();
             if (wish.Count >= 1)
             {
-                return null;
+                WishList list = _commerceDbContext.WishList.Where(x => x.UserId == userid && x.ProductId == id).FirstOrDefault();
+                _commerceDbContext.WishList.Remove(list);
+                _commerceDbContext.SaveChanges();
             }
             else
             {
