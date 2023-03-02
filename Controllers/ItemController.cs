@@ -719,6 +719,7 @@ namespace DarazApp.Controllers
                 int Order_detailsId = _commerceDbContext.Orders.Where(p => p.OrderId == OrderId).Select(p => p.OrderDetailsId).FirstOrDefault();
 
                 ReturnItems return1 = new ReturnItems();
+                
                 return1.Ret_By = userid;
                 return1.Ret_Quantity = ReturnQuantity;
                 return1.R_Number = ReturnNumber;
@@ -731,6 +732,7 @@ namespace DarazApp.Controllers
                 return1.Ret_Reason = Reason;
                 string filepath = Path.GetFileName(Image.FileName);
                 string imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                return1.ProductImage = imagespaths;
                 _commerceDbContext.ReturnItems.Add(return1);
                 _commerceDbContext.SaveChanges();
 
@@ -1132,51 +1134,6 @@ namespace DarazApp.Controllers
                 }).ToList();
             return Json(dataof);
         }
-        // var dataof = _commerceDbContext.Orders.Where(x => x.Products.UserId == userids)
-        //.Select(x => new OrdersSelectView()
-        //{
-        //    ODOrderdetailId = x.OrderDetails.OrderDetailsId,
-        //    ODPhoneNo = x.OrderDetails.PhoneNo,
-        //    ODEmail = x.OrderDetails.Email,
-        //    ODNationality = x.OrderDetails.Nationality,
-        //    ShippingAddress = x.OrderDetails.Address,
-        //    UserName = x.OrderDetails.UserName,
-        //    Stauts = x.OrderDetails.Status,
-        //    UploadDate = x.OrderDetails.UploadDate,
-
-        //    OrderHistoryView = _commerceDbContext.OrderDetails.Where(y => y.OrderDetailsId == x.OrderDetailsId).Select(y => new OrderHistoryView() {
-
-        //        productlist = y.Orders.Select(p => new Product()
-        //        {
-        //            ProductId = p.Products.ProductId,
-        //            ProductImage = p.Products.ProductImage,
-        //            ProductName = p.Products.ProductName,
-        //            ProductPrice = p.Products.ProductPrice,
-        //            ProductComments = p.Products.ProductComments.Where(pc => pc.ProductId == p.Products.ProductId && pc.UserId == userids).ToList(),
-
-        //        }).ToList(),
-        //    }).ToList(),
-        //}).ToList();
-        //return Json(dataof);
-
-        //OrderHistoryView = _commerceDbContext.Orders.Where(y => y.OrderDetailsId == x.OrderDetailsId).Select(y => new OrderHistoryView()
-        //{
-        //    OrderId =y.OrderId,
-        //    ProductId = y.ProductId,
-        //    ProductQuantity = y.ProductQuantity,
-        //    TotalPrice = y.TotalPrice,
-        //    ProductName = y.Products.ProductName,
-        //    ProductImage = y.Products.ProductImage,
-        //    ProductPrice = y.Products.ProductPrice,
-        //    ProductComments = y.Products.ProductComments.Where(z=>z.UserId ==userids && z.OrderDetailsId == y.OrderDetailsId).Select(z => new ProductComments()
-        //    {
-        //        CommentDescription = z.CommentDescription,
-        //        Rating = z.Rating,
-        //    }).ToList(),
-
-        //}).ToList(),
-
-
 
         [Authorize]
         [HttpGet]
@@ -1299,64 +1256,6 @@ namespace DarazApp.Controllers
             }).ToList();
             return Json(obj);
         }
-        //    StoreId = p.Users.UserId,
-        //    StoreName= p.Users.UserName,
-        //    StoreAddress = p.Users.Address,
-        //    StoreCity =p.Users.City,
-        //    StoreEmail =p.Users.Email,
-        //    StoreCnic = p.Users.Cnic,
-        //    StoreNationality = p.Users.Nationality,
-        //    StorePhoneNo = p.Users.PhoneNo,
-        //    PostalCode = p.Users.PostalCode,
-        //    PhoneNo = p.Users.PhoneNo,
-        //    Product = p.Products,
-        //    ProductVariations =p.ProductVariations,
-
-        //    OrdersSellerViewChild = _commerceDbContext.ProductVariations.Where(q=> q.P_VariationsID == p.VariationsId).Select(r=> new OrdersSellerViewChild()
-        //    {
-        //        ProductPrice = p.TotalPrice,
-        //        ProductQuantity = p.ProductQuantity,
-        //        Orders = r.Orders.ToList(),
-        //      ProductComments = r.ProductComments.Where(c=>c.ProductId == r.Product.ProductId && c.VariationId == r.P_VariationsID).Select(s=> new ProductComments()
-        //      {
-        //          Rating = s.Rating,
-        //          CommentDescription = s.CommentDescription,
-        //      }).ToList(),
-
-        //    }).ToList(),
-        //}).ToList();
-        //var obj = _commerceDbContext.OrderDetails.Where(o =>o.Orders.Any(p => p.Products.User.UserRoles.Any(c=>c.RoleId != sellerroleid))).Select(x => new CheckInSelectView()
-        //{
-        //    UserId = x.UserId,
-        //    ODEmail = x.Email,
-        //    ODNationality = x.Nationality,
-        //    ODPhoneNo = x.PhoneNo,
-        //    ODUserName = x.UserName,
-        //    Stauts = x.Status,
-        //    Address = x.Address,
-        //    UploadDate = x.UploadDate,
-        //    ODOrderdetailId = x.OrderDetailsId,
-        //    OrderHistoryView = _commerceDbContext.Orders.Where(y => y.OrderDetailsId == x.OrderDetailsId).Select(y => new OrderHistoryView()
-        //    {
-        //        ProductId = y.ProductId,
-        //        ProductQuantity = y.ProductQuantity,
-        //        TotalPrice = y.TotalPrice,
-        //        ProductName = y.Products.ProductName,
-        //        ProductImage = y.Products.ProductImage,
-        //        ProductPrice = y.Products.ProductPrice,
-        //        ProductVariations = y.ProductVariations,
-        //        ProductComments = y.Products.ProductComments.Where(z => z.ProductId == y.ProductId && z.VariationId == y.ProductVariations.P_VariationsID).Select(z => new ProductComments()
-        //        {
-        //            CommentDescription = z.CommentDescription,
-        //            Rating = z.Rating,
-        //        }).ToList(),
-
-        //    }).ToList(),
-
-        //}).ToList();
-
-
-
         public IActionResult GetProductsbyProductName()
         {
             return View();
@@ -1364,7 +1263,24 @@ namespace DarazApp.Controllers
         [HttpGet]
         public IActionResult GetProductName(string Id)
         {
-                List<Product> products = _commerceDbContext.Products.Where(x => x.ProductName == Id).ToList();
+                var products = _commerceDbContext.Products.Where(x => x.ProductName == Id).Select(y => new ProductSelectView()
+                {
+                    ProductName = y.ProductName,
+                    ProductImage = y.ProductImage,
+                    UploadDate = y.UploadDate,
+                    ProductId = y.ProductId,
+                    wishList = y.WishList.ToList(),
+                    ProductViewModels = new ProductViewModel()
+                    {
+                        productVariations = y.ProductVariations.Where(d => d.P_Id == y.ProductId).Select(z => new ProductVariations()
+                        {
+                            P_VariationsName = z.P_VariationsName,
+                            P_VariationsID = z.P_VariationsID,
+                            ProductBatches = z.ProductBatches,
+
+                        }).ToList(),
+                    }
+                }).ToList(); ;
                 return Json(products);   
         }
         [HttpGet]
@@ -1383,6 +1299,7 @@ namespace DarazApp.Controllers
                     ProductName = x.ProductName,
                     ProductImage = x.ProductImage,
                     ProductPrice = x.ProductPrice,
+                    wishList= x.WishList.ToList(),
                     ProductViewModels = new ProductViewModel()
                     {
                         productVariations = x.ProductVariations.Where(d => d.P_Id == x.ProductId).Select(z => new ProductVariations()
@@ -1393,8 +1310,6 @@ namespace DarazApp.Controllers
 
                         }).ToList(),
 
-                        Sizes = x.ProductSize.Select(x => x.Sizes).ToList(),
-                        Colours = x.ProductColours.Select(x => x.Colour).ToList(),
                         ProductDescriptions = x.ProductDescriptions.Select(x => new ProductDescription()
                         {
                             //P = x.P,
@@ -1406,11 +1321,7 @@ namespace DarazApp.Controllers
                             ProductQuantity = x.ProductQuantity,
                             ProductType = x.ProductType,
                         }).ToList(),
-                        ProductDescriptionimages = x.ProductDescriptionimages.Select(x => new ProductDescriptionimage()
-                        {
-                            ProductdesImage1 = x.ProductdesImage1,
-                            ProductDescriptionImagesId = x.ProductDescriptionImagesId,
-                        }).ToList(),
+                      
                         ProductSpecifications = x.ProductSpecifications.Select(x => new ProductSpecification()
                         {
                             ProductSpecificationId = x.ProductSpecificationId,
@@ -1423,20 +1334,111 @@ namespace DarazApp.Controllers
                             Graphics = x.Graphics,
                             Memory = x.Memory,
                         }).ToList(),
-                        ProductSize = x.ProductSize.Select(x => new ProductSize()
-                        {
-                            ProductSizeId = x.ProductSizeId,
-                        }).ToList(),
-                        ProductColours = x.ProductColours.Select(x => new ProductColours()
-                        {
-                            ProductColourId = x.ProductColourId,
-                        }).ToList(),
+                     
                     }
                 }).ToList();
                 return Json(products);
             }
         }
-       
+        public IActionResult AllReturnViews()
+        {
+            return View();
+        }
+
+        [Authorize]
+        public IActionResult AllReturnOrders()
+        {
+            var userid = _userService.GetUserId();
+            var dataof = _commerceDbContext.ReturnItems.Where(x => x.Products.UserId == userid).Select(y => new ReturnItems()
+            {
+                Ret_Quantity = y.Ret_Quantity,
+                Order_Id = y.Order_Id,
+                User = y.User,
+                OrderItems_Id = y.OrderItems_Id,
+                ProductImage = y.ProductImage,
+                Ret_By = y.Ret_By,
+                Ret_Reason = y.Ret_Reason,
+                R_On = y.R_On,
+                R_Number = y.R_Number,
+                P_Id = y.P_Id,
+            }).ToList();
+            
+            return Json(dataof);
+        }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult GetAllSearchResultsbyStoreId(string Id)
+        {
+            var userid = _userService.GetUserId();
+            if (Id == null)
+            {
+                List<Product> products1 = _commerceDbContext.Products.Where(x=>x.UserId == userid).ToList();
+                return Json(products1);
+            }
+            else
+            {
+                var products = _commerceDbContext.Products.Where(y => y.ProductName == Id && y.UserId == userid).Select(x => new ProductSelectView
+                {
+                    ProductId = x.ProductId,
+                    ProductName = x.ProductName,
+                    ProductImage = x.ProductImage,
+                    ProductPrice = x.ProductPrice,
+                    wishList = x.WishList.ToList(),
+                    ProductViewModels = new ProductViewModel()
+                    {
+                        productVariations = x.ProductVariations.Where(d => d.P_Id == x.ProductId).Select(z => new ProductVariations()
+                        {
+                            P_VariationsName = z.P_VariationsName,
+                            P_VariationsID = z.P_VariationsID,
+                            ProductBatches = z.ProductBatches,
+
+                        }).ToList(),
+
+                        //Sizes = x.ProductSize.Select(x => x.Sizes).ToList(),
+                        //Colours = x.ProductColours.Select(x => x.Colour).ToList(),
+                        ProductDescriptions = x.ProductDescriptions.Select(x => new ProductDescription()
+                        {
+                            //P = x.P,
+                            PdescriptionId = x.PdescriptionId,
+                            ProductBrand = x.ProductBrand,
+                            ProductDes = x.ProductDes,
+                            ProductMaterial = x.ProductMaterial,
+                            ProductQuality = x.ProductQuality,
+                            ProductQuantity = x.ProductQuantity,
+                            ProductType = x.ProductType,
+                        }).ToList(),
+                        //ProductDescriptionimages = x.ProductDescriptionimages.Select(x => new ProductDescriptionimage()
+                        //{
+                        //    ProductdesImage1 = x.ProductdesImage1,
+                        //    ProductDescriptionImagesId = x.ProductDescriptionImagesId,
+                        //}).ToList(),
+                        ProductSpecifications = x.ProductSpecifications.Select(x => new ProductSpecification()
+                        {
+                            ProductSpecificationId = x.ProductSpecificationId,
+                            ProcessorCapacity = x.ProcessorCapacity,
+                            ProductDisplay = x.ProductDisplay,
+                            ProductShippingInfo = x.ProductShippingInfo,
+                            ProductSpecificationsText = x.ProductSpecificationsText,
+                            ProductWarrantyInfo = x.ProductWarrantyInfo,
+                            CameraQuality = x.CameraQuality,
+                            Graphics = x.Graphics,
+                            Memory = x.Memory,
+                        }).ToList(),
+                        //ProductSize = x.ProductSize.Select(x => new ProductSize()
+                        //{
+                        //    ProductSizeId = x.ProductSizeId,
+                        //}).ToList(),
+                        //ProductColours = x.ProductColours.Select(x => new ProductColours()
+                        //{
+                        //    ProductColourId = x.ProductColourId,
+                        //}).ToList(),
+                    }
+                }).ToList();
+                return Json(products);
+            }
+        }
+
         public IActionResult GetReviewandRating()
         {
             return View();
@@ -1492,60 +1494,5 @@ namespace DarazApp.Controllers
 
             return Json(comments);
         }
-       
-            //ProductName = y.Products.ProductName,
-            //        ProductImage = y.Products.ProductImage,
-            //        Orders = x.Orders,
-            
-            //  .Select(x=> new SellerAllOrdersSelectView() {
-            //      ProductId =x.ProductId,
-                
-            //      OrderDetails = x.Orders.Where(y=>y.ProductId == x.ProductId).Select(y=> new OrderDetails()
-            //      {
-            //          OrderDetailsId =y.OrderDetails.OrderDetailsId,
-            //          UserName = y.OrderDetails.UserName,
-            //          FatherName = y.OrderDetails.FatherName,
-            //          Nationality =y.OrderDetails.Nationality,
-            //          City=y.OrderDetails.City,
-            //          Address =y.OrderDetails.Address,
-            //          UploadDate =y.OrderDetails.UploadDate,
-            //          PostalCode =y.OrderDetails.PostalCode,
-            //          PhoneNo =y.OrderDetails.PhoneNo,
-            //          Email =y.OrderDetails.Email,
-            //          Message = y.OrderDetails.Message,
-            //          User =y.OrderDetails.User,
-            //          Orders =x.Orders.Where(z=>z.OrderDetailsId == y.OrderDetails.OrderDetailsId).Select(z=> new Orders()
-            //          {
-            //              ProductPrice =z.ProductPrice, 
-            //              ProductQuantity = z.ProductQuantity,
-            //              TotalPrice = z.TotalPrice,
-            //              UploadDate =z.UploadDate,
-            //              Products =z.Products,
-            //          }).ToList(),
-                     
-            //      }).ToList(),
-            //  }).ToList();
-            //return Json(data);
-            //OrderDetails = x.Orders.Where(y=>y.ProductId == x.ProductId).Select(y=> new OrderDetails()
-            //{
-            //    UserName = y.OrderDetails.UserName,
-            //    FatherName = y.OrderDetails.FatherName,
-            //    Nationality =y.OrderDetails.Nationality,
-            //    City=y.OrderDetails.City,
-            //    Address =y.OrderDetails.Address,
-            //    UploadDate =y.OrderDetails.UploadDate,
-            //    PostalCode =y.OrderDetails.PostalCode,
-            //    PhoneNo =y.OrderDetails.PhoneNo,
-            //    Email =y.OrderDetails.Email,
-            //    Message = y.OrderDetails.Message,
-            //    User =y.OrderDetails.User,
-
-
-            //}).ToList(),
-            //SellerAllOrdersViewModel = new SellerAllOrdersSelectView()
-            //{
-
-            //}
-        
     }
 }

@@ -1288,7 +1288,7 @@ namespace DarazApp.Controllers
                 ProductImage = y.ProductImage,
                 UploadDate = y.UploadDate,
                 ProductId = y.ProductId,
-
+                wishList=y.WishList.ToList(),
                 ProductViewModels = new ProductViewModel()
                 {
                     productVariations = y.ProductVariations.Where(d => d.P_Id == y.ProductId).Select(z => new ProductVariations()
@@ -1319,7 +1319,7 @@ namespace DarazApp.Controllers
                 ProductImage = y.ProductImage,
                 UploadDate = y.UploadDate,
                 ProductId = y.ProductId,
-
+                wishList = y.WishList.ToList(),
                 ProductViewModels = new ProductViewModel()
                 {
                     productVariations = y.ProductVariations.Where(d => d.P_Id == y.ProductId).Select(z => new ProductVariations()
@@ -1367,13 +1367,23 @@ namespace DarazApp.Controllers
         [HttpGet]
         public IActionResult GetProductsKidCat(int id)
         {
-            List<Product> products = _commerceDb.Products.Where(x => x.KidCategoryId == id).Select(y => new Product()
+           var products = _commerceDb.Products.Where(x => x.KidCategoryId == id).Select(y => new ProductSelectView()
             {
-                ProductId = y.ProductId,
                 ProductName = y.ProductName,
                 ProductImage = y.ProductImage,
-                ProductPrice = y.ProductPrice,
+                UploadDate = y.UploadDate,
+                ProductId = y.ProductId,
+                wishList = y.WishList.ToList(),
+                ProductViewModels = new ProductViewModel()
+                {
+                    productVariations = y.ProductVariations.Where(d => d.P_Id == y.ProductId).Select(z => new ProductVariations()
+                    {
+                        P_VariationsName = z.P_VariationsName,
+                        P_VariationsID = z.P_VariationsID,
+                        ProductBatches = z.ProductBatches,
 
+                    }).ToList(),
+                }
             }).ToList();
             return Json(products);
         }

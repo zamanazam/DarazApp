@@ -26,7 +26,7 @@
     <section class="padding-y bg-light" id="Returns123">
         <div class="container">
             <div class="row">
-                <div class="col-lg-9  col-xl-9">
+                <div class="col-lg-9 col-xl-9">
                     <div id="Returns1"></div>
 
                 </div>
@@ -102,7 +102,7 @@
                             <h5 class="card-title"> Return Info </h5>
 
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
 
                                     <label class="form-label">Product Image</label>
                                     <div class="gallery-uploader-wrap" width="5" height="5">
@@ -124,7 +124,7 @@
                                     <textarea type="text" class="form-control mt-4" Placeholder="Return Reason" id="ReasonText"></textarea>
 
                                 </div>
-                                <div class="col-6">
+                                <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
                                     <article class="gallery-wrap">
                                         <div class="img-big-wrap img-thumbnail">
                                             <a data-fslightbox="mygalley" data-type="image" href="images/items/detail1/big.webp">
@@ -233,13 +233,8 @@
                 type: 'Get',
                 data: 'Json',
                 success: function (response) {
-                    debugger
                     var itotprice = 0;
-                    console.log('response', response);
-
                     $.each(response, function (key, items) {
-
-                        console.log('itm', items);
                         html += '<article class="card border-primary mb-4">';
                         html += '<div class="card-body">';
                         html += '<header class="d-lg-flex">';
@@ -260,38 +255,33 @@
                         html += '</div>';
                         html += '</header>';
                         html += '<hr>';
-                        html += ' <div class="row">';
-                        html += ' <div class="col-lg-4">';
-                        html += '  <p class="mb-0 text-muted">Contact</p>';
-                        html += ' <p class="m-0">';
-                        html += '  ' + items.odUserName + ' <br> ' + items.odPhoneNo + ' <br>' + items.odEmail + '</p>';
-                        html += ' </div>';
-                        html += ' <div class="col-lg-4 border-start">';
-                        html += ' <p class="mb-0 text-muted">Shipping address</p>';
-                        html += ' <p class="m-0">' + items.odNationality + '<br> ' + items.address + '</p>';
-                        html += ' </div>';
+                        html += '<div class="row">';
+                        html += '<div class="col-lg-4">';
+                        html += '<p class="mb-0 text-muted">Contact</p>';
+                        html += '<p class="m-0">';
+                        html += ' ' + items.odUserName + ' <br> ' + items.odPhoneNo + ' <br>' + items.odEmail + '</p>';
+                        html += '</div>';
                         html += '<div class="col-lg-4 border-start">';
-                        html += ' <p class="mb-0 text-muted">Payment</p>';
-                        html += ' <p class="mb-0 text-muted">' + items.totalPrice + ' Rs /-' + '</p>';
-                        html += ' </div>';
-                        html += '  </div>';
+                        html += '<p class="mb-0 text-muted">Shipping address</p>';
+                        html += '<p class="m-0">' + items.odNationality + '<br> ' + items.address + '</p>';
+                        html += '</div>';
+                        html += '<div class="col-lg-4 border-start">';
+                        html += '<p class="mb-0 text-muted">Payment</p>';
+                        html += '<p class="mb-0 text-muted">' + items.totalPrice + ' Rs /-' + '</p>';
+                        html += '</div>';
+                        html += '</div>';
                         html += '<hr>';
-                        html += ' <div class="d-flex">';
+                        html += '<div class="d-flex">';
                         html += '<ul class="row">';
                         html += '<li class="col-xl-4  col-lg-6">';
                         html += '<figure class="itemside mb-3 d-flex">';
-                        //html += '<img width="72" height="72" class="prdimag" alt="' + items.orderHistoryView?.productImage + '" id="' + items.orderHistoryView?.productId + '" src="' + items.orderHistoryView?.productImage + '" class="img-sm rounded border">';
-                        //var itotprice = 0;
+                       
                         $.each(items.orderHistoryView, function (key, itemss) {
-                            console.log('itemsss', itemss);
                             html += '<div class="d-flex">';
-                            html += '<img width="72" height="72" onclick="GetRatings(' + itemss.productId + ',' + items.odOrderdetailId + ',\'' + items.stauts + '\',' + itemss.productVariations?.p_VariationsID + ')" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border">';
+                            html += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="InstructionsReturn(' + items.odOrderdetailId + ',' + itemss.orderId + ',' + itemss.productVariations?.p_VariationsID + ',' + itemss.productBatches?.batchId + ');" class="badge bg-warning ms-2 ps-3 position-absolute"> Return </span></div></a><img width="72" height="72" onclick="GetRatings(' + itemss.productId + ',' + items.odOrderdetailId + ',\'' + items.stauts + '\' ,' + itemss.productVariations?.p_VariationsID + ')" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border mt-4">' : '<img width="72" height="72" onclick="GetRatings(' + itemss.productId + ',' + items.odOrderdetailId + ',\'' + items.stauts + '\' ,' + itemss.productVariations?.p_VariationsID + ')" id="' + itemss.productId + '" src="' + itemss.productImage + '" class="img-sm rounded border">';
                             html += '<input type="text" hidden="hidden" id="ProductIdss" value="' + itemss.productId + '" />';
                             html += '<input type="text" hidden="hidden" class="ordersidss" id="OrderDataId' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
-                            //html += '<input type="text" hidden="hidden" class="ordersidss" id="Variid' + itemss.productId + '" value="' + items.odOrderdetailId + '"/>';
-                            //html += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="ReturnOrder(' + items.odOrderdetailId + ',' + itemss.orderId + ','+ itemss.productVariations?.p_VariationsID +',' ');" class="badge bg-warning"> Return </span></div></a>' : '';
-                            html += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="InstructionsReturn(' + itemss.productId+ ',' + itemss.orderId + ',' + itemss.productVariations?.p_VariationsID + ',' + itemss.productBatches?.batchId + ');" class="badge bg-warning"> Return </span></div></a>' : '';
-
+                            //html += ((date - (new Date(items.deliveredOn))) <= deliver && (diff == items.stauts)) ? '<a><div><span onclick="InstructionsReturn(' + itemss.productId+ ',' + itemss.orderId + ',' + itemss.productVariations?.p_VariationsID + ',' + itemss.productBatches?.batchId + ');" class="badge bg-warning"> Return </span></div></a>' : '';
                             html += '<figcaption class="info">';
 
                             $.each(itemss.productComments, function (key, obj) {
@@ -305,13 +295,11 @@
                             html += '<div class="d-flex">';
                             html += '<p class="title" id="ProdDes">' + itemss.remainingQuantity + 'x' + '</p>';
                             html += '<p id="ProdQuantityandPrize">' + '=' + itemss.totalPrice + 'Rs' + '</p>';
-
                             html += '</div>';
                             html += '<p id="ProdQuantityandPrize">' + itemss.netPrice + 'Rs' + '</p>';
                             html += '</figcaption>';
 
                         })
-                        console.log('itotalpric', itotprice);
                         $('#PaymentValue').val(itotprice);
                         html += '</div>';
                         html += '</figure>';

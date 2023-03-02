@@ -16,7 +16,7 @@
 				<nav class="row gy-5 row-cols-xl-8 row-cols-sm-5 row-cols-3" id="Categor"></nav>
 			</section>
 			<header class="section-heading">
-				<h3 class="section-title">New products</h3>
+				<h3 class="section-title">Products</h3>
 			</header>
 			<div class="row" id="ProductsShow"></div>
 		</div>
@@ -53,12 +53,11 @@
 				
 				html += '<div class="col-lg-3 col-md-6 col-sm-6">';
 				html += '<figure class="card-product-grid">';
-
-						console.log('res', item.wishList.length);
+				html += '<div class="card bg-white">';
 				html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Table/ProductbyIdSellerView?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Table/ProductbyIdSellerView?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
 				html += '<figcaption class="pt-2">';
 				//html += '<a href="/Home/GetProductbyId?Id='+ item.productId +'" class="float-end btn btn-light btn-icon"></a>';
-						html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag"><i class="fa fa-heart"></i> <span class="top-0 start-0 m-1 p-1 translate-middle badge bg-primary" id="WishListLength">' + item.wishList.length + '</span></a>';
+				html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag"><i class="fa fa-heart"></i> <span class="top-0 start-0 m-1 p-1 translate-middle badge bg-primary" id="WishListLength">' + item.wishList.length + '</span></a>';
 				$.each(item.productViewModels?.productVariations, function (key, itemss) {
 					$.each(itemss.productBatches, function (key, obj) {
 							pricesvalue = obj.price;
@@ -69,11 +68,11 @@
 				html += '<a href="/Table/ProductbyIdSellerView?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';
 				html += '<small class="text-muted"></small>';
 				html += '</figcaption>';
+				html += '</div>';
 				html += '</figure>';
 				html += '</div>';
 				html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>';
 				})
-
 					$('#ProductsShow').append(html);
 				}
 			})

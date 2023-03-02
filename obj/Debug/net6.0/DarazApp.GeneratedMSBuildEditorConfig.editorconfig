@@ -227,6 +227,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxBZGR0b1dpc2hMaXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/DarazApp/DarazApp/Views/Item/AllReturnViews.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxBbGxSZXR1cm5WaWV3cy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/DarazApp/DarazApp/Views/Item/CheckInPage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVxDaGVja0luUGFnZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

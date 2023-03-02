@@ -34,8 +34,12 @@
 			let id = search_params.get('id');
 			debugger
 			console.log(id);
+			var token = sessionStorage.getItem('token');
 			$.ajax({
-				url: '/Item/GetAllSearchResults?Id=' + id,
+				headers:{
+					authorization: 'Berear ' + token
+				},
+				url: '/Item/GetAllSearchResultsbyStoreId?Id=' + id,
 				type: 'Get',
 				success: function (response) {
 					var html = "";
@@ -43,13 +47,15 @@
 					let diff = 6.048e+8;
 					var pricesvalue = [];
 					$.each(response, function (key, item) {
+						console.log('item',item);
 						html += '<div class="col-lg-3 col-md-6 col-sm-6" >';
 						html += '<figure class="card-product-grid" >';
+						html += '<div class="card bg-white">';
 						html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Table/EditTable?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Table/EditTable?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
 						html += '<figcaption class="pt-2" >';
-						//html += '<a href="/Table/EditTable?Id=' + item.productId + '" class="float-end btn btn-light btn-icon" > </a> <a href="/Item/AddtoWishlist?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><i class="fa fa-heart"></i > </a>';
+						html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag"><i class="fa fa-heart"></i> <span class="top-0 start-0 m-1 p-1 translate-middle badge bg-primary" id="WishListLength">' + item.wishList.length + '</span></a>';
+						//html += '<a href="/Table/EditTable?id=' + item.productId + '" class="btn btn-light btn-icon float-end"><span class="badge">' + item.wishList.length + '</span><i class="fa fa-heart"></i > </a>';
 						$.each(item.productViewModels?.productVariations, function (key, itemss) {
-							//console.log('batch', itemss.productBatches?.price);
 							$.each(itemss.productBatches, function (key, obj) {
 								pricesvalue = obj.price;
 							})
@@ -58,6 +64,7 @@
 						html += '<strong class="text-muted12d" > ' + first + '</strong>';
 						html += '<a href="/Table/EditTable?Id=' + item.productId + '" class="title text-truncate" > ' + item.productName + '</a>';
 						html += '</figcaption>';
+						html += '</div>';
 						html += '</figure>';
 						html += '</div>';
 					})

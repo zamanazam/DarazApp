@@ -1,0 +1,154 @@
+﻿@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "AllReturnViews";
+    Layout = "~/Views/Shared/_Layout6.cshtml";
+}
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+
+<section class="padding-y bg-light">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-9  col-xl-9">
+                <article class="card">
+                    <div class="content-body">
+                        <div id="Orders1">
+                        </div>
+                    </div>
+                </article>
+            </div>
+                <aside class="col-xl-3 col-lg-3" id="SimilarItems">
+                    <article class="ms-lg-4 mt-4 mt-lg-0" style="max-width: 320px">
+                        <h6 class="card-title">Summary</h6>
+
+                        <hr>
+                        <dl class="dlist-align">
+                            <dt> Total: </dt>
+                            <dd class="text-end" id="TotalValue"> <strong class="text-dark"></strong> </dd>
+                        </dl>
+
+                      </article>
+                </aside>
+               
+        </div>
+            
+    </div>
+</section>
+
+  
+
+    <style>
+        .checked {
+            color: orange;
+        }
+    </style>
+
+<script>
+    $(document).ready(function () {
+        GetDatas();
+        GetTotalPrice();
+        $('#SuccessModal').modal('hide');
+    })
+        function GetTotalPrice() {
+            debugger
+            var token = sessionStorage.getItem('token');
+
+            debugger
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/GetOrderSellerbyLogIn',
+                type: 'Get',
+              
+                success: function (response) {
+                    debugger
+                    var total = 0;
+                    console.log('response', response);
+                    $.each(response, function (key, items) {
+                 
+                       $('#TotalValue').append(total);
+                    })
+                }
+            })
+        }
+
+        function GetDatas() {
+            var token = sessionStorage.getItem('token');
+            $.ajax({
+                headers: {
+                    'authorization': 'Bearer ' + token
+                },
+                url: '/Item/AllReturnOrders',
+                type: 'Get',
+                success: function (response) {
+                    var total = 0;
+                      var TotalPric = 0;
+                    var html = "";
+
+                    $.each(response, function (key, items) {
+                        console.log('item',items);
+                        html += '<div class="row">';
+                       html += '<header>';
+                        html += '<p class="mb-0 text-dark b">' + 'R.Number' + ':' + items.r_Number + '</p>';
+                        html += '<p class="title text-dark b" id="ProdDes">' + 'Orderid' + ':' + items.order_Id + '</p>';
+                        html += '</header>';
+                        html += '<div class="col-sm-12 col-md-6 col-lg-6 mb-3">';
+                        html += '<div class="d-flex">';
+                        html += '<img width="72" height="72" onclick="GetRatings()" src="' + items.productImage + '" class="img-sm rounded border">';
+                        html += '<figcaption class="info ms-3">';
+                        html += '<p class="title mb-0 b" id="ProdDes">' + items.ret_Quantity + 'x' + '</p>';
+                        html += '<p class="mb-0 b" id="ProdQuantityandPrize">' + 'Reason' + ':' + items.ret_Reason + '</p>';
+                        html += '<p class="mb-0 b" id="ProdQuantityandPrize">' + 'Date ' + ':' + items.r_On + '</p>';
+                        html += '</figcaption>';  
+                        html += '</div>';
+                        html += '</div>';
+
+                        html += '<div class="col-sm-12 col-md-6 col-lg-6">';
+                        html += '<div class="d-flex me-auto">';
+                        html += '<img width="72" height="72" onclick="GetRatings()" src="' + items.user?.userImage + '" class="img-sm rounded border">';
+                        html += '<figcaption class="info ms-3">';
+                        html += '<p class="title mb-0 b" id="ProdDes">' + items.user?.userName + '</p>';
+                        html += '<p class="title mb-0 b" id="ProdDes">' + items.user?.phoneNo + '</p>';
+                        html += '<p class="title mb-0 b" id="ProdQuantityandPrize">' + items.user?.email + '</p>';
+                        html += '</figcaption>';
+                        html += '</div>'; 
+                        html += '</div>'; 
+                        html += '</div>';
+
+                        //html2 += '<article class="card border-primary mb-4">';
+                        //html2 += '<header>';
+                        //html2 += '<p>' + items.r_Number + '</p>';
+                        //html2 += '</header>';
+                        //html2 += '<div class="card-body">';
+                        //html2 += '<img width="100" height="100" src="'+items.productImage+'"/>';
+                        //html2 += '<figcaption class="info">';
+                        //html2 += '<div class="flex-grow-1">';
+                        //html2 += '<h6 class="mb-0" id="OrderId">' + 'Orderid' + ':' + items.order_Id + '</h6>';
+                        //html2 += '<h6 class="mb-0" id="OrderId">' + 'Quantity' + ':' + items.ret_Quantity + '</h6>';
+                        ////html += '<input type="text" id="OrderDataId" value="' + items.odOrderdetailId + '"/>';
+                        //html2 += '<h6 class="mb-0" id="OrderStatus">' + items.ret_Reason + '</h6>';
+                        //html2 += '<span class="text-muted" id="OrderDate">' + 'Date ' + ':' + items.r_On + '</span>';
+                        //html2 += '</div>';  
+                        //html2 += '</figcaption>';
+                        //html2 += '<div class="float-end">';
+                        //html2 += '<img width="100" height="100" src="'+items.productImage+'"/>';
+                        //html2 += '<h6 class="mb-0" id="OrderId">'+ items.order_Id + '</h6>';
+                        //html2 += '<h6 class="mb-0" id="OrderId">' + items.ret_Quantity + '</h6>';
+                        //html2 += '<h6 class="mb-0" id="OrderStatus">' + items.ret_Reason + '</h6>';
+                        //html2 += '</div>';
+                        //html2 += '</article>';
+                        
+                        })
+                    //$('#TotalValue').append(total);
+                    $('#Orders1').append(html);
+                }
+            })
+        }
+</script>

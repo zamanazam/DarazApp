@@ -18,7 +18,7 @@
 			
 		</section>
 			<header class="section-heading">
-				<h3 class="section-title">New products</h3>
+				<h3 class="section-title">Products</h3>
 			</header>
 			<div class="row" id="Produc">
 
@@ -134,9 +134,11 @@
 						var date = new Date();
 						var din = 0;
 						var pricesvalue = [];
+					
 						html += '<div class="col-lg-3 col-md-6 col-sm-6">';
 						html += '<figure class="card-product-grid" >';
-						html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+						html += '<div class="card bg-gray-light">';
+						html += ((date - (new Date(item.uploadDate))) <= diff) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-white"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-white"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
 						html += '<figcaption class="pt-2" >';
 						html += ((item.wishList.length == din) ? '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart"></i></a>' : '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart" style="color: dodgerblue"></i></a>');
 						$.each(item.productViewModels?.productVariations, function (key, itemss) {
@@ -149,9 +151,11 @@
 						html += '<a href="/Home/GetProductbyId?Id=' + item.productId + '" class="title text-truncate">' + item.productName + '</a>';
 						html += '<small class="text-muted"></small>';
 						html += '</figcaption>';
+						html += '</div>';
 						html += '</figure>';
 						html += '</div>';
 						html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>'
+						
 					})
 					$('#Produc').append(html);
 				}
@@ -169,9 +173,11 @@
 				var dat = item.uploadDate;
 				var date = new Date();
 				var pricesvalue= [];
+				
 				html += '<div class="col-lg-3 col-md-6 col-sm-6">';
 				html += '<figure class="card-product-grid" >';
-				html += ((date  - (new Date( item.uploadDate )))  <=  diff  ) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-gray-light"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
+				html += '<div class="card bg-gray-light">';
+				html += ((date  - (new Date( item.uploadDate )))  <=  diff  ) ? ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-white"><p class="topbar"><span class="badge bg-danger"> New</span></p><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a> ' : ' <a href="/Home/GetProductbyId?id=' + item.productId + '" class="img-wrap rounded bg-white"><img height="250" class= "mix-blend-multiply" src = "' + item.productImage + '" ></a>';
 				html += '<figcaption class="pt-2" >';
 				html += '<a href="#" class="btn btn-light btn-icon float-end" id="hearttag" onclick="AddtoWishList(' + item.productId + ')"><i class="fa fa-heart"></i></a>';
 				$.each(item.productViewModels?.productVariations, function (key, itemss) {
@@ -184,9 +190,11 @@
 				html += '<a href="/Home/GetProductbyId?Id='+ item.productId +'" class="title text-truncate">'+ item.productName +'</a>';
 				html += '<small class="text-muted"></small>';
 				html += '</figcaption>';
+				html += '</div>';
 				html += '</figure>';
 				html += '</div>';
 				html += '<h3 type="text" hidden="hidden" id="update">' + item.uploadDate + '</h3>'
+			
 				})
 				$('#Produc').append(html);
 				}

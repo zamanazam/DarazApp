@@ -12,8 +12,8 @@
     }
     }
     <div class="container">
-    <div class="card-body bg-gray" id="newcard">
-        <card>
+    <div class="card-body" id="newcard">
+        <card class="bg-gray-light">
           @*  <div class="row mb-4">
                 <div class="col-3">   
                 </div>  
@@ -40,14 +40,14 @@
                     <div class="col-3">
                     </div>
                     <div class="col-3">
-                        <div class="aside">
+                        <div class="aside mt-3">
                             <span class="bg-gray icon-md rounded-circle">
                                 <div id="UserImage"></div>
                             </span>
                         </div>
                     </div>
                     <div class="col-3">
-                        <div class="gallery-uploader-wrap" width="5" height="5">
+                        <div class="gallery-uploader-wrap mt-3" width="5" height="5">
                             <label class="uploader-img1">
                                 <input type="file" name="file" id="file" onchange="previewFile(this);">
                                 <svg xmlns="" fill="#999" width="32" height="32" viewBox="0 0 24 24">
@@ -56,7 +56,7 @@
                                 </svg>
                             </label>
                         </div>
-                        <div class="aside">
+                        <div class="aside mt-3">
                             <span class="bg-gray icon-md rounded-circle">
                                 <img class="icon-md rounded-circle" id="previewImg" />
                             </span>
@@ -147,20 +147,22 @@
             </div>
             
             <div class="row">
-                    <div class="col-sm-12 col-md-4 col-lg-4"></div>
-                    <div class="col-sm-12 col-md-4 col-lg-4 mb-4">
+                    <div class="col-sm-12 col-lg-3 col-md-3"></div>
+                    <div class="col-sm-12 col-lg-3 col-md-3 mb-4">
                     <textarea class="form-control" id="Address" placeholder="Address"></textarea>
                 </div>
-                <div class="col-sm-12 col-md-4 col-lg-4"></div>
+                    <div class="col-sm-12 col-lg-3 col-md-3"></div>
               @*  <div class="col-3"></div>*@
             </div>
          
-                <div class="row mb-4">
-                <div class="col-3"></div>
-                <div class="col-9">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-6 col-md-6"></div>
+                <div class="col-sm-12 col-lg-6 col-md-6">
                     <button class="btn btn-primary" id="Update">Update</button>
                 </div>
             </div>
+            <br />
+            <br />
        
         </card>
     </div>
