@@ -12,28 +12,28 @@
     }
 
 
-        <div class="m-5 ">
-        <div class="row ">
-            <div class="col-3">
-                    <header class="">
-                    <div class="" id="Current"></div>
+        <div class="bg-white m-5">
+        <div class="row">
+            <div class="col-3 bg-white">
+                    <header class="bg-gray rounded-5">
+                    <div class="bg-gray rounded-5" id="Current"></div>
                     </header>
                     <div id="AllUsersChats"></div>
                 </div>
 
             <div class="col-9">
-                    <header class="backgroun-color" >
-                    <div class="backgroun-color" id="ChatUserInfo"></div>
+                <header class="bg-gray rounded-5">
+                    <div class="bg-gray rounded-5" id="ChatUserInfo"></div>
                     </header>
                         <div class="bg-white rounded-3">
-                <div id="MyChatsPage" style="height:550px; overflow: auto;  overflow-x: hidden"></div>
+                <div id="MyChatsPage" style="height:500px; overflow: auto;  overflow-x: hidden"></div>
                     <div class="row mb-5" style="position-fixed">
                         <div class="col-9 float-start">
                             <input type="text" class="form-control ms-5" PlaceHolder="Reply Text" id="ResText" />
                             </div>
                             <div class="col-3 float-end">
-                            <button class="btn btn-secondary justsend float-end mr-5" onclick="SaveReplys();"> Send </button>
-                        <button class="btn btn-secondary updatemsg float-end mr-5" id="nupdatemsgs" onclick="updatereplys();"> Send </button>
+                            <button class="btn btn-info justsend ms-5" onclick="SaveReplys();"> Send </button>
+                        <button class="btn btn-info updatemsg ms-5" id="nupdatemsgs" onclick="updatereplys();"> Send </button>
                         </div>
                     </div>
                 </div>
@@ -139,8 +139,8 @@
                             }
                             id = item.id;
                         })
-                        
-                        html12 += '<div class="card backgroun-color">';
+
+                    html12 += '<div class="card bg-info rounded-5">';
                         html12 += '<div class="d-flex" onclick="GetChatsbyUserI=(' + id + ')">';
                         html12 += ((image == null) ? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + image + '"/>');
                         html12 += '<p class="alert b">' + nameses + '</p>';
@@ -221,7 +221,7 @@
                             }
                             id = item.id;
                         })
-                        html12 += '<div class="card backgroun-color">';
+                    html12 += '<div class="card bg-info">';
                         html12 += '<div class="d-flex" onclick="GetChatsbyUserI=(' + id + ')">';
                         html12 += ((image == null) ? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + image + '"/>');
                         html12 += '<p class="alert b">' + nameses + '</p>';
@@ -274,7 +274,7 @@
                     url: '/Home/GetAllChatsbyCurrentUser',
 
                     success: function (response) {
-                        console.log('eee', response);
+             
                         debugger
                         var html12 = "";
                         var cur112 = "";
@@ -282,7 +282,7 @@
                         var idid = [];
                         var nam = [];
                         $.each(response, function (key, item) {
-                            html12 += '<div class="d-flex mt-5 backgroun-color" onclick="GetChatsbyUserId(' + item.userId + ')">';
+                            html12 += '<div class="d-flex mt-5 bg-info rounded-5" onclick="GetChatsbyUserId(' + item.userId + ')">';
                             html12 += ((item.userImage == null)? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + item.userImage + '"/>');
                             html12 += '<p class="alert b">' + item.userName + '</p>';
                             html12 += '</div>';
@@ -291,8 +291,8 @@
                             idid = item.currentId;
                         })
 
-                        cur112 += '<div class="card">';
-                        cur112 += '<div class="d-flex backgroun-color" onclick="GetChatsbyUserI(' + idid + ')">';
+                        cur112 += '<div class="card rounded-5">';
+                        cur112 += '<div class="d-flex bg-info rounded-5" onclick="GetChatsbyUserI(' + idid + ')">';
                         cur112 += ((imag == null)? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + imag + '"/>');
                         cur112 += '<p class="alert b">' + nam + '</p>';
                         cur112 += '</div>';
@@ -318,8 +318,8 @@
                         var idid = [];
                         var nam = [];
                         $.each(response, function (key, item) {
-                            console.log('newite',item);
-                            html12 += '<div class="d-flex mt-5 backgroun-color" onclick="GetChatsbyUserId(' + item.userId + ')">';
+                     
+                            html12 += '<div class="d-flex mt-5 bg-info rounded-5" onclick="GetChatsbyUserId(' + item.userId + ')">';
                             html12 += ((item.userImage == null)? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + item.userImage + '"/>');
                             html12 += '<p class="alert b">' + item.userName + '</p>';
                             html12 += '</div>';
@@ -328,8 +328,8 @@
                             idid = item.currentId;
                         })
 
-                        cur112 += '<div class="card">';
-                        cur112 += '<div class="d-flex backgroun-color" onclick="GetChatsbyUserI=(' + idid + ')">';
+                        cur112 += '<div class="card rounded-5">';
+                        cur112 += '<div class="d-flex bg-info rounded-5" onclick="GetChatsbyUserI=(' + idid + ')">';
                         cur112 += ((imag == null)? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + imag + '"/>');
                         cur112 += '<p class="alert b">' + nam + '</p>';
                         cur112 += '</div>';
@@ -398,7 +398,7 @@
 
                         }
                     })
-                        html12 += '<div class="card Text_BackColour1">';
+                        html12 += '<div class="card bg-info">';
                         html12 += '<div class="d-flex" onclick="GetChatsbyUserI=(' + id + ')">';
                         html12 += ((image == null) ? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + image + '"/>');
                         html12 += '<p class="alert b">' + nameses + '</p>';
@@ -473,7 +473,7 @@
 
                         }
                     })
-                        html12 += '<div class="card Text_BackColour1">';
+                        html12 += '<div class="card bg-info">';
                         html12 += '<div class="d-flex" onclick="GetChatsbyUserI=(' + id + ')">';
                         html12 += ((image == null) ? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + image + '"/>');
                         html12 += '<p class="alert b">' + nameses + '</p>';
@@ -592,7 +592,7 @@
                         }
                     })
                        
-                        html12 += '<div class="card Text_BackColour1">';
+                        html12 += '<div class="card bg-info">';
                         html12 += '<div class="d-flex" onclick="GetChatsbyUserI=(' + id + ')">';
                         html12 += ((image == null) ? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + image + '"/>');
                         html12 += '<p class="alert b">' + nameses + '</p>';
@@ -669,7 +669,7 @@
                         }
                     })
 
-                        html12 += '<div class="card Text_BackColour1">';
+                        html12 += '<div class="card bg-info">';
                         html12 += '<div class="d-flex" onclick="GetChatsbyUserI=(' + id + ')">';
                         html12 += ((image == null) ? '<p class="bg-danger tag">Guest</p>':'<img class="img-sm m-2 rounded-circle" src="' + image + '"/>');
                         html12 += '<p class="alert b">' + nameses + '</p>';
@@ -750,6 +750,10 @@
         <style>
             .backgroun-color{
             background-color:#4993FE;
+            }
+
+            .colosd{
+                background-color: #4993FE;
             }
         </style>
     @* <div class="container">

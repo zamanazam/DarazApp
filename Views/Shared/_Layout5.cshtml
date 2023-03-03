@@ -74,10 +74,6 @@
             </li>
             
             <li class="nav-item">
-              @*  <a class="nav-link collapsed" href="/Home/AddNewAdmin" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-users"></i>
-                    <span>Add User</span>
-                </a>*@
             <div class="dropdown">
                      <a class="nav-link collapsed dropbtn" href="/Home/AddNewAdmin" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                         <i class='fas fa-indent'></i>
@@ -92,11 +88,6 @@
             
             <!-- Divider -->
             <hr class="sidebar-divider">
-
-            @*  <select>
-            <option>Buyer</option>
-            <option>Store</option>
-            </select>*@
 
             <!-- Heading -->
             <div class="sidebar-heading">
@@ -159,7 +150,7 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                  @*  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
                             <input type="text" id="ProdValues" class="form-control bg-light border-0 small" placeholder="Search for..."
                                    aria-label="Search" aria-describedby="basic-addon2">
@@ -170,7 +161,7 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form>*@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -389,28 +380,28 @@
                         GetHelps();
                         $('#UnCheckMessagesCard').hide();
                     })
-                    $("#ProdValues").autocomplete({
-                        source: function (request, response) {
-                            $.ajax({
-                                url: '@Url.Action("TextBoxSearchProducts","Home")',
-                                dataType: "json",
-                                data: { ProductName: $("#ProdValues").val() },
-                                success: function (data) {
-                                    response($.map(data, function (item) {
-                                        return { label: item.productName, value: item.productName };
-                                    }));
-                                },
-                                error: function (xhr, status, error) {
-                                    alert("Error");
-                                }
-                            });
-                        }
-                    });
+                    //$("#ProdValues").autocomplete({
+                    //    source: function (request, response) {
+                    //        $.ajax({
+                    //            url: '@Url.Action("TextBoxSearchProducts","Home")',
+                    //            dataType: "json",
+                    //            data: { ProductName: $("#ProdValues").val() },
+                    //            success: function (data) {
+                    //                response($.map(data, function (item) {
+                    //                    return { label: item.productName, value: item.productName };
+                    //                }));
+                    //            },
+                    //            error: function (xhr, status, error) {
+                    //                alert("Error");
+                    //            }
+                    //        });
+                    //    }
+                    //});
 
-                    $('#ProductSe').click(function () {
-                        var id = $('#ProdValues').val();
-                        window.location.replace('/Login/AdminPagesView?id=' + id);
-                    })
+                    //$('#ProductSe').click(function () {
+                    //    var id = $('#ProdValues').val();
+                    //    window.location.replace('/Login/AdminPagesView?id=' + id);
+                    //})
 
                     function GetAllCategories() {
                         $.ajax({

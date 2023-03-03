@@ -288,6 +288,8 @@
 
     <script>
         $(document).ready(function () {
+           
+            $("#KidCategoryName").select2();
             $('#newcard').hide();
 
             $('#AddNewModaln').modal('hide');
@@ -296,8 +298,7 @@
             GetSIzes();
 
 
-            $("#clKidCategoryName").select2();
-            //$("#KidCategoryName").select2();
+            //$("#clKidCategoryName").select2();
             $('#but_read').click(function () {
                 var username = $('#selUser option:selected').text();
                 var userid = $('#selUser').val();

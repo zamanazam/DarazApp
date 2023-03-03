@@ -1,4 +1,5 @@
 ﻿using DarazApp.Entities;
+using Microsoft.VisualBasic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DarazApp.Services
@@ -84,6 +85,21 @@ namespace DarazApp.Services
         public Product Product { get; set; }
         public Sizes Size { get; set; }
         public Colour Colour { get; set; }
+    }
+
+    public class ReturnModelView
+    {
+        public int? Ret_Quantity { get; set; }
+        public int? Ret_Price { get; set; }
+        public int? Order_Id { get; set; }
+        public User User {get; set;}
+        public int? OrderItems_Id { get; set; }
+        public string? ProductImage { get; set; }
+        public int? Ret_By { get; set; }
+        public string? Ret_Reason { get; set; }
+        public DateTime? R_On { get; set; }
+        public int? R_Number { get; set; }
+        public int? P_Id { get; set; }
     }
     public class CheckInSelectView
     {

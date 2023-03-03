@@ -1349,8 +1349,9 @@ namespace DarazApp.Controllers
         public IActionResult AllReturnOrders()
         {
             var userid = _userService.GetUserId();
-            var dataof = _commerceDbContext.ReturnItems.Where(x => x.Products.UserId == userid).Select(y => new ReturnItems()
+            var dataof = _commerceDbContext.ReturnItems.Where(x => x.Products.UserId == userid).Select(y => new ReturnModelView()
             {
+                Ret_Price = y.ProductBatch.Price * y.Ret_Quantity,
                 Ret_Quantity = y.Ret_Quantity,
                 Order_Id = y.Order_Id,
                 User = y.User,

@@ -71,7 +71,7 @@
 <script>
     $(document).ready(function () {
         GetDatas();
-        GetTotalPrice();
+        //GetTotalPrice();
         $('#SuccessModal').modal('hide');
     })
         function GetTotalPrice() {
@@ -113,12 +113,10 @@
                 type: 'Get',
                 success: function (response) {
                     var total = 0;
-                      var TotalPric = 0;
+                    var TotalPric = 0;
                     var html2 = "";
                     
                     $.each(response, function (key, items) {
-                        console.log('items', items);
-
                         html2 += '<article class="card border-primary mb-4">';
                         html2 += '<div class="card-body">';
                         html2 += '<header class="d-lg-flex">';
