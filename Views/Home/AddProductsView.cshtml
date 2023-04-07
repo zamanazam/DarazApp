@@ -488,7 +488,7 @@
 
         $('#btnshow').click(function () {
             var token = sessionStorage.getItem('token');
-
+          
 
             var form = new FormData();
             form.append('file', $('#file')[0].files[0]);
@@ -501,7 +501,6 @@
             form.append('ProductName', $('#ProductName').val());
             form.append('ProductId', $('#ProductssId').val());
             form.append('kidCategoryName', $('#kidCategoryName').val());
-
             var prices = $('.inputprice');
             console.log(prices);
             for (var i = 0; i < prices.length; i++) {
@@ -535,7 +534,7 @@
             form.append('ProductSpecificationsText', $('#ProductSpecificationText').val());
             console.log(form);
             var token = sessionStorage.getItem('token');
-
+            debugger
             $.ajax({
                 headers: {
                     Authorization: `Bearer ` + token

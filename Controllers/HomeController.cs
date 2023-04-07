@@ -56,19 +56,20 @@ namespace DarazApp.Controllers
         {
             return View();
         }
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly CommerceDbContext _commerceDb;
         private readonly ILogger<HomeController> _logger;
         private IUserService _userService;
         private readonly ViewModel _model = new ViewModel();
         private readonly SaveData _savedata = new SaveData();
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public HomeController(ILogger<HomeController> logger, IUserService userService, CommerceDbContext context, IHttpContextAccessor contextAccessor)
+        public HomeController(ILogger<HomeController> logger, IUserService userService, CommerceDbContext context, IHttpContextAccessor contextAccessor, IWebHostEnvironment hostingEnvironment)
         {
             _logger = logger;
             _userService = userService;
             _commerceDb = context;
             _httpContextAccessor = contextAccessor;
-
+            _hostingEnvironment = hostingEnvironment;
         }
         //[HttpGet]
         public IActionResult IndexData()
@@ -176,6 +177,13 @@ namespace DarazApp.Controllers
                 {
                     string filepath = Path.GetFileName(save.file.FileName);
                     imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                    string currentDirectory = _hostingEnvironment.WebRootPath;
+                    EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                    using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                    {
+                        save.file.CopyTo(stream);
+                        stream.Dispose();
+                    }
                 } 
                 user.UserImage = imagespaths;
                 user.UserName = save.UserName;
@@ -221,6 +229,14 @@ namespace DarazApp.Controllers
                 {
                     string filepath = Path.GetFileName(save.file.FileName);
                     imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                    string currentDirectory = _hostingEnvironment.WebRootPath;
+                    EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                    using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                    {
+                        save.file.CopyTo(stream);
+                        stream.Dispose();
+                    }
+
                 }
                 user.UserImage = imagespaths;
                 user.UserName = save.UserName;
@@ -247,7 +263,12 @@ namespace DarazApp.Controllers
             }
             return Ok();
         }
-
+        private void EnsureFolder(string path)
+        {
+            var exists = Directory.Exists(path);
+            if (!exists)
+                Directory.CreateDirectory(path);
+        }
         [HttpPost]
         public IActionResult UpdateRegister(UserViewModel save)
         {
@@ -261,6 +282,14 @@ namespace DarazApp.Controllers
                 {
                     string filepath = Path.GetFileName(save.file.FileName);
                     imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                    string currentDirectory = _hostingEnvironment.WebRootPath;
+                    EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                    using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                    {
+                        save.file.CopyTo(stream);
+                        stream.Dispose();
+                    }
+
                 }
                 user.UserImage = imagespaths;
                 user.UserName = save.UserName;
@@ -335,15 +364,6 @@ namespace DarazApp.Controllers
                 else i--;
             }
             int? secretkey = Convert.ToInt32(OTP);
-            //Guest guest = new Guest();
-            //guest.G_Name = UserName;
-            //guest.G_Email = Email;
-            //guest.G_Phone = PhoneNumber;
-            //guest.SecretKey = secretkey;
-            //guest.CreatedOn = DateAndTime.Now;
-            //_commerceDb.Guest.Add(guest);
-            //_commerceDb.SaveChanges();
-            //int? G_Id = guest.Guestid;
 
             User user = new User();
             user.UserName = UserName;
@@ -371,15 +391,7 @@ namespace DarazApp.Controllers
             chat.M_Status = (int)MessageStatus.UnRead;
             _commerceDb.Chat.Add(chat);
             _commerceDb.SaveChanges();
-            //GuestandStoreChat guestandStore = new GuestandStoreChat();
-            //guestandStore.ChatOn = DateAndTime.Now;
-            //guestandStore.Msg_Text = HelpText;
-            //guestandStore.StoreId = storeid;
-            //guestandStore.GuestId = G_Id;
-            //guestandStore.Msg_Status = (int)MessageStatus.UnRead;
-            //_commerceDb.GuestandStoreChat.Add(guestandStore);
-            //_commerceDb.SaveChanges();
-            //var newch = guestandStore.GS_ChatId;
+
             return Json(secretkey);
 
         }
@@ -451,7 +463,6 @@ namespace DarazApp.Controllers
             var sizis = _commerceDb.Sizes.Where(x => sizesids.Contains(x.Sizeid)).ToList();
             List<User> Userdata = _commerceDb.Products.Where(x => x.ProductId == id).Select(x => x.User).ToList();
 
-            //var sizess = _commerceDb.Sizes.Where(x=>x.Sizeid == sizesids).ToList();
             viewModel.usersvm = Userdata;
             viewModel.Sizesvm = sizis;
             viewModel.ProductVm = data;
@@ -460,7 +471,6 @@ namespace DarazApp.Controllers
             viewModel.kidCategoriesvm = kidcatdata;
             viewModel.productDescriptionimages = proddescripimages;
             viewModel.productSizesvm = productSizes;
-            //viewModel.Sizesvm = sizess;
             return Json(viewModel);
         }
         public IActionResult GetProductsDates()
@@ -478,7 +488,6 @@ namespace DarazApp.Controllers
             {
                 productSizes = db.ProductSize.Where(x => x.ProductId == id).ToList();
                 saveData.ProductSizes = productSie.SizeName;
-                //saveData.ProductId = ConproductSie.ProductId;
             }
             return View(saveData);
         }
@@ -849,12 +858,19 @@ namespace DarazApp.Controllers
           
                 KidCategory kids = new KidCategory();
                 var kidsis = dbContext.KidCategories.Where(x => x.KidCategoryName == saveData.KidCategoryName).FirstOrDefault().KidCategoryId;
-
                 Product prod = new Product();
+                string currentDirectory = _hostingEnvironment.WebRootPath;
+                EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
                 prod.UserId = Convert.ToInt32(userid);
                 string proimage = Path.GetFileName(saveData.file.FileName);
                 string uploadfilepath = Path.Combine(Directory.GetCurrentDirectory(), "\\images", proimage);
-                prod.ProductName = saveData.ProductName;
+                using FileStream stream = new FileStream(currentDirectory + uploadfilepath , FileMode.Create);
+                {
+                    saveData.file.CopyTo(stream);
+                    stream.Dispose();
+                }
+
+            prod.ProductName = saveData.ProductName;
                 //prod.ProductPrice = saveData.ProductPrice;
                 prod.ProductImage = uploadfilepath;
                 prod.KidCategoryId = kidsis;
@@ -863,6 +879,7 @@ namespace DarazApp.Controllers
                 dbContext.SaveChanges();
                 var latestProductId = prod.ProductId;
 
+            if(saveData.Texts != null) { 
                    int val = 0;
                   foreach (var item in saveData.Texts)
                   {
@@ -875,6 +892,7 @@ namespace DarazApp.Controllers
                     dbContext.ProductVariations.Add(productVariations);
                     dbContext.SaveChanges();
                   }
+            }
 
 
             ProductDescription description = new ProductDescription();
@@ -888,12 +906,21 @@ namespace DarazApp.Controllers
             dbContext.ProductDescriptions.AddRange(description);
             dbContext.SaveChanges();
 
-
+            int x = 0;
             foreach (var images in saveData.savedimages)
             {
                 ProductDescriptionimage productDescriptionimage = new ProductDescriptionimage();
                 string filepath = Path.GetFileName(images.FileName);
                 string imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                int x1 = x++;
+                EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                prod.UserId = Convert.ToInt32(userid);
+                using FileStream stream1 = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                {
+                    saveData.file.CopyTo(stream1);
+                    stream.Dispose();
+                }
+
                 productDescriptionimage.ProductdesImage1 = imagespaths;
                 productDescriptionimage.ProductId = latestProductId;
                 dbContext.AddRange(productDescriptionimage);
@@ -1340,7 +1367,6 @@ namespace DarazApp.Controllers
             return View();
         }
 
-
         [HttpGet]
         public IActionResult GetCategoiesbyID(int Id)
         {
@@ -1617,9 +1643,18 @@ namespace DarazApp.Controllers
                 }
                 else
                 {
-                    string imagepath = Path.GetFileName(saveData.file.FileName);
-                    string imagedes = Path.Combine(Directory.GetCurrentDirectory(), "\\images", imagepath);
-                    item.UserImage = imagedes;
+                    //string imagepath = Path.GetFileName(saveData.file.FileName);
+                    //string imagedes = Path.Combine(Directory.GetCurrentDirectory(), "\\images", imagepath);
+                    string currentDirectory = _hostingEnvironment.WebRootPath;
+                    EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                    string proimage = Path.GetFileName(saveData.file.FileName);
+                    string uploadfilepath = Path.Combine(Directory.GetCurrentDirectory(), "\\images", proimage);
+                    using FileStream stream = new FileStream(currentDirectory + uploadfilepath, FileMode.Create);
+                    {
+                        saveData.file.CopyTo(stream);
+                        stream.Dispose();
+                    }
+                    item.UserImage = uploadfilepath;
                 }
                     item.Password = saveData.Password;
                     item.status = saveData.userstatus;
@@ -1671,9 +1706,18 @@ namespace DarazApp.Controllers
                 }
                 else
                 {
-                    string imagepath = Path.GetFileName(saveData.file.FileName);
-                    string imagedes = Path.Combine(Directory.GetCurrentDirectory(), "\\images", imagepath);
-                    item.UserImage = imagedes;
+                    //string imagepath = Path.GetFileName(saveData.file.FileName);
+                    //string imagedes = Path.Combine(Directory.GetCurrentDirectory(), "\\images", imagepath);
+                    string currentDirectory = _hostingEnvironment.WebRootPath;
+                    EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                    string proimage = Path.GetFileName(saveData.file.FileName);
+                    string uploadfilepath = Path.Combine(Directory.GetCurrentDirectory(), "\\images", proimage);
+                    using FileStream stream = new FileStream(currentDirectory + uploadfilepath, FileMode.Create);
+                    {
+                        saveData.file.CopyTo(stream);
+                        stream.Dispose();
+                    }
+                    item.UserImage = uploadfilepath;
                 }
 
                 _commerceDb.Users.Update(item);
@@ -1759,6 +1803,11 @@ namespace DarazApp.Controllers
             {
                 return Json(prodid);
             }
+        }
+
+        public IActionResult TimeInterval()
+        {
+            return View();
         }
 
         [HttpGet]
@@ -2034,8 +2083,6 @@ namespace DarazApp.Controllers
             return Json(chats);
         }
 
-
-
         public IActionResult ChatwithStorebySecretKey(int secretkey, string Message, int storeid)
         {
             var userid = _commerceDb.Users.Where(x => x.SecretKey == secretkey).Select(x => x.UserId).FirstOrDefault();
@@ -2050,7 +2097,6 @@ namespace DarazApp.Controllers
             var chatid = chat.Id;
             return Json(chatid);
         }
-
 
         [HttpPost]
         public IActionResult AddHelpsNotLogedIn(AddHelpModal helpModal)
@@ -2203,8 +2249,6 @@ namespace DarazApp.Controllers
         [HttpPost]
         public IActionResult ChangeHelpStatusbyId(int id, string ResponseText)
         {
-            //Room helps = _commerceDb.Room.Where(x => x.H_Id == id).FirstOrDefault();
-            //List<Room> helps1 = _commerceDb.Room.Where(y=>y.H_Id == id).ToList();
             List<AdminChat> adminChats = _commerceDb.AdminChat.Where(x => x.A_ChatId == id).ToList();
             AdminChat chat = _commerceDb.AdminChat.Where(y => y.A_ChatId == id).FirstOrDefault();
             foreach (var admin in adminChats)
@@ -2408,10 +2452,6 @@ namespace DarazApp.Controllers
             }).ToList();
             return Json(chats123);
         }
-        //public IActionResult ChatsHistoryBuyerView()
-        //{
-        //    return View();
-        //}
         public IActionResult GetUserDatabySecretkey(int id)
         {
             User user = _commerceDb.Users.Where(x => x.SecretKey == id).FirstOrDefault();
@@ -2611,7 +2651,6 @@ namespace DarazApp.Controllers
             }
             return Json(RoomId);
         }
-
 
         [Authorize]
         public IActionResult SaveReplyChat(int receiverid, string Message)
@@ -2820,7 +2859,6 @@ namespace DarazApp.Controllers
                     secretKey = y.SecretKey,
                     assignedTo = y.AssignedTo,
                     assignedOn = y.AssignedOn,
-
                     admins= y.Admins,
                     users = y.Users,
                     assign = y.Assign,

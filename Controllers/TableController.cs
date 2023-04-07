@@ -16,10 +16,12 @@ namespace DarazApp.Controllers
 {
     public class TableController : Controller
     {
+        private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly CommerceDbContext _commerceDbContext = new CommerceDbContext();
         private IUserService _userService;
-        public TableController(CommerceDbContext commerceDb, IUserService userService)
+        public TableController(CommerceDbContext commerceDb, IUserService userService, IWebHostEnvironment hostEnvironment)
         {
+            _hostingEnvironment = hostEnvironment;
             _commerceDbContext = commerceDb;
             _userService = userService;
         }
@@ -175,12 +177,24 @@ namespace DarazApp.Controllers
             category.CategoryName = CategoryName;
             string filepath = Path.GetFileName(file.FileName);
             string imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+            string currentDirectory = _hostingEnvironment.WebRootPath;
+            EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+            using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+            {
+                file.CopyTo(stream);
+                stream.Dispose();
+            }
             category.CategoryIcon = imagespaths;
-         
             _commerceDbContext.Categories.Add(category);
             _commerceDbContext.SaveChanges();
             var LatestCategoryId = category.CategoryId;
             return Json(LatestCategoryId);
+        }
+        private void EnsureFolder(string path)
+        {
+            var exists = Directory.Exists(path);
+            if (!exists)
+                Directory.CreateDirectory(path);
         }
         [HttpPost]
         public IActionResult AddNewSubCategory(IList<string>SubCategoryName ,IList<IFormFile>formFiles, int CategoryId)
@@ -191,6 +205,13 @@ namespace DarazApp.Controllers
                 int val1 = val++;
                 string filepath = Path.GetFileName(item.FileName);
                 string imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                string currentDirectory = _hostingEnvironment.WebRootPath;
+                EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                {
+                    item.CopyTo(stream);
+                    stream.Dispose();
+                }
                 PerCategory perCategory = new PerCategory();
                 perCategory.PerCategoryName = SubCategoryName.ElementAtOrDefault(val1);
                 perCategory.PerCategoriesIcon = imagespaths;
@@ -212,6 +233,13 @@ namespace DarazApp.Controllers
                 KidCategory kid = new KidCategory();
                 string filepath = Path.GetFileName(item.FileName);
                 string imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                string currentDirectory = _hostingEnvironment.WebRootPath;
+                EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                {
+                    item.CopyTo(stream);
+                    stream.Dispose();
+                }
                 kid.KidCategoryName = KidCategoryName.ElementAtOrDefault(val1);
                 kid.Comission = KidCategoryComission.ElementAtOrDefault(val1);
                 kid.KidCategoryIcon = imagespaths;
@@ -711,13 +739,19 @@ namespace DarazApp.Controllers
                     {
                         string proimage = Path.GetFileName(saveData.file.FileName);
                         string uploadfilepath = Path.Combine(Directory.GetCurrentDirectory(), "\\images", proimage);
+                        string currentDirectory = _hostingEnvironment.WebRootPath;
+                        EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                        using FileStream stream = new FileStream(currentDirectory + uploadfilepath, FileMode.Create);
+                        {
+                            saveData.file.CopyTo(stream);
+                            stream.Dispose();
+                        }
                         item.ProductImage = uploadfilepath;
                     }
                     db.Products.Update(item);
                     db.SaveChanges();
                 }
-               
-              
+
                     descriptions = db.ProductDescriptions.Where(y => y.ProductId == saveData.ProductId).ToList();
                     foreach (var descrip in descriptions)
                     {
@@ -745,6 +779,13 @@ namespace DarazApp.Controllers
 
                         string filepath = Path.GetFileName(images.FileName);
                         string imagespaths = Path.Combine(Directory.GetCurrentDirectory(), "\\images", filepath);
+                        string currentDirectory = _hostingEnvironment.WebRootPath;
+                        EnsureFolder(Path.Combine(currentDirectory, "\\images" ?? "Common"));
+                        using FileStream stream = new FileStream(currentDirectory + imagespaths, FileMode.Create);
+                        {
+                            saveData.file.CopyTo(stream);
+                            stream.Dispose();
+                        }
                         productDescriptionimage.ProductdesImage1 = imagespaths;
                         productDescriptionimage.ProductId = saveData.ProductId;
                         db.ProductDescriptionimages.AddRange(productDescriptionimage);
@@ -776,7 +817,6 @@ namespace DarazApp.Controllers
                     List<ProductBatch> batchlist = _commerceDbContext.ProductBatch.Where(y => y.BatchId == b_Id).ToList();
                     foreach (var item in batchlist)
                     {
-
                         item.Quantity = batch.Quantity;
                         item.UploadOn = batch.UploadOn;
                         item.Price = price;

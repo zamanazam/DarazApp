@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "StZzyLTMGnwykxKgiOru3ZY+wuWbom0nnn58qkHfxSw=",
+  "Hash": "xAnfwvvat9vSGDadNM12fzSrO7ICZbrWeuLwiwZf8K4=",
   "Source": "DarazApp",
   "BasePath": "_content/DarazApp",
   "Mode": "Default",
@@ -185,6 +185,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\1528-4-500x500.jpeg"
+    },
+    {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\3d686f89303c660f8e033e23a6521700.png_wh300.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/3d686f89303c660f8e033e23a6521700.png_wh300.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\3d686f89303c660f8e033e23a6521700.png_wh300.png"
     },
     {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\61HKOG2wECL.jpg",
@@ -629,6 +646,23 @@
       "OriginalItemSpec": "wwwroot\\images\\desacripimage6.jpg"
     },
     {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\Design-Transparent-PNG.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/Design-Transparent-PNG.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Design-Transparent-PNG.png"
+    },
+    {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\Doll1.jpg",
       "SourceId": "DarazApp",
       "SourceType": "Discovered",
@@ -984,6 +1018,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\download.jpg"
+    },
+    {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\download.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/download.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\download.png"
     },
     {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\Ecommerce templates for Figma and Sketch.html",
@@ -4097,6 +4148,23 @@
       "OriginalItemSpec": "wwwroot\\images\\images (1).jpg"
     },
     {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\images (1).png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/images (1).png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\images (1).png"
+    },
+    {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\images (2).jpg",
       "SourceId": "DarazApp",
       "SourceType": "Discovered",
@@ -4231,6 +4299,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\images.jpg"
+    },
+    {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\images.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/images.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\images.png"
     },
     {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\istockphoto-187310279-612x612.jpg",
@@ -4384,6 +4469,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\logo 1.ai-1.jpg"
+    },
+    {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\logo_1.ai-1-removebg-preview.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/logo_1.ai-1-removebg-preview.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\logo_1.ai-1-removebg-preview.png"
     },
     {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\MenShirts.jpg",
@@ -4639,6 +4741,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\photo-1542291026-7eec264c27ff.jpg"
+    },
+    {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\png-clipart-mario-mario.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/png-clipart-mario-mario.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\png-clipart-mario-mario.png"
+    },
+    {
+      "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\png-transparent-spider-man-heroes-download-with-transparent-background-free-thumbnail.png",
+      "SourceId": "DarazApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\DarazApp\\DarazApp\\wwwroot\\",
+      "BasePath": "_content/DarazApp",
+      "RelativePath": "images/png-transparent-spider-man-heroes-download-with-transparent-background-free-thumbnail.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\png-transparent-spider-man-heroes-download-with-transparent-background-free-thumbnail.png"
     },
     {
       "Identity": "E:\\DarazApp\\DarazApp\\wwwroot\\images\\Shampoo.jpg",

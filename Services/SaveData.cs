@@ -35,6 +35,8 @@ namespace DarazApp.Services
         public int Quantity { get; set; }
 
         public string? ProductDes { get; set; }
+        public string? blobToBase64 { get; set; } 
+        public IList<string>? blobToBase64s { get; set; }
 
         public int P { get; set; }
 

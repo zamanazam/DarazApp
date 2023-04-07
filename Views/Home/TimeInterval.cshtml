@@ -1,0 +1,149 @@
+﻿@using DarazApp.Services
+@model DarazApp.Services.ViewModel
+@{
+    ViewData["Title"] = "TimeInterval";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
+    <div class="container">
+        <label>Time Interval</label>
+        <h5 id="countdown"></h5>
+        <h5 id="Countdown ended"></h5>
+
+
+
+      <svg>
+            <circle id="myCircle" cx="50%" cy="50%" r="50" stroke="black" stroke-width="2" fill="none" />
+    </svg>
+ <div class="progress-bar"></div>
+
+        @*<div id="progress-bar"></div>*@
+    </div>
+
+    <style>
+        #myCircle {
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 5s;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: black;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #4CAF50;
+        }
+
+    </style>
+    <script>
+
+        //$(document).ready(function () {
+        //    var progressBar = $('#progress-bar');
+        //    var duration = 2 * 60 * 1000; // 2 minutes in milliseconds
+
+        //    // Animate the progress bar
+        //    progressBar.animate({ width: "100%" }, {
+        //        duration: duration,
+        //        easing: "linear",
+        //        complete: function () {
+        //            // Animation complete
+        //        }
+        //    });
+        //});
+        //This code uses the animate method of jQuery to animate the width of the progress bar to 100 % over the course of 2 minutes, using a linear easing function. When the animation is complete, the complete function is called, which you can use to perform any necessary actions.
+
+                //var endDate = new Date("2023-04-01T00:00:00Z"); // Replace with your end date
+
+                //var countdownInterval = setInterval(function () {
+                //    var now = new Date().getTime(); // Get current time
+                //    var timeDiff = endDate.getTime() - now; // Get time difference in milliseconds
+
+                //    // Calculate days, hours, minutes and seconds remaining
+                //    var days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                //    var hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                //    var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                //    var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                //    // Update label text with countdown
+                //    $("#countdown").text(days + "d " + hours + "h " + minutes + "m " + seconds + "s");
+
+                //    // Check if countdown has ended
+                //    if (timeDiff < 0) {
+                //        clearInterval(countdownInterval); // Stop interval
+                //        $("#countdown").text("Countdown ended!"); // Update label text
+                //    }
+                //}, 1000);
+
+                $(document).ready(function () {
+                    var progressBar = $('.progress-bar');   
+                    var progressFill = $('.progress-bar-fill');
+                    var duration = 120; // 2 minutes in seconds
+                    var intervalTime = (duration / progressBar.width())* 1000;
+                    console.log(duration); 
+                    console.log(intervalTime);
+                    console.log(progressBar.width());
+
+
+                    var increment = progressBar.width() / duration;
+                    console.log(increment);
+                    var interval = setInterval(function () {
+                        var width1 = progressFill.width() + increment;
+               
+                        progressFill.width(width1);
+                        if (progressFill.width() >= progressBar.width()) {
+                            clearInterval(interval);
+                        }
+                    }, intervalTime);
+                });
+                //var endDate = new Date(Date.now() + 1 * 60 * 1000);
+
+                //var fillValue = 0;
+                //$('#myCircle').css('stroke-dashoffset', 118985);
+
+                //var countdownInterval = setInterval(function () {
+                //    fillValue++;
+                //    var now = new Date().getTime();
+                //    var timeDiff = endDate.getTime() - now;
+
+                //    console.log('ms', timeDiff);
+
+                //    var minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                //    var seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+                //    var speed = -1;
+
+                //    $('#myCircle').css('stroke-dashoffset', 118985 - fillValue * speed);
+                //    if (fillValue == 0) {
+                //        clearInterval(countdownInterval);
+                //    }
+
+                //    $("#countdown").text('Remaining Time' + minutes + 'm' + seconds + 's');
+                //    if (timeDiff < 0) {
+                //        clearInterval(countdownInterval);
+                //        $("#countdown").text("Countdown ended!");
+                //    }
+                //}, 1000);
+
+
+                //$(document).ready(function () {
+                //    var fillValue = 0;
+                //    $('#myCircle').css('stroke-dashoffset', 314);
+
+                //    var interval = setInterval(function () {
+                //        fillValue++;
+                //        $('#myCircle').css('stroke-dashoffset', 314 - fillValue * 3.14);
+                //        if (fillValue == 0) {
+                //            clearInterval(interval);
+                //        }
+                //    }, 20);
+                //});
+
+
+    </script>
